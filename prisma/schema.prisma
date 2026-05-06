@@ -1,0 +1,250 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─── Users ───────────────────────────────────────────────────────────────────
+
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  phone     String?
+  password  String?  // null when using OAuth
+  image     String?
+  role      UserRole @default(CUSTOMER)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  addresses Address[]
+  orders    Order[]
+  accounts  Account[]
+  sessions  Session[]
+
+  @@map("users")
+}
+
+enum UserRole {
+  CUSTOMER
+  RESTAURANT_OWNER
+  ADMIN
+}
+
+// ─── NextAuth tables ──────────────────────────────────────────────────────────
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+  @@map("verification_tokens")
+}
+
+// ─── Addresses ───────────────────────────────────────────────────────────────
+
+model Address {
+  id        String      @id @default(cuid())
+  userId    String
+  label     String      // "Home", "Work", "Other"
+  line1     String
+  line2     String?
+  city      String
+  state     String
+  pincode   String
+  lat       Float?
+  lng       Float?
+  isDefault Boolean     @default(false)
+  createdAt DateTime    @default(now())
+
+  user   User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  orders Order[]
+
+  @@map("addresses")
+}
+
+// ─── Restaurants ──────────────────────────────────────────────────────────────
+
+model Restaurant {
+  id            String         @id @default(cuid())
+  name          String
+  slug          String         @unique
+  description   String?        @db.Text
+  imageUrl      String
+  bannerUrl     String?
+  cuisines      String[]
+  rating        Float          @default(0)
+  ratingCount   Int            @default(0)
+  avgDeliveryTime Int          @default(30)  // minutes
+  deliveryFee   Float          @default(0)
+  minOrderAmount Float         @default(0)
+  isOpen        Boolean        @default(true)
+  isPureVeg     Boolean        @default(false)
+  city          String
+  area          String
+  address       String
+  lat           Float?
+  lng           Float?
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+
+  categories    MenuCategory[]
+  orders        Order[]
+
+  @@map("restaurants")
+}
+
+// ─── Menu ─────────────────────────────────────────────────────────────────────
+
+model MenuCategory {
+  id           String     @id @default(cuid())
+  restaurantId String
+  name         String
+  description  String?
+  sortOrder    Int        @default(0)
+
+  restaurant Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  items      MenuItem[]
+
+  @@map("menu_categories")
+}
+
+model MenuItem {
+  id          String       @id @default(cuid())
+  categoryId  String
+  name        String
+  description String?      @db.Text
+  price       Float
+  imageUrl    String?
+  isVeg       Boolean      @default(true)
+  isAvailable Boolean      @default(true)
+  isBestSeller Boolean     @default(false)
+  spiceLevel  SpiceLevel?
+  sortOrder   Int          @default(0)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  category   MenuCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  orderItems OrderItem[]
+
+  @@map("menu_items")
+}
+
+enum SpiceLevel {
+  MILD
+  MEDIUM
+  HOT
+  EXTRA_HOT
+}
+
+// ─── Orders ───────────────────────────────────────────────────────────────────
+
+model Order {
+  id           String      @id @default(cuid())
+  userId       String
+  restaurantId String
+  addressId    String?
+  status       OrderStatus @default(PLACED)
+  paymentMode  PaymentMode @default(CASH_ON_DELIVERY)
+  paymentStatus PaymentStatus @default(PENDING)
+  subtotal     Float
+  deliveryFee  Float
+  taxes        Float
+  discount     Float       @default(0)
+  total        Float
+  otp          String?     // 4-digit OTP for delivery confirmation
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+
+  user       User       @relation(fields: [userId], references: [id])
+  restaurant Restaurant @relation(fields: [restaurantId], references: [id])
+  address    Address?   @relation(fields: [addressId], references: [id])
+  items      OrderItem[]
+  timeline   OrderTimeline[]
+
+  @@map("orders")
+}
+
+model OrderItem {
+  id         String @id @default(cuid())
+  orderId    String
+  menuItemId String
+  name       String  // snapshot at order time
+  price      Float   // snapshot at order time
+  quantity   Int
+
+  order    Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  menuItem MenuItem @relation(fields: [menuItemId], references: [id])
+
+  @@map("order_items")
+}
+
+model OrderTimeline {
+  id        String      @id @default(cuid())
+  orderId   String
+  status    OrderStatus
+  message   String?
+  createdAt DateTime    @default(now())
+
+  order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@map("order_timeline")
+}
+
+enum OrderStatus {
+  PLACED
+  ACCEPTED
+  PREPARING
+  READY
+  OUT_FOR_DELIVERY
+  DELIVERED
+  CANCELLED
+}
+
+enum PaymentMode {
+  CASH_ON_DELIVERY
+  ONLINE
+  WALLET
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  FAILED
+  REFUNDED
+}
