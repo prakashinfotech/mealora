@@ -24,7 +24,11 @@
     "react": "^18",
     "react-dom": "^18",
     "tailwind-merge": "^2.3.0",
+    "zod": "^4.4.3",
     "zustand": "^4.5.2"
+  },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",

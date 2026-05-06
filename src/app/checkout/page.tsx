@@ -9,10 +9,8 @@ import { CartSummary } from '@/components/cart/CartSummary'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
 import { useCartStore } from '@/store/cartStore'
-import { formatPrice, calculateTaxes } from '@/lib/utils'
+import { formatPrice, calculateTaxes, calculateDeliveryFee } from '@/lib/utils'
 import type { Address, PaymentMode } from '@/types'
-
-const DELIVERY_FEE = 40
 
 const PAYMENT_OPTIONS: { mode: PaymentMode; label: string; icon: string }[] = [
   { mode: 'CASH_ON_DELIVERY', label: 'Cash on Delivery', icon: '💵' },
@@ -28,7 +26,7 @@ export default function CheckoutPage() {
   const restaurantId = useCartStore((s) => s.restaurantId)
   const clearCart = useCartStore((s) => s.clearCart)
 
-  const deliveryFee = subtotal >= 299 ? 0 : DELIVERY_FEE
+  const deliveryFee = calculateDeliveryFee(subtotal)
   const taxes = calculateTaxes(subtotal)
 
   const [addresses, setAddresses] = useState<Address[]>([])

@@ -10,9 +10,7 @@ import { formatPrice } from '@/lib/utils'
 import Link from 'next/link'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
-import { calculateTaxes } from '@/lib/utils'
-
-const DELIVERY_FEE = 40
+import { calculateTaxes, calculateDeliveryFee, FREE_DELIVERY_THRESHOLD } from '@/lib/utils'
 
 export default function CartPage() {
   const { data: session } = useSession()
@@ -23,7 +21,7 @@ export default function CartPage() {
   const restaurantId = useCartStore((s) => s.restaurantId)
   const clearCart = useCartStore((s) => s.clearCart)
 
-  const deliveryFee = subtotal >= 299 ? 0 : DELIVERY_FEE
+  const deliveryFee = calculateDeliveryFee(subtotal)
   const taxes = calculateTaxes(subtotal)
   const total = subtotal + deliveryFee + taxes
 
@@ -91,9 +89,9 @@ export default function CartPage() {
               </div>
 
               {/* Delivery note */}
-              {subtotal < 299 && (
+              {subtotal < FREE_DELIVERY_THRESHOLD && (
                 <div className="bg-brand-orange-light border border-orange-200 rounded-xl px-4 py-3 text-sm text-swiggy-black">
-                  Add <span className="font-bold text-brand-orange">{formatPrice(299 - subtotal)}</span> more for free delivery!
+                  Add <span className="font-bold text-brand-orange">{formatPrice(FREE_DELIVERY_THRESHOLD - subtotal)}</span> more for free delivery!
                 </div>
               )}
 

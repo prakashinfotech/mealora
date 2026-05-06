@@ -6,10 +6,6 @@ export const addressService = {
     addressRepository.findByUser(userId),
 
   create: async (userId: string, input: CreateAddressInput) => {
-    if (!input.line1 || !input.city || !input.pincode) {
-      throw new Error('line1, city, and pincode are required.')
-    }
-
     if (input.isDefault) {
       await addressRepository.clearDefaults(userId)
     }

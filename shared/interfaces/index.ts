@@ -162,41 +162,8 @@ export interface RestaurantFilters {
   limit?: number
 }
 
-export interface CreateOrderInput {
-  restaurantId: string
-  addressId: string
-  paymentMode: PaymentMode
-  items: {
-    menuItemId: string
-    quantity: number
-    name: string
-    price: number
-  }[]
-  subtotal: number
-  deliveryFee: number
-  taxes: number
-  discount: number
-  total: number
-}
-
-export interface CreateAddressInput {
-  label: string
-  line1: string
-  line2?: string
-  city: string
-  state: string
-  pincode: string
-  lat?: number
-  lng?: number
-  isDefault?: boolean
-}
-
-export interface RegisterUserInput {
-  name: string
-  email: string
-  password: string
-  phone?: string
-}
+// Input types are defined in shared/schemas and re-exported here for convenience
+export type { RegisterUserInput, CreateAddressInput, CreateOrderInput } from '@shared/schemas'
 
 // ─── Legacy aliases (keep existing component imports working) ─────────────────
 export type User = IUser

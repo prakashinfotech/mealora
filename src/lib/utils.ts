@@ -11,7 +11,7 @@ export {
   calculateOrderTotal,
 } from '@shared/helpers'
 
-export { ORDER_STATUS_LABELS, ORDER_STATUS_COLORS } from '@shared/constants'
+export { ORDER_STATUS_LABELS, ORDER_STATUS_COLORS, DELIVERY_FEE, FREE_DELIVERY_THRESHOLD } from '@shared/constants'
 
 // ─── Frontend-only: Tailwind class merger ─────────────────────────────────────
 import { clsx, type ClassValue } from 'clsx'

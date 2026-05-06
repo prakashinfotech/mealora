@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
 import { RestaurantCard } from '@/components/home/RestaurantCard'
@@ -7,6 +8,15 @@ import type { RestaurantFilters } from '@shared/interfaces'
 
 interface PageProps {
   searchParams: { [key: string]: string | string[] | undefined }
+}
+
+function buildPageUrl(searchParams: Record<string, string | string[] | undefined>, page: number) {
+  const params = new URLSearchParams()
+  for (const [key, val] of Object.entries(searchParams)) {
+    if (val && key !== 'page') params.set(key, String(val))
+  }
+  params.set('page', String(page))
+  return `/restaurants?${params.toString()}`
 }
 
 export default async function RestaurantsPage({ searchParams }: PageProps) {
@@ -22,6 +32,7 @@ export default async function RestaurantsPage({ searchParams }: PageProps) {
   }
 
   const { items: restaurants, total, page, limit, hasMore } = await restaurantService.list(filters)
+  const totalPages = Math.ceil(total / limit)
 
   const heading = filters.search
     ? `Results for "${filters.search}"`
@@ -58,12 +69,57 @@ export default async function RestaurantsPage({ searchParams }: PageProps) {
                 ))}
               </div>
 
-              {/* Pagination hint */}
-              {hasMore && (
-                <div className="text-center mt-10">
-                  <p className="text-swiggy-gray text-sm">
-                    Showing {restaurants.length} of {total} restaurants
+              {/* Pagination */}
+              {totalPages > 1 && (
+                <div className="flex items-center justify-between mt-10">
+                  <p className="text-sm text-swiggy-gray">
+                    Showing <span className="font-semibold text-swiggy-black">{(page - 1) * limit + 1}–{Math.min(page * limit, total)}</span> of <span className="font-semibold text-swiggy-black">{total}</span> restaurants
                   </p>
+
+                  <div className="flex items-center gap-2">
+                    {page > 1 ? (
+                      <Link
+                        href={buildPageUrl(searchParams, page - 1)}
+                        className="flex items-center gap-1.5 px-4 py-2 text-sm font-semibold rounded-xl border border-swiggy-border bg-white text-swiggy-black hover:border-brand-orange hover:text-brand-orange transition-colors"
+                      >
+                        ← Prev
+                      </Link>
+                    ) : (
+                      <span className="flex items-center gap-1.5 px-4 py-2 text-sm font-semibold rounded-xl border border-swiggy-border bg-white text-swiggy-gray-light cursor-not-allowed">
+                        ← Prev
+                      </span>
+                    )}
+
+                    {/* Page numbers */}
+                    <div className="flex items-center gap-1">
+                      {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
+                        <Link
+                          key={p}
+                          href={buildPageUrl(searchParams, p)}
+                          className={`w-9 h-9 flex items-center justify-center rounded-xl text-sm font-semibold transition-colors ${
+                            p === page
+                              ? 'bg-brand-orange text-white'
+                              : 'border border-swiggy-border bg-white text-swiggy-black hover:border-brand-orange hover:text-brand-orange'
+                          }`}
+                        >
+                          {p}
+                        </Link>
+                      ))}
+                    </div>
+
+                    {hasMore ? (
+                      <Link
+                        href={buildPageUrl(searchParams, page + 1)}
+                        className="flex items-center gap-1.5 px-4 py-2 text-sm font-semibold rounded-xl border border-swiggy-border bg-white text-swiggy-black hover:border-brand-orange hover:text-brand-orange transition-colors"
+                      >
+                        Next →
+                      </Link>
+                    ) : (
+                      <span className="flex items-center gap-1.5 px-4 py-2 text-sm font-semibold rounded-xl border border-swiggy-border bg-white text-swiggy-gray-light cursor-not-allowed">
+                        Next →
+                      </span>
+                    )}
+                  </div>
                 </div>
               )}
             </>
