@@ -1,12 +1,12 @@
 import { redirect } from 'next/navigation'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
-import { prisma } from '@/lib/prisma'
 import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
 import { formatPrice, ORDER_STATUS_LABELS, ORDER_STATUS_COLORS } from '@/lib/utils'
-import Link from 'next/link'
+import { orderService } from '@server/services/order.service'
 import { cn } from '@/lib/utils'
+import Link from 'next/link'
 
 export const metadata = { title: 'My Orders' }
 
@@ -14,14 +14,7 @@ export default async function OrdersPage() {
   const session = await getServerSession(authOptions)
   if (!session) redirect('/login')
 
-  const orders = await prisma.order.findMany({
-    where: { userId: session.user.id },
-    orderBy: { createdAt: 'desc' },
-    include: {
-      restaurant: { select: { id: true, name: true, imageUrl: true, area: true } },
-      items: { select: { name: true, quantity: true } },
-    },
-  })
+  const orders = await orderService.listForUser(session.user.id)
 
   return (
     <>

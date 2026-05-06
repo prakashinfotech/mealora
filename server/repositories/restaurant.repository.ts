@@ -38,4 +38,18 @@ export const restaurantRepository = {
       select: { id: true, name: true, imageUrl: true, cuisines: true, rating: true, area: true },
       take: limit,
     }),
+
+  getFeatured: async (limit: number) =>
+    prisma.restaurant.findMany({
+      where: { isOpen: true },
+      orderBy: { rating: 'desc' },
+      take: limit,
+    }),
+
+  getTopRated: async (minRating: number, limit: number) =>
+    prisma.restaurant.findMany({
+      where: { rating: { gte: minRating } },
+      orderBy: { ratingCount: 'desc' },
+      take: limit,
+    }),
 }

@@ -3,37 +3,13 @@ import { Footer } from '@/components/layout/Footer'
 import { HeroSearch } from '@/components/home/HeroSearch'
 import { CategoryCarousel } from '@/components/home/CategoryCarousel'
 import { RestaurantCard } from '@/components/home/RestaurantCard'
-import { prisma } from '@/lib/prisma'
+import { restaurantService } from '@server/services/restaurant.service'
 import Link from 'next/link'
-
-async function getFeaturedRestaurants() {
-  try {
-    return await prisma.restaurant.findMany({
-      where: { isOpen: true },
-      orderBy: { rating: 'desc' },
-      take: 8,
-    })
-  } catch {
-    return []
-  }
-}
-
-async function getTopRatedRestaurants() {
-  try {
-    return await prisma.restaurant.findMany({
-      where: { rating: { gte: 4.0 } },
-      orderBy: { ratingCount: 'desc' },
-      take: 6,
-    })
-  } catch {
-    return []
-  }
-}
 
 export default async function HomePage() {
   const [featured, topRated] = await Promise.all([
-    getFeaturedRestaurants(),
-    getTopRatedRestaurants(),
+    restaurantService.getFeatured(8),
+    restaurantService.getTopRated(4.0, 6),
   ])
 
   return (

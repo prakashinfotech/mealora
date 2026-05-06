@@ -1,11 +1,11 @@
 import { notFound, redirect } from 'next/navigation'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
-import { prisma } from '@/lib/prisma'
 import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
 import { OrderTracker } from '@/components/order/OrderTracker'
 import { formatPrice } from '@/lib/utils'
+import { orderService } from '@server/services/order.service'
 import Link from 'next/link'
 import type { Metadata } from 'next'
 
@@ -18,23 +18,11 @@ export const metadata: Metadata = { title: 'Order Tracking' }
 // Revalidate frequently while order is active
 export const revalidate = 10
 
-async function getOrder(id: string, userId: string) {
-  return prisma.order.findFirst({
-    where: { id, userId },
-    include: {
-      restaurant: { select: { id: true, name: true, imageUrl: true, area: true } },
-      address: true,
-      items: true,
-      timeline: { orderBy: { createdAt: 'asc' } },
-    },
-  })
-}
-
 export default async function OrderTrackingPage({ params }: PageProps) {
   const session = await getServerSession(authOptions)
   if (!session) redirect('/login')
 
-  const order = await getOrder(params.id, session.user.id)
+  const order = await orderService.findForUser(params.id, session.user.id)
   if (!order) notFound()
 
   return (

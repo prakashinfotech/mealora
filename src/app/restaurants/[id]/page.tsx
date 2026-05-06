@@ -4,34 +4,15 @@ import { Footer } from '@/components/layout/Footer'
 import { RestaurantHeader } from '@/components/restaurant/RestaurantHeader'
 import { MenuSection } from '@/components/restaurant/MenuSection'
 import { CartFloatingBar } from '@/components/restaurant/CartFloatingBar'
-import { prisma } from '@/lib/prisma'
+import { restaurantService } from '@server/services/restaurant.service'
 import type { Metadata } from 'next'
 
 interface PageProps {
   params: { id: string }
 }
 
-async function getRestaurantWithMenu(id: string) {
-  return prisma.restaurant.findUnique({
-    where: { id },
-    include: {
-      categories: {
-        orderBy: { sortOrder: 'asc' },
-        include: {
-          items: {
-            orderBy: { sortOrder: 'asc' },
-          },
-        },
-      },
-    },
-  })
-}
-
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const restaurant = await prisma.restaurant.findUnique({
-    where: { id: params.id },
-    select: { name: true, cuisines: true, area: true },
-  })
+  const restaurant = await restaurantService.findById(params.id)
   if (!restaurant) return {}
   return {
     title: `${restaurant.name} — Order Online`,
@@ -40,7 +21,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function RestaurantDetailPage({ params }: PageProps) {
-  const restaurant = await getRestaurantWithMenu(params.id)
+  const restaurant = await restaurantService.findByIdWithMenu(params.id)
 
   if (!restaurant) notFound()
 

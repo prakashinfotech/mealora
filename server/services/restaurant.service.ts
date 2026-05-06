@@ -64,4 +64,10 @@ export const restaurantService = {
 
     return { restaurants, menuItems }
   },
+
+  getFeatured: async (limit = 8) =>
+    restaurantRepository.getFeatured(limit),
+
+  getTopRated: async (minRating = 4.0, limit = 6) =>
+    restaurantRepository.getTopRated(minRating, limit),
 }

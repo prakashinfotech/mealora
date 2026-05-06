@@ -2,66 +2,11 @@ import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
 import { RestaurantCard } from '@/components/home/RestaurantCard'
 import { RestaurantFiltersBar } from '@/components/restaurant/RestaurantFiltersBar'
-import { prisma } from '@/lib/prisma'
-import type { RestaurantFilters } from '@/types'
-import type { Prisma } from '@prisma/client'
+import { restaurantService } from '@server/services/restaurant.service'
+import type { RestaurantFilters } from '@shared/interfaces'
 
 interface PageProps {
   searchParams: { [key: string]: string | string[] | undefined }
-}
-
-async function getRestaurants(filters: RestaurantFilters) {
-  const where: Prisma.RestaurantWhereInput = {}
-
-  if (filters.search) {
-    where.OR = [
-      { name: { contains: filters.search, mode: 'insensitive' } },
-      { cuisines: { has: filters.search } },
-      { area: { contains: filters.search, mode: 'insensitive' } },
-    ]
-  }
-
-  if (filters.cuisine) {
-    where.cuisines = { hasSome: [filters.cuisine] }
-  }
-
-  if (filters.rating) {
-    where.rating = { gte: filters.rating }
-  }
-
-  if (filters.maxDeliveryTime) {
-    where.avgDeliveryTime = { lte: filters.maxDeliveryTime }
-  }
-
-  if (filters.isPureVeg === true) {
-    where.isPureVeg = true
-  }
-
-  const orderByMap: Record<string, Prisma.RestaurantOrderByWithRelationInput> = {
-    rating: { rating: 'desc' },
-    delivery_time: { avgDeliveryTime: 'asc' },
-    cost_low: { deliveryFee: 'asc' },
-    cost_high: { deliveryFee: 'desc' },
-  }
-
-  const orderBy: Prisma.RestaurantOrderByWithRelationInput = filters.sortBy
-    ? (orderByMap[filters.sortBy] ?? { rating: 'desc' })
-    : { rating: 'desc' }
-
-  const page = filters.page ?? 1
-  const limit = filters.limit ?? 12
-
-  const [restaurants, total] = await Promise.all([
-    prisma.restaurant.findMany({
-      where,
-      orderBy,
-      skip: (page - 1) * limit,
-      take: limit,
-    }),
-    prisma.restaurant.count({ where }),
-  ])
-
-  return { restaurants, total, page, limit }
 }
 
 export default async function RestaurantsPage({ searchParams }: PageProps) {
@@ -76,8 +21,7 @@ export default async function RestaurantsPage({ searchParams }: PageProps) {
     limit: 12,
   }
 
-  const { restaurants, total, page, limit } = await getRestaurants(filters)
-  const hasMore = page * limit < total
+  const { items: restaurants, total, page, limit, hasMore } = await restaurantService.list(filters)
 
   const heading = filters.search
     ? `Results for "${filters.search}"`
@@ -114,7 +58,7 @@ export default async function RestaurantsPage({ searchParams }: PageProps) {
                 ))}
               </div>
 
-              {/* Load more / pagination hint */}
+              {/* Pagination hint */}
               {hasMore && (
                 <div className="text-center mt-10">
                   <p className="text-swiggy-gray text-sm">
