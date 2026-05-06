@@ -1,0 +1,41 @@
+import { prisma } from '@/lib/prisma'
+import type { Prisma } from '@prisma/client'
+
+export const restaurantRepository = {
+  findMany: async (
+    where: Prisma.RestaurantWhereInput,
+    orderBy: Prisma.RestaurantOrderByWithRelationInput,
+    skip: number,
+    take: number
+  ) =>
+    prisma.restaurant.findMany({ where, orderBy, skip, take }),
+
+  count: async (where: Prisma.RestaurantWhereInput) =>
+    prisma.restaurant.count({ where }),
+
+  findById: async (id: string) =>
+    prisma.restaurant.findUnique({ where: { id } }),
+
+  findByIdWithMenu: async (id: string) =>
+    prisma.restaurant.findUnique({
+      where: { id },
+      include: {
+        categories: {
+          orderBy: { sortOrder: 'asc' },
+          include: { items: { orderBy: { sortOrder: 'asc' } } },
+        },
+      },
+    }),
+
+  searchByName: async (query: string, limit = 5) =>
+    prisma.restaurant.findMany({
+      where: {
+        OR: [
+          { name: { contains: query, mode: 'insensitive' } },
+          { area: { contains: query, mode: 'insensitive' } },
+        ],
+      },
+      select: { id: true, name: true, imageUrl: true, cuisines: true, rating: true, area: true },
+      take: limit,
+    }),
+}
