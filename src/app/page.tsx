@@ -1,6 +1,7 @@
 import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
 import { HeroSearch } from '@/components/home/HeroSearch'
+import { PromoCards } from '@/components/home/PromoCards'
 import { CategoryCarousel } from '@/components/home/CategoryCarousel'
 import { RestaurantCard } from '@/components/home/RestaurantCard'
 import { restaurantService } from '@server/services/restaurant.service'
@@ -16,27 +17,36 @@ export default async function HomePage() {
     <>
       <Navbar />
       <main className="min-h-screen bg-white">
+        {/* Hero + Promo block share the orange background */}
         <HeroSearch />
+        <PromoCards />
+
+        {/* Category carousel */}
         <CategoryCarousel />
 
-        {/* Divider */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 mt-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <hr className="border-swiggy-border" />
         </div>
 
         {/* Featured Restaurants */}
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 mt-10">
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 py-10">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="section-title">Restaurants near you</h2>
-            <Link href="/restaurants" className="text-sm font-semibold text-brand-orange hover:underline">
-              See all
+            <div>
+              <h2 className="text-xl font-black text-swiggy-black">Restaurants near you</h2>
+              <p className="text-sm text-swiggy-gray mt-0.5">Discover the best food &amp; drinks</p>
+            </div>
+            <Link
+              href="/restaurants"
+              className="text-sm font-bold text-brand-orange hover:text-brand-orange-dark transition-colors flex items-center gap-1"
+            >
+              See all →
             </Link>
           </div>
 
           {featured.length === 0 ? (
-            <div className="text-center py-16 text-swiggy-gray">
-              <p className="text-lg font-medium">No restaurants found</p>
-              <p className="text-sm mt-1">Run the seed script to populate data.</p>
+            <div className="text-center py-16 bg-swiggy-gray-bg rounded-2xl">
+              <p className="text-lg font-bold text-swiggy-black">No restaurants found</p>
+              <p className="text-sm text-swiggy-gray mt-1">Run the seed script to populate data.</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
@@ -47,10 +57,25 @@ export default async function HomePage() {
           )}
         </section>
 
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <hr className="border-swiggy-border" />
+        </div>
+
         {/* Top Rated */}
         {topRated.length > 0 && (
-          <section className="max-w-7xl mx-auto px-4 sm:px-6 mt-12">
-            <h2 className="section-title mb-6">Top rated near you</h2>
+          <section className="max-w-7xl mx-auto px-4 sm:px-6 py-10">
+            <div className="flex items-center justify-between mb-6">
+              <div>
+                <h2 className="text-xl font-black text-swiggy-black">Top rated near you</h2>
+                <p className="text-sm text-swiggy-gray mt-0.5">Highest rated restaurants in Bangalore</p>
+              </div>
+              <Link
+                href="/restaurants?sortBy=rating"
+                className="text-sm font-bold text-brand-orange hover:text-brand-orange-dark transition-colors flex items-center gap-1"
+              >
+                See all →
+              </Link>
+            </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
               {topRated.map((r) => (
                 <RestaurantCard key={r.id} restaurant={r} />
@@ -59,15 +84,26 @@ export default async function HomePage() {
           </section>
         )}
 
-        {/* CTA Banner */}
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 mt-14 mb-4">
-          <div className="bg-brand-orange-light rounded-2xl p-8 flex flex-col sm:flex-row items-center justify-between gap-6">
-            <div>
-              <h3 className="text-xl font-bold text-swiggy-black">Partner with us</h3>
-              <p className="text-swiggy-gray text-sm mt-1">Register your restaurant and grow with Swiggy.</p>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <hr className="border-swiggy-border" />
+        </div>
+
+        {/* Partner CTA */}
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 py-10">
+          <div className="bg-brand-orange rounded-2xl p-8 sm:p-10 flex flex-col sm:flex-row items-center justify-between gap-6 overflow-hidden relative">
+            <div className="absolute -right-8 -top-8 w-40 h-40 bg-white/10 rounded-full" />
+            <div className="absolute -left-4 -bottom-8 w-32 h-32 bg-white/10 rounded-full" />
+            <div className="relative">
+              <h3 className="text-xl sm:text-2xl font-black text-white">Partner with us</h3>
+              <p className="text-orange-100 text-sm mt-1">
+                Register your restaurant and reach millions of hungry customers.
+              </p>
             </div>
-            <Link href="#" className="btn-primary shrink-0">
-              Register your restaurant
+            <Link
+              href="#"
+              className="relative shrink-0 bg-white text-brand-orange font-bold px-6 py-3 rounded-xl hover:bg-orange-50 transition-colors shadow-md"
+            >
+              Register your restaurant →
             </Link>
           </div>
         </section>
