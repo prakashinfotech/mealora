@@ -1,5 +1,5 @@
-import { PageLoader } from '@/components/ui/Spinner'
+import { RestaurantsPageSkeleton } from '@/components/ui/Skeleton'
 
 export default function Loading() {
-  return <PageLoader />
+  return <RestaurantsPageSkeleton />
 }

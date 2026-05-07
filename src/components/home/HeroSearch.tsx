@@ -17,10 +17,7 @@ export function HeroSearch() {
   }
 
   return (
-    <section
-      className="relative bg-swiggy-black text-white overflow-hidden"
-      style={{ minHeight: 340 }}
-    >
+    <section className="relative bg-swiggy-black text-white overflow-hidden min-h-[340px]">
       {/* Decorative blobs */}
       <div className="absolute -top-20 -right-20 w-72 h-72 bg-brand-orange opacity-20 rounded-full blur-3xl" />
       <div className="absolute -bottom-10 left-10 w-48 h-48 bg-yellow-400 opacity-10 rounded-full blur-2xl" />

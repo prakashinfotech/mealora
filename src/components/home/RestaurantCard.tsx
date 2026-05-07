@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { formatDeliveryTime, formatPrice } from '@/lib/utils'
+import { formatDeliveryTime, formatPrice, formatCount } from '@/lib/utils'
 import type { Restaurant } from '@/types'
 
 interface RestaurantCardProps {
@@ -49,7 +49,7 @@ export function RestaurantCard({ restaurant }: RestaurantCardProps) {
               </svg>
               {restaurant.rating.toFixed(1)}
             </span>
-            <span className="text-swiggy-gray-light text-xs">({restaurant.ratingCount}+)</span>
+            <span className="text-swiggy-gray-light text-xs">({formatCount(restaurant.ratingCount)}+)</span>
           </div>
 
           {/* Cuisines */}

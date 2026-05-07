@@ -12,7 +12,7 @@ export function CartFloatingBar() {
   if (totalItems === 0) return null
 
   return (
-    <div className="fixed bottom-0 inset-x-0 z-40 max-w-4xl mx-auto px-4 pb-4 pointer-events-none">
+    <div className="fixed bottom-0 inset-x-0 z-40 max-w-4xl mx-auto px-4 pb-4 pointer-events-none animate-slide-up-bar">
       <Link
         href="/cart"
         className="pointer-events-auto flex items-center justify-between bg-swiggy-green text-white px-5 py-4 rounded-2xl shadow-2xl"

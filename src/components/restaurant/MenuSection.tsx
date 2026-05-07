@@ -17,6 +17,7 @@ export function MenuSection({ category, restaurant }: Props) {
     <section id={`category-${category.id}`} className="mb-2">
       <button
         onClick={() => setCollapsed(!collapsed)}
+        aria-expanded={!collapsed}
         className="w-full flex items-center justify-between py-4 px-4 sm:px-6 bg-white hover:bg-swiggy-gray-bg/50 transition-colors"
       >
         <div className="flex items-center gap-2">
@@ -24,20 +25,27 @@ export function MenuSection({ category, restaurant }: Props) {
           <span className="text-xs text-swiggy-gray-light">({availableCount})</span>
         </div>
         <svg
-          className={`w-5 h-5 text-swiggy-gray transition-transform duration-200 ${collapsed ? '-rotate-90' : ''}`}
+          className={`w-5 h-5 text-swiggy-gray transition-transform duration-300 ${collapsed ? '-rotate-90' : ''}`}
           fill="none" stroke="currentColor" viewBox="0 0 24 24"
         >
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
         </svg>
       </button>
 
-      {!collapsed && (
-        <div className="px-4 sm:px-6 bg-white">
-          {category.items.map((item) => (
-            <MenuItemCard key={item.id} item={item} restaurant={restaurant} />
-          ))}
+      {/* Smooth collapse via grid-rows transition */}
+      <div
+        className={`grid transition-all duration-300 ease-in-out ${
+          collapsed ? 'grid-rows-[0fr] opacity-0' : 'grid-rows-[1fr] opacity-100'
+        }`}
+      >
+        <div className="overflow-hidden">
+          <div className="px-4 sm:px-6 bg-white">
+            {category.items.map((item) => (
+              <MenuItemCard key={item.id} item={item} restaurant={restaurant} />
+            ))}
+          </div>
         </div>
-      )}
+      </div>
     </section>
   )
 }

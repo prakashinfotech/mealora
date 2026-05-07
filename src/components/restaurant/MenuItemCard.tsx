@@ -58,6 +58,7 @@ export function MenuItemCard({ item, restaurant }: Props) {
         {item.isAvailable && (
           quantity === 0 ? (
             <button
+              aria-label={`Add ${item.name} to cart`}
               onClick={() =>
                 addItem({
                   menuItemId: item.id,
@@ -76,13 +77,15 @@ export function MenuItemCard({ item, restaurant }: Props) {
           ) : (
             <div className="flex items-center w-24 justify-between bg-brand-orange rounded-lg px-2 py-1">
               <button
+                aria-label={`Remove one ${item.name}`}
                 onClick={() => decrementItem(item.id)}
                 className="text-white font-black text-lg leading-none w-6 h-6 flex items-center justify-center"
               >
                 −
               </button>
-              <span className="text-white font-bold text-sm">{quantity}</span>
+              <span className="text-white font-bold text-sm" aria-live="polite">{quantity}</span>
               <button
+                aria-label={`Add one more ${item.name}`}
                 onClick={() => incrementItem(item.id)}
                 className="text-white font-black text-lg leading-none w-6 h-6 flex items-center justify-center"
               >

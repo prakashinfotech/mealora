@@ -5,12 +5,13 @@ import Image from 'next/image'
 import { useSession, signOut } from 'next-auth/react'
 import { useCartStore } from '@/store/cartStore'
 import { useState } from 'react'
-import { cn } from '@/lib/utils'
+import { Skeleton } from '@/components/ui/Skeleton'
 
 export function Navbar() {
-  const { data: session } = useSession()
+  const { data: session, status } = useSession()
   const totalItems = useCartStore((s) => s.totalItems())
   const [menuOpen, setMenuOpen] = useState(false)
+  const isLoading = status === 'loading'
 
   return (
     <header className="sticky top-0 z-50 bg-white shadow-sm">
@@ -20,8 +21,11 @@ export function Navbar() {
           <span className="text-2xl font-black text-brand-orange tracking-tight">swiggy</span>
         </Link>
 
-        {/* Location picker (simplified) */}
-        <button className="hidden md:flex items-center gap-1 text-sm font-semibold text-swiggy-black hover:text-brand-orange transition-colors ml-4">
+        {/* Location picker */}
+        <button
+          aria-label="Change delivery location"
+          className="hidden md:flex items-center gap-1 text-sm font-semibold text-swiggy-black hover:text-brand-orange transition-colors ml-4"
+        >
           <svg className="w-4 h-4 text-brand-orange" fill="currentColor" viewBox="0 0 20 20">
             <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
           </svg>
@@ -34,12 +38,21 @@ export function Navbar() {
             Restaurants
           </Link>
 
-          {session ? (
+          {isLoading ? (
+            <div className="flex items-center gap-4">
+              <Skeleton className="h-4 w-16 rounded" />
+              <Skeleton className="h-8 w-20 rounded-lg" />
+            </div>
+          ) : session ? (
             <>
               <Link href="/orders" className="text-sm font-semibold text-swiggy-black hover:text-brand-orange transition-colors">
                 My Orders
               </Link>
-              <Link href="/cart" className="relative flex items-center gap-1 text-sm font-semibold text-swiggy-black hover:text-brand-orange transition-colors">
+              <Link
+                href="/cart"
+                aria-label={`Cart, ${totalItems} item${totalItems !== 1 ? 's' : ''}`}
+                className="relative flex items-center gap-1 text-sm font-semibold text-swiggy-black hover:text-brand-orange transition-colors"
+              >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-4H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                 </svg>
@@ -52,7 +65,7 @@ export function Navbar() {
               </Link>
 
               <div className="relative group">
-                <button className="flex items-center gap-2 text-sm font-semibold text-swiggy-black">
+                <button className="flex items-center gap-2 text-sm font-semibold text-swiggy-black" aria-label="Account menu">
                   {session.user.image ? (
                     <Image src={session.user.image} alt="avatar" width={28} height={28} className="rounded-full" />
                   ) : (
@@ -93,7 +106,7 @@ export function Navbar() {
         {/* Mobile: cart icon + hamburger */}
         <div className="flex md:hidden items-center gap-3 ml-auto">
           {totalItems > 0 && (
-            <Link href="/cart" className="relative">
+            <Link href="/cart" aria-label={`Cart, ${totalItems} items`} className="relative">
               <svg className="w-6 h-6 text-swiggy-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-4H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
               </svg>
@@ -102,7 +115,12 @@ export function Navbar() {
               </span>
             </Link>
           )}
-          <button onClick={() => setMenuOpen(!menuOpen)} className="p-1">
+          <button
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={menuOpen}
+            className="p-1"
+          >
             <svg className="w-6 h-6 text-swiggy-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               {menuOpen
                 ? <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -112,24 +130,37 @@ export function Navbar() {
         </div>
       </nav>
 
-      {/* Mobile menu */}
-      {menuOpen && (
-        <div className="md:hidden border-t border-swiggy-border bg-white px-4 py-4 flex flex-col gap-4">
-          <Link href="/restaurants" onClick={() => setMenuOpen(false)} className="text-sm font-semibold text-swiggy-black">Restaurants</Link>
-          {session ? (
+      {/* Mobile menu — always in DOM, height-animated */}
+      <div
+        className={`md:hidden border-t border-swiggy-border bg-white overflow-hidden transition-all duration-300 ease-in-out ${
+          menuOpen ? 'max-h-72 opacity-100' : 'max-h-0 opacity-0'
+        }`}
+      >
+        <div className="px-4 py-4 flex flex-col gap-4">
+          <Link href="/restaurants" onClick={() => setMenuOpen(false)} className="text-sm font-semibold text-swiggy-black">
+            Restaurants
+          </Link>
+          {!isLoading && session ? (
             <>
               <Link href="/orders" onClick={() => setMenuOpen(false)} className="text-sm font-semibold text-swiggy-black">My Orders</Link>
-              <Link href="/cart" onClick={() => setMenuOpen(false)} className="text-sm font-semibold text-swiggy-black">Cart {totalItems > 0 && `(${totalItems})`}</Link>
-              <button onClick={() => { signOut({ callbackUrl: '/' }); setMenuOpen(false) }} className="text-sm font-semibold text-swiggy-red text-left">Sign Out</button>
+              <Link href="/cart" onClick={() => setMenuOpen(false)} className="text-sm font-semibold text-swiggy-black">
+                Cart {totalItems > 0 && `(${totalItems})`}
+              </Link>
+              <button
+                onClick={() => { signOut({ callbackUrl: '/' }); setMenuOpen(false) }}
+                className="text-sm font-semibold text-swiggy-red text-left"
+              >
+                Sign Out
+              </button>
             </>
-          ) : (
+          ) : !isLoading ? (
             <>
               <Link href="/login" onClick={() => setMenuOpen(false)} className="text-sm font-semibold text-swiggy-black">Log in</Link>
               <Link href="/register" onClick={() => setMenuOpen(false)} className="text-sm font-semibold text-brand-orange">Sign up</Link>
             </>
-          )}
+          ) : null}
         </div>
-      )}
+      </div>
     </header>
   )
 }
