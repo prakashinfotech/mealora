@@ -29,10 +29,10 @@ export function HeroSearch() {
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 pt-12 pb-20 md:pt-14 md:pb-24 text-center">
         {/* Headlines */}
-        <h1 className="text-3xl sm:text-4xl md:text-[52px] font-black leading-tight tracking-tight mb-1">
+        <h1 className="text-2xl sm:text-3xl md:text-4xl font-black leading-tight tracking-tight mb-1">
           Order food &amp; groceries.
         </h1>
-        <p className="text-2xl sm:text-3xl md:text-[40px] font-black leading-tight text-white/90 mb-10">
+        <p className="text-xl sm:text-2xl md:text-3xl font-black leading-tight text-white/90 mb-10">
           Discover best restaurants. Swiggy it!
         </p>
 

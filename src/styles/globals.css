@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Shimmer sweep for skeleton loading — defined outside @layer so the keyframe
+   is always emitted regardless of PurgeCSS/tree-shaking */
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
 @layer base {
   :root {
     --font-sans: 'Inter', system-ui, sans-serif;
@@ -33,6 +40,23 @@
   .animate-slide-up-bar {
     animation: slide-up-bar 0.25s ease-out;
   }
+
+  /* Shimmer utility for skeletons */
+  .skeleton-shimmer {
+    background: linear-gradient(90deg, #E9E9EB 25%, #f5f5f5 50%, #E9E9EB 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s ease-in-out infinite;
+  }
+
+  /* Subtle fade-in for content that resolves after loading */
+  .animate-fade-in {
+    animation: fade-in 0.25s ease;
+  }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 
 @layer components {

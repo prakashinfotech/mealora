@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import { Providers } from './providers'
+import { RouteProgress } from '@/components/ui/RouteProgress'
 import '@/styles/globals.css'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -27,7 +28,10 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Providers session={session}>{children}</Providers>
+        <Providers session={session}>
+          <RouteProgress />
+          {children}
+        </Providers>
       </body>
     </html>
   )
