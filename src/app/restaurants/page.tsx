@@ -5,6 +5,8 @@ import { RestaurantCard } from '@/components/home/RestaurantCard'
 import { RestaurantFiltersBar } from '@/components/restaurant/RestaurantFiltersBar'
 import { restaurantService } from '@server/services/restaurant.service'
 import type { RestaurantFilters } from '@shared/interfaces'
+import { toTitleCase } from '@/lib/utils'
+import { DEFAULT_CITY } from '@/lib/cities'
 
 interface PageProps {
   searchParams: { [key: string]: string | string[] | undefined }
@@ -23,6 +25,7 @@ export default async function RestaurantsPage({ searchParams }: PageProps) {
   const filters: RestaurantFilters = {
     search: searchParams.search as string | undefined,
     cuisine: searchParams.cuisine as string | undefined,
+    city: searchParams.city as string | undefined,
     rating: searchParams.rating ? Number(searchParams.rating) : undefined,
     maxDeliveryTime: searchParams.maxDeliveryTime ? Number(searchParams.maxDeliveryTime) : undefined,
     isPureVeg: searchParams.isPureVeg === 'true',
@@ -34,11 +37,12 @@ export default async function RestaurantsPage({ searchParams }: PageProps) {
   const { items: restaurants, total, page, limit, hasMore } = await restaurantService.list(filters)
   const totalPages = Math.ceil(total / limit)
 
+  const cityLabel = filters.city ?? DEFAULT_CITY
   const heading = filters.search
     ? `Results for "${filters.search}"`
     : filters.cuisine
-    ? `${filters.cuisine} restaurants`
-    : 'Restaurants near you'
+    ? `${toTitleCase(filters.cuisine)} restaurants in ${cityLabel}`
+    : `Restaurants in ${cityLabel}`
 
   return (
     <>

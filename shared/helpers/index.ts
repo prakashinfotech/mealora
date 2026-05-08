@@ -19,6 +19,10 @@ export function formatDeliveryTime(minutes: number): string {
   return m === 0 ? `${h} hr` : `${h} hr ${m} mins`
 }
 
+export function toTitleCase(str: string): string {
+  return str.replace(/\b\w/g, (c) => c.toUpperCase())
+}
+
 export function slugify(text: string): string {
   return text
     .toLowerCase()

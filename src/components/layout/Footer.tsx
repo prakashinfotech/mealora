@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-const CITIES = [
+const FOOTER_CITIES = [
   'Bangalore', 'Mumbai', 'Delhi', 'Hyderabad',
   'Pune', 'Chennai', 'Kolkata', 'Ahmedabad',
 ]
@@ -56,9 +56,9 @@ export function Footer() {
           <div>
             <h4 className="font-black text-sm mb-4 text-swiggy-black">Available in</h4>
             <ul className="space-y-2.5 text-sm">
-              {CITIES.slice(0, 5).map((city) => (
+              {FOOTER_CITIES.slice(0, 5).map((city) => (
                 <li key={city}>
-                  <Link href="/restaurants" className="text-swiggy-gray hover:text-swiggy-black transition-colors">
+                  <Link href={`/restaurants?city=${encodeURIComponent(city)}`} className="text-swiggy-gray hover:text-swiggy-black transition-colors">
                     {city}
                   </Link>
                 </li>
@@ -89,10 +89,10 @@ export function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
         <h4 className="text-sm font-black text-swiggy-black mb-4">Cities with food delivery</h4>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
-          {CITIES.map((city) => (
+          {FOOTER_CITIES.map((city) => (
             <Link
               key={city}
-              href="/restaurants"
+              href={`/restaurants?city=${encodeURIComponent(city)}`}
               className="text-xs text-swiggy-gray border border-swiggy-border rounded-xl px-3 py-2.5 hover:border-brand-orange hover:text-brand-orange transition-colors text-center leading-snug"
             >
               Order food online in {city}

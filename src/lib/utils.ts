@@ -5,6 +5,7 @@ export {
   formatPrice,
   formatDeliveryTime,
   slugify,
+  toTitleCase,
   generateOTP,
   calculateTaxes,
   calculateDeliveryFee,

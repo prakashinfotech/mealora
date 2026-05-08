@@ -3,6 +3,7 @@
 import Image from 'next/image'
 import { useCartStore } from '@/store/cartStore'
 import { formatPrice } from '@/lib/utils'
+import { getMenuItemImage, isGenericPlaceholder } from '@/lib/menuImages'
 import { VegBadge } from '@/components/ui/Badge'
 import type { MenuItem, Restaurant } from '@/types'
 
@@ -15,6 +16,9 @@ export function MenuItemCard({ item, restaurant }: Props) {
   const { items, addItem, incrementItem, decrementItem } = useCartStore()
   const cartItem = items.find((i) => i.menuItemId === item.id)
   const quantity = cartItem?.quantity ?? 0
+  const displayImage = isGenericPlaceholder(item.imageUrl)
+    ? getMenuItemImage(item.name, item.isVeg)
+    : item.imageUrl
 
   return (
     <div className={`flex gap-4 py-5 border-b border-swiggy-border last:border-b-0 ${!item.isAvailable ? 'opacity-50' : ''}`}>
@@ -42,9 +46,9 @@ export function MenuItemCard({ item, restaurant }: Props) {
       {/* Image + Add button */}
       <div className="shrink-0 flex flex-col items-center gap-2">
         <div className="relative w-24 h-20 rounded-xl overflow-hidden bg-swiggy-gray-bg">
-          {item.imageUrl ? (
+          {displayImage ? (
             <Image
-              src={item.imageUrl}
+              src={displayImage}
               alt={item.name}
               fill
               className="object-cover"

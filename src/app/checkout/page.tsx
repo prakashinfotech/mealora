@@ -9,6 +9,7 @@ import { CartSummary } from '@/components/cart/CartSummary'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
 import { useCartStore } from '@/store/cartStore'
+import { useCityStore } from '@/store/cityStore'
 import { formatPrice, calculateTaxes, calculateDeliveryFee } from '@/lib/utils'
 import type { Address, PaymentMode } from '@/types'
 
@@ -25,6 +26,7 @@ export default function CheckoutPage() {
   const subtotal = useCartStore((s) => s.subtotal())
   const restaurantId = useCartStore((s) => s.restaurantId)
   const clearCart = useCartStore((s) => s.clearCart)
+  const currentCity = useCityStore((s) => s.city)
 
   const deliveryFee = calculateDeliveryFee(subtotal)
   const taxes = calculateTaxes(subtotal)
@@ -40,8 +42,8 @@ export default function CheckoutPage() {
   const [newAddress, setNewAddress] = useState({
     label: 'Home',
     line1: '',
-    city: 'Bangalore',
-    state: 'Karnataka',
+    city: currentCity,
+    state: '',
     pincode: '',
   })
 

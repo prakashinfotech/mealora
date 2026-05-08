@@ -3,6 +3,7 @@ import { menuRepository } from '@server/repositories/menu.repository'
 import type { RestaurantFilters, PaginatedResponse, IRestaurant } from '@shared/interfaces'
 import type { Prisma } from '@prisma/client'
 import { DEFAULT_PAGE_LIMIT, MAX_PAGE_LIMIT } from '@shared/constants'
+import { toTitleCase } from '@shared/helpers'
 
 const ORDER_BY_MAP: Record<string, Prisma.RestaurantOrderByWithRelationInput> = {
   rating: { rating: 'desc' },
@@ -22,10 +23,20 @@ function buildWhereClause(filters: RestaurantFilters): Prisma.RestaurantWhereInp
     ]
   }
 
-  if (filters.cuisine) where.cuisines = { hasSome: [filters.cuisine] }
+  if (filters.cuisine) {
+    const normalized = toTitleCase(filters.cuisine)
+    // hasSome is case-sensitive; normalize input + broaden to category name match
+    const cuisineOr: Prisma.RestaurantWhereInput[] = [
+      { cuisines: { hasSome: [normalized] } },
+      { categories: { some: { name: { contains: filters.cuisine, mode: 'insensitive' } } } },
+    ]
+    if (normalized !== filters.cuisine) cuisineOr.push({ cuisines: { hasSome: [filters.cuisine] } })
+    where.AND = [{ OR: cuisineOr }]
+  }
   if (filters.rating) where.rating = { gte: filters.rating }
   if (filters.maxDeliveryTime) where.avgDeliveryTime = { lte: filters.maxDeliveryTime }
   if (filters.isPureVeg === true) where.isPureVeg = true
+  if (filters.city) where.city = { equals: filters.city, mode: 'insensitive' }
 
   return where
 }
@@ -65,9 +76,9 @@ export const restaurantService = {
     return { restaurants, menuItems }
   },
 
-  getFeatured: async (limit = 8) =>
-    restaurantRepository.getFeatured(limit),
+  getFeatured: async (limit = 8, city?: string) =>
+    restaurantRepository.getFeatured(limit, city),
 
-  getTopRated: async (minRating = 4.0, limit = 6) =>
-    restaurantRepository.getTopRated(minRating, limit),
+  getTopRated: async (minRating = 4.0, limit = 6, city?: string) =>
+    restaurantRepository.getTopRated(minRating, limit, city),
 }

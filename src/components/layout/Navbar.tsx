@@ -4,12 +4,16 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useSession, signOut } from 'next-auth/react'
 import { useCartStore } from '@/store/cartStore'
+import { useCityStore } from '@/store/cityStore'
 import { useState } from 'react'
 import { Skeleton } from '@/components/ui/Skeleton'
+import { NavbarLocationSelector, MobileLocationRow } from '@/components/ui/LocationSelector'
+import { buildRestaurantsUrl } from '@/lib/navigation'
 
 export function Navbar() {
   const { data: session, status } = useSession()
   const totalItems = useCartStore((s) => s.totalItems())
+  const city = useCityStore((s) => s.city)
   const [menuOpen, setMenuOpen] = useState(false)
   const isLoading = status === 'loading'
 
@@ -21,20 +25,12 @@ export function Navbar() {
           <span className="text-2xl font-black text-brand-orange tracking-tight">swiggy</span>
         </Link>
 
-        {/* Location picker */}
-        <button
-          aria-label="Change delivery location"
-          className="hidden md:flex items-center gap-1 text-sm font-semibold text-swiggy-black hover:text-brand-orange transition-colors ml-4"
-        >
-          <svg className="w-4 h-4 text-brand-orange" fill="currentColor" viewBox="0 0 20 20">
-            <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
-          </svg>
-          <span className="border-b-2 border-swiggy-black">Bangalore</span>
-        </button>
+        {/* Location picker (desktop) */}
+        <NavbarLocationSelector />
 
         {/* Desktop nav */}
         <div className="hidden md:flex items-center gap-6 ml-auto">
-          <Link href="/restaurants" className="text-sm font-semibold text-swiggy-black hover:text-brand-orange transition-colors">
+          <Link href={buildRestaurantsUrl({ city })} className="text-sm font-semibold text-swiggy-black hover:text-brand-orange transition-colors">
             Restaurants
           </Link>
 
@@ -133,11 +129,16 @@ export function Navbar() {
       {/* Mobile menu — always in DOM, height-animated */}
       <div
         className={`md:hidden border-t border-swiggy-border bg-white overflow-hidden transition-all duration-300 ease-in-out ${
-          menuOpen ? 'max-h-72 opacity-100' : 'max-h-0 opacity-0'
+          menuOpen ? 'max-h-[480px] opacity-100' : 'max-h-0 opacity-0'
         }`}
       >
         <div className="px-4 py-4 flex flex-col gap-4">
-          <Link href="/restaurants" onClick={() => setMenuOpen(false)} className="text-sm font-semibold text-swiggy-black">
+          {/* City selector row */}
+          <MobileLocationRow onAfterSelect={() => setMenuOpen(false)} />
+
+          <div className="border-t border-swiggy-border" />
+
+          <Link href={buildRestaurantsUrl({ city })} onClick={() => setMenuOpen(false)} className="text-sm font-semibold text-swiggy-black">
             Restaurants
           </Link>
           {!isLoading && session ? (

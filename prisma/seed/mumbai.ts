@@ -1,0 +1,218 @@
+import { img, banner, P, type RestaurantInput } from './helpers'
+
+export const mumbaiRestaurants: RestaurantInput[] = [
+  {
+    name: 'Sardar Pav Bhaji',
+    slug: 'sardar-pav-bhaji-tardeo',
+    description: 'The original Tardeo institution serving Mumbai\'s most iconic pav bhaji since 1966.',
+    imageUrl: img(P.streetFood),
+    bannerUrl: banner(P.streetFood),
+    cuisines: ['Street Food', 'Pav Bhaji', 'Maharashtrian'],
+    rating: 4.5, ratingCount: 18200, avgDeliveryTime: 30, deliveryFee: 20, minOrderAmount: 99,
+    isOpen: true, isPureVeg: true,
+    city: 'Mumbai', area: 'Tardeo', address: 'Tardeo Road, near August Kranti Maidan, Mumbai',
+    menu: [
+      { name: 'Pav Bhaji', items: [
+        { name: 'Classic Pav Bhaji', price: 89, isVeg: true, description: 'Buttered pav with spiced mixed vegetable bhaji', isBestSeller: true, imageId: P.streetFood },
+        { name: 'Special Pav Bhaji', price: 119, isVeg: true, description: 'Extra butter, extra cheese, extra bhaji', isBestSeller: true, imageId: P.streetFood },
+        { name: 'Cheese Pav Bhaji', price: 139, isVeg: true, description: 'Topped with generous grated cheese', imageId: P.streetFood },
+        { name: 'Jain Pav Bhaji', price: 99, isVeg: true, description: 'Made without onion and garlic', imageId: P.streetFood },
+      ]},
+      { name: 'Street Food', items: [
+        { name: 'Tava Pulao', price: 89, isVeg: true, description: 'Spiced rice tossed on a tawa with vegetables and pav bhaji masala', isBestSeller: true, imageId: P.friedRice },
+        { name: 'Vada Pav', price: 25, isVeg: true, description: 'Mumbai\'s favourite street snack — spiced potato fritter in a bun', isBestSeller: true, imageId: P.streetFood },
+        { name: 'Misal Pav', price: 79, isVeg: true, description: 'Spicy sprouted moth bean curry with pav', imageId: P.curry },
+      ]},
+      { name: 'Beverages', items: [
+        { name: 'Masala Chaas', price: 39, isVeg: true, description: 'Chilled spiced buttermilk', imageId: P.drinks },
+        { name: 'Sugarcane Juice', price: 49, isVeg: true, imageId: P.drinks },
+      ]},
+    ],
+  },
+  {
+    name: 'Bademiya',
+    slug: 'bademiya-colaba',
+    description: 'Legendary street-side kebab stall turned institution in the heart of Colaba since 1946.',
+    imageUrl: img(P.kebab),
+    bannerUrl: banner(P.kebab),
+    cuisines: ['Mughlai', 'Kebabs', 'Street Food'],
+    rating: 4.4, ratingCount: 14600, avgDeliveryTime: 35, deliveryFee: 30, minOrderAmount: 149,
+    isOpen: true, isPureVeg: false,
+    city: 'Mumbai', area: 'Colaba', address: 'Behind Taj Mahal Hotel, Colaba, Mumbai',
+    menu: [
+      { name: 'Kebabs', items: [
+        { name: 'Chicken Seekh Kebab (4 pcs)', price: 179, isVeg: false, description: 'Minced chicken with herbs on skewers', isBestSeller: true, imageId: P.kebab },
+        { name: 'Mutton Seekh Kebab (4 pcs)', price: 219, isVeg: false, isBestSeller: true, imageId: P.kebab },
+        { name: 'Chicken Tikka (6 pcs)', price: 249, isVeg: false, description: 'Marinated boneless chicken grilled in tandoor', imageId: P.kebab },
+        { name: 'Tandoori Chicken (Half)', price: 289, isVeg: false, imageId: P.chicken },
+      ]},
+      { name: 'Rolls & Breads', items: [
+        { name: 'Chicken Tikka Roll', price: 149, isVeg: false, description: 'Tikka wrapped in rumali roti with chutney', isBestSeller: true, imageId: P.roll },
+        { name: 'Mutton Seekh Roll', price: 169, isVeg: false, imageId: P.roll },
+        { name: 'Rumali Roti (2 pcs)', price: 49, isVeg: true, imageId: P.bread },
+        { name: 'Butter Naan', price: 49, isVeg: true, imageId: P.bread },
+      ]},
+      { name: 'Gravies', items: [
+        { name: 'Kadhai Chicken', price: 279, isVeg: false, description: 'Chicken cooked in iron kadhai with tomatoes and peppers', isBestSeller: true, imageId: P.curry },
+        { name: 'Mutton Korma', price: 319, isVeg: false, imageId: P.curry },
+      ]},
+    ],
+  },
+  {
+    name: 'Britannia & Co.',
+    slug: 'britannia-co-ballard-estate',
+    description: 'A Mumbai legend since 1923 serving Parsi cuisine including the iconic Berry Pulao.',
+    imageUrl: img(P.northIndian),
+    cuisines: ['Parsi', 'Continental', 'Berry Pulao'],
+    rating: 4.6, ratingCount: 9500, avgDeliveryTime: 40, deliveryFee: 40, minOrderAmount: 199,
+    isOpen: true, isPureVeg: false,
+    city: 'Mumbai', area: 'Ballard Estate', address: 'Wakefield House, Sprott Road, Ballard Estate, Mumbai',
+    menu: [
+      { name: 'Parsi Classics', items: [
+        { name: 'Berry Pulao (Chicken)', price: 349, isVeg: false, description: 'Fragrant rice with chicken and imported Iranian barberries', isBestSeller: true, imageId: P.biryani },
+        { name: 'Berry Pulao (Mutton)', price: 399, isVeg: false, description: 'Slow-cooked mutton with saffron rice and barberries', isBestSeller: true, imageId: P.biryani2 },
+        { name: 'Dhansak (Chicken)', price: 329, isVeg: false, description: 'Lentil and vegetable curry with caramelised rice — Sunday special', imageId: P.curry },
+        { name: 'Salli Boti', price: 299, isVeg: false, description: 'Tender mutton in a tangy sauce topped with potato salli', imageId: P.curry },
+      ]},
+      { name: 'Sides & Desserts', items: [
+        { name: 'Caramel Custard', price: 89, isVeg: true, description: 'Classic baked caramel custard — a Parsi staple', isBestSeller: true, imageId: P.dessert },
+        { name: 'Lagan Nu Custard', price: 99, isVeg: true, description: 'Traditional baked egg custard', imageId: P.dessert },
+        { name: 'Raspberry Soda', price: 59, isVeg: true, description: 'Chilled raspberry-flavoured soda', imageId: P.drinks },
+      ]},
+    ],
+  },
+  {
+    name: 'Soam',
+    slug: 'soam-chowpatty',
+    description: 'Celebrated Gujarati-Maharashtrian snack house on the edge of Chowpatty Beach.',
+    imageUrl: img(P.veg),
+    cuisines: ['Gujarati', 'Street Food', 'Vegetarian'],
+    rating: 4.5, ratingCount: 11400, avgDeliveryTime: 30, deliveryFee: 25, minOrderAmount: 99,
+    isOpen: true, isPureVeg: true,
+    city: 'Mumbai', area: 'Chowpatty', address: '24 Soam, Chowpatty Seaface Road, Mumbai',
+    menu: [
+      { name: 'Chaat & Snacks', items: [
+        { name: 'Ragda Pattice', price: 89, isVeg: true, description: 'Spiced potato patties on curried white peas with chutneys', isBestSeller: true, imageId: P.streetFood },
+        { name: 'Dabeli', price: 49, isVeg: true, description: 'Spiced potato filling in a ladi pav with chutneys and sev', isBestSeller: true, imageId: P.streetFood },
+        { name: 'Sev Puri', price: 69, isVeg: true, description: 'Crispy puris topped with potato, chutneys and sev', imageId: P.streetFood },
+        { name: 'Pani Puri (6 pcs)', price: 59, isVeg: true, isBestSeller: true, imageId: P.streetFood },
+      ]},
+      { name: 'Gujarati Specialties', items: [
+        { name: 'Undhiyu', price: 199, isVeg: true, description: 'Seasonal mixed vegetable curry cooked upside-down — Surat style', isBestSeller: true, imageId: P.curry },
+        { name: 'Handvo', price: 99, isVeg: true, description: 'Savoury baked lentil and vegetable cake', imageId: P.veg },
+        { name: 'Khaman Dhokla', price: 79, isVeg: true, description: 'Soft steamed chickpea flour cake with tempering', imageId: P.veg },
+      ]},
+      { name: 'Drinks', items: [
+        { name: 'Aam Panna', price: 59, isVeg: true, description: 'Raw mango cooler with cumin and mint', imageId: P.drinks },
+        { name: 'Chaas', price: 39, isVeg: true, imageId: P.drinks },
+      ]},
+    ],
+  },
+  {
+    name: 'The Bombay Canteen',
+    slug: 'bombay-canteen-lower-parel',
+    description: 'Modern Indian restaurant celebrating regional recipes reimagined for today.',
+    imageUrl: img(P.curry),
+    cuisines: ['Modern Indian', 'Continental', 'Cocktails'],
+    rating: 4.4, ratingCount: 7200, avgDeliveryTime: 45, deliveryFee: 60, minOrderAmount: 299,
+    isOpen: true, isPureVeg: false,
+    city: 'Mumbai', area: 'Lower Parel', address: 'Process House, Kamala Mills, Lower Parel, Mumbai',
+    menu: [
+      { name: 'Small Plates', items: [
+        { name: 'Masala Papad Tacos', price: 229, isVeg: true, description: 'Crispy masala papad shells with chaat filling and chutney dust', isBestSeller: true, imageId: P.streetFood },
+        { name: 'Bombay Duck Fry', price: 279, isVeg: false, description: 'Semolina-crusted Bombil fish fry — Mumbai bar staple', isBestSeller: true, imageId: P.seafood },
+        { name: 'Chicken Pepper Fry', price: 299, isVeg: false, description: 'Kerala-style chicken with cracked black pepper and curry leaves', imageId: P.chicken },
+        { name: 'Palak Patta Chaat', price: 199, isVeg: true, description: 'Crispy spinach leaves with tamarind and yogurt', imageId: P.veg },
+      ]},
+      { name: 'Mains', items: [
+        { name: 'Kheema Pao', price: 349, isVeg: false, description: 'Spiced lamb mince with toasted Irani pao', isBestSeller: true, imageId: P.curry },
+        { name: 'Goan Fish Curry', price: 399, isVeg: false, description: 'Tangy coconut-based fish curry from Goa', imageId: P.seafood },
+        { name: 'Dal Chawal Arancini', price: 269, isVeg: true, description: 'Risotto-style rice balls stuffed with dal makhani', imageId: P.northIndian },
+      ]},
+      { name: 'Desserts', items: [
+        { name: 'Caramelised Banana Tart', price: 229, isVeg: true, imageId: P.dessert },
+        { name: 'Chaas Panna Cotta', price: 199, isVeg: true, description: 'Chilled buttermilk panna cotta with aam papad', imageId: P.dessert },
+      ]},
+    ],
+  },
+  {
+    name: 'New Kulfi Centre',
+    slug: 'new-kulfi-centre-chowpatty',
+    description: 'Mumbai\'s most beloved kulfi shop — creamy, slow-frozen, and loaded with flavour.',
+    imageUrl: img(P.iceCream),
+    cuisines: ['Desserts', 'Kulfi', 'Ice Cream'],
+    rating: 4.6, ratingCount: 22800, avgDeliveryTime: 20, deliveryFee: 20, minOrderAmount: 79,
+    isOpen: true, isPureVeg: true,
+    city: 'Mumbai', area: 'Chowpatty', address: 'Chowpatty Beach, Mumbai',
+    menu: [
+      { name: 'Kulfi', items: [
+        { name: 'Malai Kulfi', price: 89, isVeg: true, description: 'Classic creamy milk-based kulfi on a stick', isBestSeller: true, imageId: P.iceCream },
+        { name: 'Kesar Pista Kulfi', price: 99, isVeg: true, description: 'Saffron and pistachio kulfi — the Mughal favourite', isBestSeller: true, imageId: P.iceCream },
+        { name: 'Sitaphal Kulfi', price: 109, isVeg: true, description: 'Custard apple kulfi — a Mumbai seasonal treat', imageId: P.iceCream },
+        { name: 'Mango Kulfi', price: 109, isVeg: true, description: 'Made from Alphonso mangoes — summer special', isBestSeller: true, imageId: P.iceCream },
+        { name: 'Chocolate Kulfi', price: 99, isVeg: true, imageId: P.dessert },
+      ]},
+      { name: 'Falooda & More', items: [
+        { name: 'Rose Falooda', price: 129, isVeg: true, description: 'Rose syrup, vermicelli, basil seeds, ice cream', isBestSeller: true, imageId: P.drinks },
+        { name: 'Rabdi Kulfi', price: 149, isVeg: true, description: 'Kulfi on a bed of thick rabdi', imageId: P.sweets },
+        { name: 'Kulfi Faloodah (Special)', price: 179, isVeg: true, description: 'The house special — everything together', imageId: P.iceCream },
+      ]},
+    ],
+  },
+  {
+    name: 'Swati Snacks',
+    slug: 'swati-snacks-tardeo',
+    description: 'Iconic Gujarati snackery — from panki to Surti undhiyu, a Mumbai institution since 1963.',
+    imageUrl: img(P.veg),
+    cuisines: ['Gujarati', 'Street Food', 'Snacks'],
+    rating: 4.5, ratingCount: 13000, avgDeliveryTime: 30, deliveryFee: 25, minOrderAmount: 99,
+    isOpen: true, isPureVeg: true,
+    city: 'Mumbai', area: 'Tardeo', address: 'Tardeo Road, near Wilson College, Mumbai',
+    menu: [
+      { name: 'Gujarati Snacks', items: [
+        { name: 'Panki Chatni', price: 89, isVeg: true, description: 'Steamed rice flour pancakes served with green chutney', isBestSeller: true, imageId: P.veg },
+        { name: 'Dal Kachori', price: 79, isVeg: true, description: 'Crispy fried pastry stuffed with spiced lentils', isBestSeller: true, imageId: P.streetFood },
+        { name: 'Sandwich Dhokla', price: 89, isVeg: true, description: 'Layers of khaman and green chutney', imageId: P.veg },
+        { name: 'Bhel Puri', price: 79, isVeg: true, description: 'Puffed rice tossed with chutneys and vegetables', imageId: P.streetFood },
+      ]},
+      { name: 'Mains & Thali', items: [
+        { name: 'Surti Undhiyu', price: 229, isVeg: true, description: 'Slow-cooked Gujarati vegetable dish — seasonal', isBestSeller: true, imageId: P.curry },
+        { name: 'Dal Dhokli', price: 149, isVeg: true, description: 'Wheat flour pasta in spiced lentil soup', imageId: P.curry },
+        { name: 'Thali (Mini)', price: 199, isVeg: true, imageId: P.thali },
+      ]},
+      { name: 'Drinks', items: [
+        { name: 'Thandai', price: 69, isVeg: true, description: 'Chilled milk with dry fruits and spices', imageId: P.drinks },
+        { name: 'Masala Chaas', price: 39, isVeg: true, imageId: P.drinks },
+      ]},
+    ],
+  },
+  {
+    name: 'Khyber',
+    slug: 'khyber-fort',
+    description: 'Mumbai\'s most celebrated North Indian fine-dining restaurant, serving royally spiced dishes since 1964.',
+    imageUrl: img(P.curry),
+    cuisines: ['North Indian', 'Mughlai', 'Tandoor'],
+    rating: 4.5, ratingCount: 6800, avgDeliveryTime: 45, deliveryFee: 60, minOrderAmount: 399,
+    isOpen: true, isPureVeg: false,
+    city: 'Mumbai', area: 'Fort', address: '145, Mahatma Gandhi Road, Fort, Mumbai',
+    menu: [
+      { name: 'Tandoor Specialties', items: [
+        { name: 'Khyber Murgh (Half)', price: 399, isVeg: false, description: 'Whole leg of chicken marinated in saffron and cream', isBestSeller: true, imageId: P.chicken },
+        { name: 'Chicken Tikka (6 pcs)', price: 369, isVeg: false, description: 'Boneless chicken in yogurt-spice marinade', isBestSeller: true, imageId: P.kebab },
+        { name: 'Seekh Kebab (4 pcs)', price: 349, isVeg: false, description: 'Minced lamb kebabs with chaat masala', imageId: P.kebab },
+        { name: 'Paneer Tikka (6 pcs)', price: 299, isVeg: true, imageId: P.northIndian },
+      ]},
+      { name: 'Mains', items: [
+        { name: 'Chicken Tikka Masala', price: 419, isVeg: false, description: 'The undisputed classic — charred chicken in rich tomato-cream sauce', isBestSeller: true, imageId: P.curry },
+        { name: 'Dal Bukhara', price: 299, isVeg: true, description: 'Slow-cooked black lentils simmered overnight', isBestSeller: true, imageId: P.curry },
+        { name: 'Roghan Josh', price: 449, isVeg: false, description: 'Kashmiri lamb in fragrant red gravy', imageId: P.curry },
+        { name: 'Paneer Makhani', price: 349, isVeg: true, imageId: P.northIndian },
+      ]},
+      { name: 'Breads & Desserts', items: [
+        { name: 'Butter Naan', price: 69, isVeg: true, isBestSeller: true, imageId: P.bread },
+        { name: 'Kulfi Falooda', price: 199, isVeg: true, isBestSeller: true, imageId: P.iceCream },
+        { name: 'Gulab Jamun (2 pcs)', price: 119, isVeg: true, imageId: P.sweets },
+      ]},
+    ],
+  },
+]

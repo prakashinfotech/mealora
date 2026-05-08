@@ -1,0 +1,218 @@
+import { img, banner, P, type RestaurantInput } from './helpers'
+
+export const delhiRestaurants: RestaurantInput[] = [
+  {
+    name: "Karim's",
+    slug: 'karims-jama-masjid',
+    description: 'A Delhi legend since 1913 — Mughal-era recipes passed down through six generations of the Karim family.',
+    imageUrl: img(P.kebab),
+    bannerUrl: banner(P.kebab),
+    cuisines: ['Mughlai', 'Kebabs', 'North Indian'],
+    rating: 4.6, ratingCount: 28400, avgDeliveryTime: 35, deliveryFee: 30, minOrderAmount: 149,
+    isOpen: true, isPureVeg: false,
+    city: 'Delhi', area: 'Jama Masjid', address: '16, Jama Masjid, Gali Kababian, Old Delhi',
+    menu: [
+      { name: 'Kebabs & Starters', items: [
+        { name: 'Mutton Burra Kebab (4 pcs)', price: 349, isVeg: false, description: 'Marinated baby lamb chops slow-grilled over charcoal', isBestSeller: true, imageId: P.kebab },
+        { name: 'Seekh Kebab (4 pcs)', price: 249, isVeg: false, description: 'Minced mutton on skewers with herbs', isBestSeller: true, imageId: P.kebab },
+        { name: 'Chicken Jahangiri (6 pcs)', price: 279, isVeg: false, description: 'Royal chicken preparation with almond sauce', imageId: P.chicken },
+        { name: 'Shami Kebab (4 pcs)', price: 199, isVeg: false, description: 'Minced mutton and chickpea patties', imageId: P.kebab },
+      ]},
+      { name: 'Gravies', items: [
+        { name: 'Mutton Korma', price: 349, isVeg: false, description: 'Slow-braised mutton in Mughal-style cashew gravy', isBestSeller: true, imageId: P.curry },
+        { name: 'Nahari', price: 299, isVeg: false, description: 'Slow-cooked nihari — eaten since the Mughal era at dawn', imageId: P.curry },
+        { name: 'Chicken Masala', price: 279, isVeg: false, imageId: P.curry },
+      ]},
+      { name: 'Breads & Desserts', items: [
+        { name: 'Sheermal', price: 39, isVeg: true, description: 'Saffron-flavoured sweet bread', isBestSeller: true, imageId: P.bread },
+        { name: 'Phirni', price: 89, isVeg: true, description: 'Chilled rice flour pudding with rose water', imageId: P.sweets },
+        { name: 'Butter Naan', price: 39, isVeg: true, imageId: P.bread },
+      ]},
+    ],
+  },
+  {
+    name: 'Moti Mahal',
+    slug: 'moti-mahal-daryaganj',
+    description: 'Birthplace of Butter Chicken — Kundan Lal Gujral\'s 1947 original in Daryaganj.',
+    imageUrl: img(P.curry),
+    cuisines: ['North Indian', 'Punjabi', 'Mughlai'],
+    rating: 4.3, ratingCount: 19600, avgDeliveryTime: 35, deliveryFee: 35, minOrderAmount: 199,
+    isOpen: true, isPureVeg: false,
+    city: 'Delhi', area: 'Daryaganj', address: '3703, Netaji Subhash Marg, Daryaganj, New Delhi',
+    menu: [
+      { name: 'Signature Dishes', items: [
+        { name: 'Butter Chicken (Original)', price: 389, isVeg: false, description: 'The 1947 original — tandoori chicken simmered in buttery tomato gravy', isBestSeller: true, imageId: P.curry },
+        { name: 'Dal Makhani', price: 249, isVeg: true, description: 'Black lentils slow-cooked overnight', isBestSeller: true, imageId: P.northIndian },
+        { name: 'Chicken Tandoori (Half)', price: 349, isVeg: false, description: 'Whole chicken marinated and cooked in a clay oven', imageId: P.chicken },
+      ]},
+      { name: 'Mains', items: [
+        { name: 'Mutton Rogan Josh', price: 419, isVeg: false, description: 'Braised lamb in Kashmiri spice gravy', isBestSeller: true, imageId: P.curry },
+        { name: 'Paneer Butter Masala', price: 299, isVeg: true, imageId: P.northIndian },
+        { name: 'Chicken Bharta', price: 329, isVeg: false, description: 'Smoked chicken minced with onion and tomatoes', imageId: P.curry },
+      ]},
+      { name: 'Breads & Desserts', items: [
+        { name: 'Butter Naan', price: 59, isVeg: true, isBestSeller: true, imageId: P.bread },
+        { name: 'Laccha Paratha', price: 59, isVeg: true, imageId: P.bread },
+        { name: 'Kulfi Falooda', price: 149, isVeg: true, isBestSeller: true, imageId: P.iceCream },
+      ]},
+    ],
+  },
+  {
+    name: 'Paranthe Wali Gali',
+    slug: 'paranthe-wali-gali-chandni-chowk',
+    description: 'The legendary alley of parathas in Chandni Chowk — over 150 years of stuffed bread perfection.',
+    imageUrl: img(P.bread),
+    cuisines: ['North Indian', 'Breakfast', 'Street Food'],
+    rating: 4.4, ratingCount: 12200, avgDeliveryTime: 30, deliveryFee: 20, minOrderAmount: 79,
+    isOpen: true, isPureVeg: true,
+    city: 'Delhi', area: 'Chandni Chowk', address: 'Gali Paranthe Wali, Chandni Chowk, Old Delhi',
+    menu: [
+      { name: 'Stuffed Parathas', items: [
+        { name: 'Aloo Paratha (2 pcs)', price: 79, isVeg: true, description: 'Crispy fried paratha with spiced mashed potato', isBestSeller: true, imageId: P.bread },
+        { name: 'Gobhi Paratha (2 pcs)', price: 79, isVeg: true, description: 'Fresh cauliflower with ginger and green chillies', isBestSeller: true, imageId: P.bread },
+        { name: 'Paneer Paratha (2 pcs)', price: 99, isVeg: true, description: 'Crumbled cottage cheese with spices', imageId: P.bread },
+        { name: 'Pyaz Paratha (2 pcs)', price: 79, isVeg: true, description: 'Spiced onion and chilli stuffed paratha', imageId: P.bread },
+        { name: 'Mix Veg Paratha (2 pcs)', price: 89, isVeg: true, description: 'Seasonal vegetables with a hint of chaat masala', isBestSeller: true, imageId: P.bread },
+      ]},
+      { name: 'Sides & Drinks', items: [
+        { name: 'Rabri (Bowl)', price: 89, isVeg: true, description: 'Thick reduced milk dessert with saffron', imageId: P.sweets },
+        { name: 'Mango Lassi', price: 79, isVeg: true, isBestSeller: true, imageId: P.drinks },
+        { name: 'Masala Chai', price: 29, isVeg: true, imageId: P.chai },
+        { name: 'Pickle Platter', price: 29, isVeg: true, description: 'Assorted seasonal pickles', imageId: P.veg },
+      ]},
+    ],
+  },
+  {
+    name: 'Sagar Ratna',
+    slug: 'sagar-ratna-defence-colony',
+    description: 'Delhi\'s premier South Indian vegetarian chain — dosas, idlis, and filter coffee since 1986.',
+    imageUrl: img(P.dosa),
+    cuisines: ['South Indian', 'Tiffin', 'Vegetarian'],
+    rating: 4.3, ratingCount: 8500, avgDeliveryTime: 30, deliveryFee: 25, minOrderAmount: 99,
+    isOpen: true, isPureVeg: true,
+    city: 'Delhi', area: 'Defence Colony', address: 'B-28, Defence Colony Market, New Delhi',
+    menu: [
+      { name: 'Dosa & Tiffin', items: [
+        { name: 'Masala Dosa', price: 99, isVeg: true, description: 'Crispy golden dosa with spiced potato masala', isBestSeller: true, imageId: P.dosa },
+        { name: 'Rava Dosa', price: 119, isVeg: true, description: 'Thin crispy semolina dosa with cashews', isBestSeller: true, imageId: P.dosa },
+        { name: 'Idli Sambar (3 pcs)', price: 79, isVeg: true, imageId: P.idli },
+        { name: 'Medu Vada (2 pcs)', price: 69, isVeg: true, description: 'Crispy lentil doughnuts with sambar and chutney', imageId: P.idli },
+        { name: 'Uttapam', price: 99, isVeg: true, imageId: P.dosa },
+      ]},
+      { name: 'Meals & Extras', items: [
+        { name: 'South Indian Thali', price: 179, isVeg: true, description: 'Rice, sambar, rasam, 2 curries, papad, dessert', isBestSeller: true, imageId: P.thali },
+        { name: 'Curd Rice', price: 89, isVeg: true, imageId: P.veg },
+      ]},
+      { name: 'Beverages', items: [
+        { name: 'Filter Coffee', price: 49, isVeg: true, isBestSeller: true, imageId: P.coffee },
+        { name: 'Coconut Chutney', price: 29, isVeg: true, imageId: P.veg },
+      ]},
+    ],
+  },
+  {
+    name: 'Al Jawahar',
+    slug: 'al-jawahar-jama-masjid',
+    description: 'Old Delhi Mughlai institution known for its rich Lucknowi-style nihari, biryanis and kebabs.',
+    imageUrl: img(P.biryani),
+    cuisines: ['Mughlai', 'Biryani', 'Kebabs'],
+    rating: 4.4, ratingCount: 15200, avgDeliveryTime: 35, deliveryFee: 30, minOrderAmount: 149,
+    isOpen: true, isPureVeg: false,
+    city: 'Delhi', area: 'Jama Masjid', address: 'Jama Masjid Gate 1, Old Delhi',
+    menu: [
+      { name: 'Biryani', items: [
+        { name: 'Mutton Biryani', price: 299, isVeg: false, description: 'Dum-cooked mutton in fragrant basmati rice', isBestSeller: true, imageId: P.biryani },
+        { name: 'Chicken Biryani', price: 229, isVeg: false, isBestSeller: true, imageId: P.biryani2 },
+        { name: 'Veg Biryani', price: 179, isVeg: true, imageId: P.biryani },
+      ]},
+      { name: 'Curries & Stews', items: [
+        { name: 'Nihari (Beef)', price: 249, isVeg: false, description: 'Slow-cooked overnight stew with marrow and spices', isBestSeller: true, imageId: P.curry },
+        { name: 'Paya Soup', price: 149, isVeg: false, description: 'Trotters slow-cooked in aromatic broth', imageId: P.soup },
+        { name: 'Shahi Korma (Mutton)', price: 299, isVeg: false, imageId: P.curry },
+      ]},
+      { name: 'Breads', items: [
+        { name: 'Sheermal', price: 39, isVeg: true, isBestSeller: true, imageId: P.bread },
+        { name: 'Seekh Kebab (4 pcs)', price: 199, isVeg: false, imageId: P.kebab },
+      ]},
+    ],
+  },
+  {
+    name: 'Khan Chacha',
+    slug: 'khan-chacha-khan-market',
+    description: 'Legendary Khan Market kebab stall beloved since the 1970s — famous for its mutton tikka rolls.',
+    imageUrl: img(P.roll),
+    cuisines: ['Kebabs', 'Rolls', 'Mughlai'],
+    rating: 4.3, ratingCount: 11100, avgDeliveryTime: 25, deliveryFee: 25, minOrderAmount: 99,
+    isOpen: true, isPureVeg: false,
+    city: 'Delhi', area: 'Khan Market', address: '94, Khan Market, New Delhi',
+    menu: [
+      { name: 'Rolls', items: [
+        { name: 'Mutton Tikka Roll', price: 169, isVeg: false, description: 'Tender mutton tikka in rumali roti with onion and chutney', isBestSeller: true, imageId: P.roll },
+        { name: 'Chicken Tikka Roll', price: 149, isVeg: false, isBestSeller: true, imageId: P.roll },
+        { name: 'Paneer Tikka Roll', price: 129, isVeg: true, imageId: P.roll },
+        { name: 'Seekh Kebab Roll', price: 149, isVeg: false, imageId: P.roll },
+        { name: 'Egg Paratha Roll', price: 99, isVeg: false, imageId: P.egg },
+      ]},
+      { name: 'Platters', items: [
+        { name: 'Mixed Kebab Platter', price: 349, isVeg: false, description: 'Mutton tikka, chicken tikka, seekh kebab, rumali roti', isBestSeller: true, imageId: P.kebab },
+        { name: 'Chicken Tikka (6 pcs)', price: 249, isVeg: false, imageId: P.kebab },
+        { name: 'Mutton Boti (6 pcs)', price: 289, isVeg: false, imageId: P.kebab },
+      ]},
+    ],
+  },
+  {
+    name: 'Gulati Restaurant',
+    slug: 'gulati-pandara-road',
+    description: 'Old-school Punjabi dining on Pandara Road — generous portions of Mughal-spiced curries since 1959.',
+    imageUrl: img(P.northIndian),
+    cuisines: ['North Indian', 'Punjabi', 'Mughlai'],
+    rating: 4.4, ratingCount: 17000, avgDeliveryTime: 35, deliveryFee: 35, minOrderAmount: 199,
+    isOpen: true, isPureVeg: false,
+    city: 'Delhi', area: 'Pandara Road', address: '6, Pandara Road Market, New Delhi',
+    menu: [
+      { name: 'Mains', items: [
+        { name: 'Dal Makhani', price: 279, isVeg: true, description: 'Black lentils slow-cooked with cream and butter', isBestSeller: true, imageId: P.curry },
+        { name: 'Butter Chicken', price: 349, isVeg: false, isBestSeller: true, imageId: P.curry },
+        { name: 'Mutton Rogan Josh', price: 419, isVeg: false, imageId: P.curry },
+        { name: 'Paneer Butter Masala', price: 299, isVeg: true, imageId: P.northIndian },
+        { name: 'Sarson da Saag', price: 249, isVeg: true, description: 'Mustard greens with makke di roti — winter special', imageId: P.curry },
+      ]},
+      { name: 'Tandoor', items: [
+        { name: 'Tandoori Chicken (Half)', price: 329, isVeg: false, isBestSeller: true, imageId: P.chicken },
+        { name: 'Paneer Tikka (6 pcs)', price: 279, isVeg: true, imageId: P.northIndian },
+      ]},
+      { name: 'Breads & Desserts', items: [
+        { name: 'Butter Naan', price: 59, isVeg: true, isBestSeller: true, imageId: P.bread },
+        { name: 'Kesar Kheer', price: 119, isVeg: true, description: 'Rich saffron rice pudding', imageId: P.sweets },
+        { name: 'Gulab Jamun (2 pcs)', price: 99, isVeg: true, imageId: P.sweets },
+      ]},
+    ],
+  },
+  {
+    name: "Haldiram's",
+    slug: 'haldirams-connaught-place',
+    description: 'India\'s most trusted snack and sweets brand — a Connaught Place landmark since 1941.',
+    imageUrl: img(P.sweets),
+    cuisines: ['North Indian', 'Sweets', 'Snacks'],
+    rating: 4.3, ratingCount: 31200, avgDeliveryTime: 25, deliveryFee: 0, minOrderAmount: 99,
+    isOpen: true, isPureVeg: true,
+    city: 'Delhi', area: 'Connaught Place', address: 'A-1, Connaught Place, New Delhi',
+    menu: [
+      { name: 'Chaat & Snacks', items: [
+        { name: 'Raj Kachori', price: 99, isVeg: true, description: 'Giant puri stuffed with chole, sprouts, dahi, chutneys', isBestSeller: true, imageId: P.streetFood },
+        { name: 'Pani Puri (6 pcs)', price: 69, isVeg: true, isBestSeller: true, imageId: P.streetFood },
+        { name: 'Aloo Tikki Chaat', price: 89, isVeg: true, description: 'Crispy tikkis topped with chole and chutney', imageId: P.streetFood },
+        { name: 'Chole Bhature', price: 139, isVeg: true, description: 'Spiced chickpeas with fluffy fried bread', isBestSeller: true, imageId: P.northIndian },
+      ]},
+      { name: 'Sweets & Mithai', items: [
+        { name: 'Kaju Katli (250g)', price: 249, isVeg: true, description: 'Premium cashew-based fudge', isBestSeller: true, imageId: P.sweets },
+        { name: 'Gulab Jamun (4 pcs)', price: 99, isVeg: true, imageId: P.sweets },
+        { name: 'Ladoo (Besan, 2 pcs)', price: 79, isVeg: true, imageId: P.sweets },
+        { name: 'Soan Papdi (100g)', price: 79, isVeg: true, imageId: P.sweets },
+      ]},
+      { name: 'Beverages', items: [
+        { name: 'Thandai (Special)', price: 89, isVeg: true, imageId: P.drinks },
+        { name: 'Masala Chaas', price: 49, isVeg: true, imageId: P.drinks },
+      ]},
+    ],
+  },
+]

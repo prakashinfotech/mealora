@@ -3,9 +3,12 @@ import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
 import { RestaurantHeader } from '@/components/restaurant/RestaurantHeader'
 import { MenuSection } from '@/components/restaurant/MenuSection'
+import { CategoryNav } from '@/components/restaurant/CategoryNav'
+import { CityMismatchBanner } from '@/components/restaurant/CityMismatchBanner'
 import { CartFloatingBar } from '@/components/restaurant/CartFloatingBar'
 import { restaurantService } from '@server/services/restaurant.service'
 import type { Metadata } from 'next'
+import type { MenuCategoryWithItems } from '@/types'
 
 interface PageProps {
   params: { id: string }
@@ -20,50 +23,61 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 }
 
+// Merge same-named categories so duplicate seed data doesn't create duplicate sections
+function mergeCategories(categories: MenuCategoryWithItems[]): MenuCategoryWithItems[] {
+  const seen = new Map<string, MenuCategoryWithItems>()
+  const order: string[] = []
+
+  for (const cat of categories) {
+    if (cat.items.length === 0) continue
+    const key = cat.name.toLowerCase().trim()
+    if (seen.has(key)) {
+      const existing = seen.get(key)!
+      existing.items = [...existing.items, ...cat.items]
+    } else {
+      seen.set(key, { ...cat, items: [...cat.items] })
+      order.push(key)
+    }
+  }
+
+  return order.map((k) => seen.get(k)!)
+}
+
 export default async function RestaurantDetailPage({ params }: PageProps) {
   const restaurant = await restaurantService.findByIdWithMenu(params.id)
 
   if (!restaurant) notFound()
 
-  const categoriesWithItems = restaurant.categories.filter((c) => c.items.length > 0)
+  const categories = mergeCategories(restaurant.categories)
 
   return (
     <>
       <Navbar />
+      <CityMismatchBanner restaurantCity={restaurant.city} />
       <main className="min-h-screen bg-swiggy-gray-bg pb-24">
         <RestaurantHeader restaurant={restaurant} />
 
-        {/* Category jump nav */}
-        {categoriesWithItems.length > 1 && (
-          <div className="max-w-4xl mx-auto mt-4 px-4 sm:px-6">
-            <div className="flex gap-2 overflow-x-auto scrollbar-hide pb-1">
-              {categoriesWithItems.map((cat) => (
-                <a
-                  key={cat.id}
-                  href={`#category-${cat.id}`}
-                  className="shrink-0 px-4 py-1.5 text-xs font-semibold bg-white border border-swiggy-border text-swiggy-black rounded-full hover:border-brand-orange hover:text-brand-orange transition-colors"
-                >
-                  {cat.name}
-                </a>
-              ))}
-            </div>
-          </div>
-        )}
+        {/* Sticky category jump nav */}
+        <CategoryNav categories={categories.map((c) => ({ id: c.id, name: c.name }))} />
 
         {/* Menu */}
-        <div className="max-w-4xl mx-auto mt-4 bg-white rounded-2xl overflow-hidden shadow-card">
-          {categoriesWithItems.length === 0 ? (
-            <p className="text-center py-16 text-swiggy-gray text-sm">
-              No menu items available right now.
-            </p>
+        <div className="max-w-4xl mx-auto mt-4 px-4 sm:px-6 pb-4">
+          {categories.length === 0 ? (
+            <div className="bg-white rounded-2xl text-center py-20">
+              <p className="text-4xl mb-4">🍽️</p>
+              <p className="text-base font-bold text-swiggy-black">No menu items available</p>
+              <p className="text-sm text-swiggy-gray mt-1">Check back soon — the kitchen is warming up!</p>
+            </div>
           ) : (
-            categoriesWithItems.map((cat) => (
-              <MenuSection
-                key={cat.id}
-                category={cat}
-                restaurant={{ id: restaurant.id, name: restaurant.name }}
-              />
-            ))
+            <div className="bg-white rounded-2xl overflow-hidden shadow-card">
+              {categories.map((cat) => (
+                <MenuSection
+                  key={cat.id}
+                  category={cat}
+                  restaurant={{ id: restaurant.id, name: restaurant.name }}
+                />
+              ))}
+            </div>
           )}
         </div>
       </main>

@@ -1,6 +1,8 @@
 'use client'
 
 import { useCartStore } from '@/store/cartStore'
+import { useCityStore } from '@/store/cityStore'
+import { buildRestaurantsUrl } from '@/lib/navigation'
 import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
 import { CartItemRow } from '@/components/cart/CartItem'
@@ -15,6 +17,7 @@ import { calculateTaxes, calculateDeliveryFee, FREE_DELIVERY_THRESHOLD } from '@
 export default function CartPage() {
   const { data: session } = useSession()
   const router = useRouter()
+  const city = useCityStore((s) => s.city)
   const items = useCartStore((s) => s.items)
   const subtotal = useCartStore((s) => s.subtotal())
   const restaurantName = useCartStore((s) => s.restaurantName)
@@ -42,7 +45,7 @@ export default function CartPage() {
             <span className="text-7xl">🛒</span>
             <h2 className="text-2xl font-black text-swiggy-black mt-6">Your cart is empty</h2>
             <p className="text-swiggy-gray mt-2">Add items from a restaurant to get started.</p>
-            <Link href="/restaurants" className="btn-primary inline-block mt-6">
+            <Link href={buildRestaurantsUrl({ city })} className="btn-primary inline-block mt-6">
               Browse restaurants
             </Link>
           </div>

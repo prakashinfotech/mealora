@@ -39,16 +39,22 @@ export const restaurantRepository = {
       take: limit,
     }),
 
-  getFeatured: async (limit: number) =>
+  getFeatured: async (limit: number, city?: string) =>
     prisma.restaurant.findMany({
-      where: { isOpen: true },
+      where: {
+        isOpen: true,
+        ...(city ? { city: { equals: city, mode: 'insensitive' } } : {}),
+      },
       orderBy: { rating: 'desc' },
       take: limit,
     }),
 
-  getTopRated: async (minRating: number, limit: number) =>
+  getTopRated: async (minRating: number, limit: number, city?: string) =>
     prisma.restaurant.findMany({
-      where: { rating: { gte: minRating } },
+      where: {
+        rating: { gte: minRating },
+        ...(city ? { city: { equals: city, mode: 'insensitive' } } : {}),
+      },
       orderBy: { ratingCount: 'desc' },
       take: limit,
     }),

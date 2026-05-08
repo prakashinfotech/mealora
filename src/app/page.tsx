@@ -5,12 +5,19 @@ import { PromoCards } from '@/components/home/PromoCards'
 import { CategoryCarousel } from '@/components/home/CategoryCarousel'
 import { RestaurantCard } from '@/components/home/RestaurantCard'
 import { restaurantService } from '@server/services/restaurant.service'
+import { buildRestaurantsUrl } from '@/lib/navigation'
+import { DEFAULT_CITY } from '@/lib/cities'
 import Link from 'next/link'
 
-export default async function HomePage() {
+interface PageProps {
+  searchParams: { city?: string }
+}
+
+export default async function HomePage({ searchParams }: PageProps) {
+  const city = searchParams.city ?? DEFAULT_CITY
   const [featured, topRated] = await Promise.all([
-    restaurantService.getFeatured(8),
-    restaurantService.getTopRated(4.0, 6),
+    restaurantService.getFeatured(8, city),
+    restaurantService.getTopRated(4.0, 6, city),
   ])
 
   return (
@@ -32,11 +39,11 @@ export default async function HomePage() {
         <section className="max-w-7xl mx-auto px-4 sm:px-6 py-10">
           <div className="flex items-center justify-between mb-6">
             <div>
-              <h2 className="text-xl font-black text-swiggy-black">Restaurants near you</h2>
+              <h2 className="text-xl font-black text-swiggy-black">Restaurants in {city}</h2>
               <p className="text-sm text-swiggy-gray mt-0.5">Discover the best food &amp; drinks</p>
             </div>
             <Link
-              href="/restaurants"
+              href={buildRestaurantsUrl({ city })}
               className="text-sm font-bold text-brand-orange hover:text-brand-orange-dark transition-colors flex items-center gap-1"
             >
               See all →
@@ -66,11 +73,11 @@ export default async function HomePage() {
           <section className="max-w-7xl mx-auto px-4 sm:px-6 py-10">
             <div className="flex items-center justify-between mb-6">
               <div>
-                <h2 className="text-xl font-black text-swiggy-black">Top rated near you</h2>
-                <p className="text-sm text-swiggy-gray mt-0.5">Highest rated restaurants in Bangalore</p>
+                <h2 className="text-xl font-black text-swiggy-black">Top rated in {city}</h2>
+                <p className="text-sm text-swiggy-gray mt-0.5">Highest rated restaurants in {city}</p>
               </div>
               <Link
-                href="/restaurants?sortBy=rating"
+                href={buildRestaurantsUrl({ city, sortBy: 'rating' })}
                 className="text-sm font-bold text-brand-orange hover:text-brand-orange-dark transition-colors flex items-center gap-1"
               >
                 See all →

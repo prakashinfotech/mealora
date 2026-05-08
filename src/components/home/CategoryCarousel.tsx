@@ -2,24 +2,27 @@
 
 import { useRef } from 'react'
 import Link from 'next/link'
+import { useCityStore } from '@/store/cityStore'
+import { buildRestaurantsUrl } from '@/lib/navigation'
 
 const CATEGORIES = [
-  { name: 'Pizza', emoji: '🍕', query: 'pizza' },
-  { name: 'Biryani', emoji: '🍛', query: 'biryani' },
-  { name: 'Burgers', emoji: '🍔', query: 'burgers' },
-  { name: 'Chinese', emoji: '🍜', query: 'chinese' },
-  { name: 'South Indian', emoji: '🥘', query: 'south+indian' },
-  { name: 'Desserts', emoji: '🍰', query: 'desserts' },
-  { name: 'Rolls', emoji: '🌯', query: 'rolls' },
-  { name: 'Pasta', emoji: '🍝', query: 'pasta' },
-  { name: 'Sushi', emoji: '🍣', query: 'sushi' },
-  { name: 'Momos', emoji: '🥟', query: 'momos' },
-  { name: 'Thali', emoji: '🍱', query: 'thali' },
-  { name: 'Ice Cream', emoji: '🍦', query: 'ice+cream' },
+  { name: 'Pizza',        emoji: '🍕', query: 'pizza' },
+  { name: 'Biryani',      emoji: '🍛', query: 'biryani' },
+  { name: 'Burgers',      emoji: '🍔', query: 'burgers' },
+  { name: 'Chinese',      emoji: '🍜', query: 'chinese' },
+  { name: 'South Indian', emoji: '🥘', query: 'south indian' },
+  { name: 'Desserts',     emoji: '🍰', query: 'desserts' },
+  { name: 'Rolls',        emoji: '🌯', query: 'rolls' },
+  { name: 'Pasta',        emoji: '🍝', query: 'pasta' },
+  { name: 'Sushi',        emoji: '🍣', query: 'sushi' },
+  { name: 'Momos',        emoji: '🥟', query: 'momos' },
+  { name: 'Thali',        emoji: '🍱', query: 'thali' },
+  { name: 'Ice Cream',    emoji: '🍦', query: 'ice cream' },
 ]
 
 export function CategoryCarousel() {
   const scrollRef = useRef<HTMLDivElement>(null)
+  const city = useCityStore((s) => s.city)
 
   const scroll = (dir: 'left' | 'right') => {
     if (scrollRef.current) {
@@ -53,7 +56,7 @@ export function CategoryCarousel() {
         {CATEGORIES.map((cat) => (
           <Link
             key={cat.name}
-            href={`/restaurants?cuisine=${cat.query}`}
+            href={buildRestaurantsUrl({ city, cuisine: cat.query })}
             className="flex flex-col items-center gap-2.5 shrink-0 group"
           >
             <div className="w-24 h-24 bg-swiggy-gray-bg rounded-full flex items-center justify-center text-4xl group-hover:scale-105 group-hover:shadow-lg transition-all duration-200">

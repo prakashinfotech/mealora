@@ -1,33 +1,39 @@
-import Link from 'next/link'
+'use client'
 
-const CARDS = [
-  {
-    title: 'FOOD DELIVERY',
-    subtitle: 'FROM RESTAURANTS',
-    badge: 'UPTO 60% OFF',
-    emoji: '🍱',
-    href: '/restaurants',
-    bg: 'bg-orange-50',
-  },
-  {
-    title: 'GREAT OFFERS',
-    subtitle: 'BEST DEALS TODAY',
-    badge: 'UPTO 40% OFF',
-    emoji: '🎉',
-    href: '/restaurants?sortBy=rating',
-    bg: 'bg-green-50',
-  },
-  {
-    title: 'TOP RATED',
-    subtitle: 'BEST IN BANGALORE',
-    badge: '4.5+ STARS',
-    emoji: '⭐',
-    href: '/restaurants?rating=4',
-    bg: 'bg-amber-50',
-  },
-]
+import Link from 'next/link'
+import { useCityStore } from '@/store/cityStore'
+import { buildRestaurantsUrl } from '@/lib/navigation'
 
 export function PromoCards() {
+  const city = useCityStore((s) => s.city)
+
+  const CARDS = [
+    {
+      title: 'FOOD DELIVERY',
+      subtitle: 'FROM RESTAURANTS',
+      badge: 'UPTO 60% OFF',
+      emoji: '🍱',
+      href: buildRestaurantsUrl({ city }),
+      bg: 'bg-orange-50',
+    },
+    {
+      title: 'GREAT OFFERS',
+      subtitle: 'BEST DEALS TODAY',
+      badge: 'UPTO 40% OFF',
+      emoji: '🎉',
+      href: buildRestaurantsUrl({ city, sortBy: 'rating' }),
+      bg: 'bg-green-50',
+    },
+    {
+      title: 'TOP RATED',
+      subtitle: `BEST IN ${city.toUpperCase()}`,
+      badge: '4.5+ STARS',
+      emoji: '⭐',
+      href: buildRestaurantsUrl({ city, rating: 4 }),
+      bg: 'bg-amber-50',
+    },
+  ]
+
   return (
     <div className="bg-brand-orange pb-10 px-4 sm:px-6">
       <div className="max-w-7xl mx-auto">
