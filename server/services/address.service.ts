@@ -9,7 +9,12 @@ export const addressService = {
     if (input.isDefault) {
       await addressRepository.clearDefaults(userId)
     }
-
     return addressRepository.create(userId, input)
   },
+
+  setDefault: async (userId: string, id: string) =>
+    addressRepository.setDefault(id, userId),
+
+  delete: async (userId: string, id: string) =>
+    addressRepository.delete(id, userId),
 }

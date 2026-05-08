@@ -61,7 +61,7 @@ export function Navbar() {
               </Link>
 
               <div className="relative group">
-                <button className="flex items-center gap-2 text-sm font-semibold text-swiggy-black" aria-label="Account menu">
+                <Link href="/profile" className="flex items-center gap-2 text-sm font-semibold text-swiggy-black hover:text-brand-orange transition-colors" aria-label="Account menu">
                   {session.user.image ? (
                     <Image src={session.user.image} alt="avatar" width={28} height={28} className="rounded-full" />
                   ) : (
@@ -70,7 +70,7 @@ export function Navbar() {
                     </span>
                   )}
                   {session.user.name?.split(' ')[0]}
-                </button>
+                </Link>
                 <div className="absolute right-0 top-full mt-2 w-44 bg-white border border-swiggy-border rounded-xl shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
                   <Link href="/profile" className="block px-4 py-3 text-sm text-swiggy-black hover:bg-swiggy-gray-bg rounded-t-xl">
                     Profile
@@ -143,6 +143,7 @@ export function Navbar() {
           </Link>
           {!isLoading && session ? (
             <>
+              <Link href="/profile" onClick={() => setMenuOpen(false)} className="text-sm font-semibold text-swiggy-black">Profile</Link>
               <Link href="/orders" onClick={() => setMenuOpen(false)} className="text-sm font-semibold text-swiggy-black">My Orders</Link>
               <Link href="/cart" onClick={() => setMenuOpen(false)} className="text-sm font-semibold text-swiggy-black">
                 Cart {totalItems > 0 && `(${totalItems})`}

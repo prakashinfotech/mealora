@@ -21,4 +21,13 @@ export const addressRepository = {
     prisma.address.create({
       data: { userId, ...input },
     }),
+
+  setDefault: async (id: string, userId: string) =>
+    prisma.$transaction([
+      prisma.address.updateMany({ where: { userId }, data: { isDefault: false } }),
+      prisma.address.update({ where: { id }, data: { isDefault: true } }),
+    ]),
+
+  delete: async (id: string, userId: string) =>
+    prisma.address.deleteMany({ where: { id, userId } }),
 }

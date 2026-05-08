@@ -15,4 +15,11 @@ export const userRepository = {
       data,
       select: { id: true, name: true, email: true },
     }),
+
+  update: async (id: string, data: { name?: string; phone?: string | null }) =>
+    prisma.user.update({
+      where: { id },
+      data,
+      select: { id: true, name: true, email: true, phone: true, image: true, createdAt: true },
+    }),
 }

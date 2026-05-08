@@ -18,4 +18,11 @@ export const userService = {
 
   findById: async (id: string) =>
     userRepository.findById(id),
+
+  update: async (id: string, data: { name?: string; phone?: string | null }) => {
+    if (data.name !== undefined && data.name.trim().length < 2) {
+      throw new Error('Name must be at least 2 characters.')
+    }
+    return userRepository.update(id, data)
+  },
 }
