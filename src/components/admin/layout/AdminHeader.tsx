@@ -20,9 +20,11 @@ const ROUTE_LABELS: Record<string, string> = {
 }
 
 function getPageTitle(pathname: string): string {
-  // Exact match first
   if (ROUTE_LABELS[pathname]) return ROUTE_LABELS[pathname]
-  // Prefix match for nested routes (e.g. /admin/restaurants/123)
+  // Menu sub-routes
+  if (pathname.includes('/menu/categories')) return 'Menu Categories'
+  if (pathname.includes('/menu/items')) return 'Menu Items'
+  if (pathname.includes('/menu')) return 'Menu Management'
   const base = Object.keys(ROUTE_LABELS).find(
     (key) => key !== '/admin' && pathname.startsWith(key),
   )

@@ -165,6 +165,13 @@ export function RestaurantListClient() {
       render: (row) => (
         <div className="flex items-center gap-2">
           <button
+            onClick={(e) => { e.stopPropagation(); router.push(`/admin/restaurants/${row.id}/menu`) }}
+            className="text-xs font-semibold text-slate-600 hover:underline"
+          >
+            Menu
+          </button>
+          <span className="text-slate-300">|</span>
+          <button
             onClick={(e) => { e.stopPropagation(); router.push(`/admin/restaurants/${row.id}/edit`) }}
             className="text-xs font-semibold text-brand-orange hover:underline"
           >

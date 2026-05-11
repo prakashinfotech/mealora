@@ -6,6 +6,7 @@ import { AdminFormField, AdminInput, AdminSelect, AdminTextarea } from '@/compon
 import { AdminFormSection, AdminFormGrid } from '@/components/admin/ui/AdminFormSection'
 import { AdminImageField } from '@/components/admin/ui/AdminImageField'
 import { AdminToast, type ToastData } from '@/components/admin/ui/AdminToast'
+import { AdminToggle } from '@/components/admin/ui/AdminToggle'
 import { AdminRestaurantSchema, type AdminRestaurantInput } from '@shared/schemas'
 import { CITIES } from '@/lib/cities'
 import { slugify } from '@/lib/utils'
@@ -22,27 +23,6 @@ const COMMON_CUISINES = [
   'Biryani', 'Rolls', 'Desserts', 'Sushi', 'Pasta', 'Thali', 'Momos',
 ]
 
-function Toggle({
-  label, checked, onChange, description,
-}: { label: string; checked: boolean; onChange: (v: boolean) => void; description?: string }) {
-  return (
-    <label className="flex items-start gap-3 cursor-pointer">
-      <div className="relative mt-0.5">
-        <input type="checkbox" className="sr-only" checked={checked} onChange={(e) => onChange(e.target.checked)} />
-        <div
-          className={`w-10 h-6 rounded-full transition-colors ${checked ? 'bg-brand-orange' : 'bg-slate-200'}`}
-        />
-        <div
-          className={`absolute top-1 w-4 h-4 rounded-full bg-white shadow transition-transform ${checked ? 'translate-x-5' : 'translate-x-1'}`}
-        />
-      </div>
-      <div>
-        <p className="text-sm font-medium text-slate-700">{label}</p>
-        {description && <p className="text-xs text-slate-400 mt-0.5">{description}</p>}
-      </div>
-    </label>
-  )
-}
 
 export function RestaurantForm({ mode, defaultValues }: Props) {
   const router = useRouter()
@@ -348,25 +328,25 @@ export function RestaurantForm({ mode, defaultValues }: Props) {
         {/* Flags */}
         <AdminFormSection title="Settings">
           <div className="space-y-4">
-            <Toggle
+            <AdminToggle
               label="Active"
               description="Visible to customers. Deactivate to hide without deleting."
               checked={form.isActive ?? true}
               onChange={(v) => set('isActive', v)}
             />
-            <Toggle
+            <AdminToggle
               label="Currently open"
               description="Accepting orders right now."
               checked={form.isOpen ?? true}
               onChange={(v) => set('isOpen', v)}
             />
-            <Toggle
+            <AdminToggle
               label="Featured"
               description="Show in the featured section on the homepage."
               checked={form.isFeatured ?? false}
               onChange={(v) => set('isFeatured', v)}
             />
-            <Toggle
+            <AdminToggle
               label="Pure veg"
               description="Only vegetarian items."
               checked={form.isPureVeg ?? false}
