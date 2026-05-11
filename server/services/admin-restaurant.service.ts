@@ -72,9 +72,10 @@ export const adminRestaurantService = {
   },
 
   setActive: async (id: string, isActive: boolean) => {
-    // Verify restaurant exists first
     const restaurant = await adminRestaurantRepository.findById(id)
     if (!restaurant) throw new Error('Restaurant not found.')
     return adminRestaurantRepository.setActive(id, isActive)
   },
+
+  getStats: () => adminRestaurantRepository.getStats(),
 }

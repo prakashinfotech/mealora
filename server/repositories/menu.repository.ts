@@ -12,6 +12,7 @@ export const menuRepository = {
       where: {
         name: { contains: query, mode: 'insensitive' },
         isAvailable: true,
+        isActive: true,
       },
       select: {
         id: true,

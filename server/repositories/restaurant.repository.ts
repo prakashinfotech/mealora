@@ -21,8 +21,14 @@ export const restaurantRepository = {
       where: { id },
       include: {
         categories: {
+          where: { isActive: true },
           orderBy: { sortOrder: 'asc' },
-          include: { items: { orderBy: { sortOrder: 'asc' } } },
+          include: {
+            items: {
+              where: { isActive: true, isAvailable: true },
+              orderBy: { sortOrder: 'asc' },
+            },
+          },
         },
       },
     }),

@@ -138,33 +138,43 @@ model MenuCategory {
   id           String     @id @default(cuid())
   restaurantId String
   name         String
+  slug         String     @default("")
   description  String?
   sortOrder    Int        @default(0)
+  isActive     Boolean    @default(true)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
 
   restaurant Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
   items      MenuItem[]
 
+  @@index([restaurantId, sortOrder])
+  @@index([restaurantId, isActive])
   @@map("menu_categories")
 }
 
 model MenuItem {
-  id          String       @id @default(cuid())
-  categoryId  String
-  name        String
-  description String?      @db.Text
-  price       Float
-  imageUrl    String?
-  isVeg       Boolean      @default(true)
-  isAvailable Boolean      @default(true)
-  isBestSeller Boolean     @default(false)
-  spiceLevel  SpiceLevel?
-  sortOrder   Int          @default(0)
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
+  id              String      @id @default(cuid())
+  categoryId      String
+  name            String
+  description     String?     @db.Text
+  price           Float
+  imageUrl        String?
+  isVeg           Boolean     @default(true)
+  isAvailable     Boolean     @default(true)
+  isActive        Boolean     @default(true)
+  isBestSeller    Boolean     @default(false)
+  isRecommended   Boolean     @default(false)
+  spiceLevel      SpiceLevel?
+  preparationTime Int?
+  sortOrder       Int         @default(0)
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
 
   category   MenuCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   orderItems OrderItem[]
 
+  @@index([categoryId, isActive])
   @@map("menu_items")
 }
 

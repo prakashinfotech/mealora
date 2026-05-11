@@ -65,4 +65,12 @@ export const adminRestaurantRepository = {
       data: { isActive },
       select: { id: true, isActive: true },
     }),
+
+  getStats: async () => {
+    const [total, active] = await Promise.all([
+      prisma.restaurant.count(),
+      prisma.restaurant.count({ where: { isActive: true } }),
+    ])
+    return { total, active }
+  },
 }

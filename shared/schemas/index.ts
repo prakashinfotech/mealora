@@ -130,3 +130,84 @@ export const AdminRestaurantFiltersSchema = z.object({
 export type AdminRestaurantInput = z.infer<typeof AdminRestaurantSchema>
 export type UpdateAdminRestaurantInput = z.infer<typeof UpdateAdminRestaurantSchema>
 export type AdminRestaurantFilters = z.infer<typeof AdminRestaurantFiltersSchema>
+
+// ─── Admin: Menu Category ─────────────────────────────────────────────────────
+
+export const AdminMenuCategorySchema = z.object({
+  name: z.string().trim().min(1, 'Name is required.').max(80, 'Name is too long.'),
+  slug: z.string().trim().regex(/^[a-z0-9-]*$/, 'Slug must be lowercase letters, numbers, and hyphens.').optional(),
+  description: z.string().trim().optional(),
+  sortOrder: z.number().int().min(0).default(0),
+  isActive: z.boolean().default(true),
+})
+
+export const UpdateAdminMenuCategorySchema = AdminMenuCategorySchema.partial()
+
+export const AdminMenuCategoryFiltersSchema = z.object({
+  isActive: z.enum(['true', 'false', 'all']).default('all'),
+})
+
+export type AdminMenuCategoryInput = z.infer<typeof AdminMenuCategorySchema>
+export type UpdateAdminMenuCategoryInput = z.infer<typeof UpdateAdminMenuCategorySchema>
+export type AdminMenuCategoryFilters = z.infer<typeof AdminMenuCategoryFiltersSchema>
+
+// ─── Admin: Menu Item ─────────────────────────────────────────────────────────
+
+export const AdminMenuItemSchema = z.object({
+  categoryId: z.string().cuid('Invalid category.'),
+  name: z.string().trim().min(1, 'Name is required.').max(120, 'Name is too long.'),
+  description: z.string().trim().optional(),
+  price: z.number().positive('Price must be greater than 0.'),
+  imageUrl: z.string().trim().url('Must be a valid URL.').or(z.literal('')).optional(),
+  isVeg: z.boolean().default(true),
+  isAvailable: z.boolean().default(true),
+  isActive: z.boolean().default(true),
+  isBestSeller: z.boolean().default(false),
+  isRecommended: z.boolean().default(false),
+  preparationTime: z.number().int().min(1).max(120).optional(),
+  sortOrder: z.number().int().min(0).default(0),
+})
+
+export const UpdateAdminMenuItemSchema = AdminMenuItemSchema.partial()
+
+export const AdminMenuItemFiltersSchema = z.object({
+  page: z.coerce.number().int().min(1).default(1),
+  limit: z.coerce.number().int().min(1).max(100).default(20),
+  search: z.string().trim().optional(),
+  categoryId: z.string().trim().optional(),
+  isVeg: z.enum(['true', 'false', 'all']).default('all'),
+  isActive: z.enum(['true', 'false', 'all']).default('all'),
+  isAvailable: z.enum(['true', 'false', 'all']).default('all'),
+})
+
+export type AdminMenuItemInput = z.infer<typeof AdminMenuItemSchema>
+export type UpdateAdminMenuItemInput = z.infer<typeof UpdateAdminMenuItemSchema>
+export type AdminMenuItemFilters = z.infer<typeof AdminMenuItemFiltersSchema>
+
+// ─── Admin: Orders ────────────────────────────────────────────────────────────
+
+const ORDER_STATUS_VALUES = ['PLACED', 'ACCEPTED', 'PREPARING', 'READY', 'OUT_FOR_DELIVERY', 'DELIVERED', 'CANCELLED'] as const
+const PAYMENT_STATUS_VALUES = ['PENDING', 'PAID', 'FAILED', 'REFUNDED'] as const
+const PAYMENT_MODE_VALUES = ['CASH_ON_DELIVERY', 'ONLINE', 'WALLET'] as const
+
+export const AdminOrderFiltersSchema = z.object({
+  page: z.coerce.number().int().min(1).default(1),
+  limit: z.coerce.number().int().min(1).max(50).default(20),
+  search: z.string().trim().optional(),
+  status: z.enum([...ORDER_STATUS_VALUES, 'all']).default('all'),
+  paymentStatus: z.enum([...PAYMENT_STATUS_VALUES, 'all']).default('all'),
+  paymentMode: z.enum([...PAYMENT_MODE_VALUES, 'all']).default('all'),
+  restaurantId: z.string().trim().optional(),
+  city: z.string().trim().optional(),
+  dateFrom: z.string().trim().optional(),
+  dateTo: z.string().trim().optional(),
+  sort: z.enum(['newest', 'oldest', 'total_desc', 'total_asc']).default('newest'),
+})
+
+export const AdminUpdateOrderStatusSchema = z.object({
+  status: z.enum(ORDER_STATUS_VALUES, { error: 'Status is required.' }),
+  note: z.string().trim().optional(),
+})
+
+export type AdminOrderFilters = z.infer<typeof AdminOrderFiltersSchema>
+export type AdminUpdateOrderStatusInput = z.infer<typeof AdminUpdateOrderStatusSchema>
