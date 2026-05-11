@@ -28,7 +28,7 @@ export default async function OrderTrackingPage({ params }: PageProps) {
   return (
     <>
       <Navbar />
-      <main className="min-h-screen bg-swiggy-gray-bg py-8">
+      <main className="bg-swiggy-gray-bg py-8">
         <div className="max-w-5xl mx-auto px-4 sm:px-6">
           {/* Breadcrumb */}
           <nav className="flex items-center gap-2 text-sm text-swiggy-gray mb-6">

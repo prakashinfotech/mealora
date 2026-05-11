@@ -54,7 +54,7 @@ export default async function RestaurantDetailPage({ params }: PageProps) {
     <>
       <Navbar />
       <CityMismatchBanner restaurantCity={restaurant.city} />
-      <main className="min-h-screen bg-swiggy-gray-bg pb-24">
+      <main className="bg-swiggy-gray-bg pb-24">
         <RestaurantHeader restaurant={restaurant} />
 
         {/* Sticky category jump nav */}

@@ -19,7 +19,7 @@ export default async function OrdersPage() {
   return (
     <>
       <Navbar />
-      <main className="min-h-screen bg-swiggy-gray-bg py-8">
+      <main className="bg-swiggy-gray-bg py-8">
         <div className="max-w-3xl mx-auto px-4 sm:px-6">
           <h1 className="text-2xl font-black text-swiggy-black mb-6">My Orders</h1>
 

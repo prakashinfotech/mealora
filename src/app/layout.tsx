@@ -4,6 +4,7 @@ import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import { Providers } from './providers'
 import { RouteProgress } from '@/components/ui/RouteProgress'
+import { CityParamSync } from '@/components/ui/CityParamSync'
 import '@/styles/globals.css'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -30,6 +31,7 @@ export default async function RootLayout({
       <body className={inter.className}>
         <Providers session={session}>
           <RouteProgress />
+          <CityParamSync />
           {children}
         </Providers>
       </body>

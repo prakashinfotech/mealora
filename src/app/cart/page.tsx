@@ -40,7 +40,7 @@ export default function CartPage() {
     return (
       <>
         <Navbar />
-        <main className="min-h-screen bg-swiggy-gray-bg flex items-center justify-center">
+        <main className="bg-swiggy-gray-bg py-16 flex items-center justify-center">
           <div className="text-center">
             <span className="text-7xl">🛒</span>
             <h2 className="text-2xl font-black text-swiggy-black mt-6">Your cart is empty</h2>
@@ -58,7 +58,7 @@ export default function CartPage() {
   return (
     <>
       <Navbar />
-      <main className="min-h-screen bg-swiggy-gray-bg py-8">
+      <main className="bg-swiggy-gray-bg py-8">
         <div className="max-w-5xl mx-auto px-4 sm:px-6">
           <h1 className="text-2xl font-black text-swiggy-black mb-6">Your Cart</h1>
 

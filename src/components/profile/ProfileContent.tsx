@@ -510,7 +510,7 @@ export function ProfileContent({ user: initialUser, orders, addresses: initialAd
   )
 
   return (
-    <div className="min-h-screen bg-swiggy-gray-bg">
+    <div className="bg-swiggy-gray-bg">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8">
 
         {/* Mobile: horizontal tab chips */}

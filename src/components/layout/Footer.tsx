@@ -7,9 +7,28 @@ const FOOTER_CITIES = [
 
 export function Footer() {
   return (
-    <footer className="bg-[#F5F5F5] border-t border-swiggy-border mt-16">
+    <footer className="bg-[#EBEBEB] border-t border-swiggy-border/60 mt-0">
+      {/* Cities grid */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+        <h4 className="text-sm font-black text-swiggy-black mb-4">Cities with food delivery</h4>
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
+          {FOOTER_CITIES.map((city) => (
+            <Link
+              key={city}
+              href={`/restaurants?city=${encodeURIComponent(city)}`}
+              className="text-xs text-swiggy-gray border border-swiggy-border rounded-xl px-3 py-2.5 hover:border-brand-orange hover:text-brand-orange transition-colors text-center leading-snug"
+            >
+              Order food online in {city}
+            </Link>
+          ))}
+        </div>
+      </div>
+
+      {/* Divider */}
+      <div className="border-t border-swiggy-border/40" />
+
       {/* Main columns */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
         <div className="grid grid-cols-2 md:grid-cols-5 gap-8">
           {/* Brand */}
           <div className="col-span-2 md:col-span-1">
@@ -79,25 +98,6 @@ export function Footer() {
               ))}
             </ul>
           </div>
-        </div>
-      </div>
-
-      {/* Divider */}
-      <div className="border-t border-swiggy-border" />
-
-      {/* Cities grid */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
-        <h4 className="text-sm font-black text-swiggy-black mb-4">Cities with food delivery</h4>
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
-          {FOOTER_CITIES.map((city) => (
-            <Link
-              key={city}
-              href={`/restaurants?city=${encodeURIComponent(city)}`}
-              className="text-xs text-swiggy-gray border border-swiggy-border rounded-xl px-3 py-2.5 hover:border-brand-orange hover:text-brand-orange transition-colors text-center leading-snug"
-            >
-              Order food online in {city}
-            </Link>
-          ))}
         </div>
       </div>
 

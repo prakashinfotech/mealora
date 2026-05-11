@@ -7,6 +7,7 @@ import { RestaurantCard } from '@/components/home/RestaurantCard'
 import { restaurantService } from '@server/services/restaurant.service'
 import { buildRestaurantsUrl } from '@/lib/navigation'
 import { DEFAULT_CITY } from '@/lib/cities'
+import { CitySync } from '@/components/home/CitySync'
 import Link from 'next/link'
 
 interface PageProps {
@@ -22,8 +23,9 @@ export default async function HomePage({ searchParams }: PageProps) {
 
   return (
     <>
+      <CitySync serverCity={city} />
       <Navbar />
-      <main className="min-h-screen bg-white">
+      <main className="bg-white">
         {/* Hero + Promo block share the orange background */}
         <HeroSearch />
         <PromoCards />

@@ -47,7 +47,7 @@ export default async function RestaurantsPage({ searchParams }: PageProps) {
   return (
     <>
       <Navbar />
-      <main className="min-h-screen bg-swiggy-gray-bg">
+      <main className="bg-swiggy-gray-bg">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
           {/* Header */}
           <div className="mb-6">
