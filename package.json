@@ -21,6 +21,7 @@
     "jose": "^5.4.0",
     "next": "14.2.29",
     "next-auth": "^4.24.7",
+    "razorpay": "^2.9.6",
     "react": "^18",
     "react-dom": "^18",
     "tailwind-merge": "^2.3.0",

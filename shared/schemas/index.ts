@@ -47,6 +47,34 @@ export const CreateOrderSchema = z.object({
   taxes: z.number().nonnegative('Invalid taxes.'),
   discount: z.number().nonnegative('Invalid discount.'),
   total: z.number().positive('Invalid total.'),
+  razorpayOrderId: z.string().optional(),
+  razorpayPaymentId: z.string().optional(),
+})
+
+// ─── Payment ──────────────────────────────────────────────────────────────────
+
+export const CreatePaymentOrderSchema = z.object({
+  restaurantId: z.string().cuid('Invalid restaurant ID.'),
+  items: z.array(
+    z.object({
+      menuItemId: z.string().cuid('Invalid menu item ID.'),
+      quantity: z.number().int().min(1, 'Quantity must be at least 1.'),
+    })
+  ).min(1, 'Order must have at least one item.'),
+})
+
+export const VerifyPaymentSchema = z.object({
+  razorpayOrderId: z.string().min(1, 'Razorpay order ID is required.'),
+  razorpayPaymentId: z.string().min(1, 'Payment ID is required.'),
+  razorpaySignature: z.string().min(1, 'Signature is required.'),
+  restaurantId: z.string().cuid('Invalid restaurant ID.'),
+  addressId: z.string().cuid('Invalid address ID.'),
+  items: z.array(OrderItemSchema).min(1, 'Order must have at least one item.'),
+  subtotal: z.number().nonnegative('Invalid subtotal.'),
+  deliveryFee: z.number().nonnegative('Invalid delivery fee.'),
+  taxes: z.number().nonnegative('Invalid taxes.'),
+  discount: z.number().nonnegative('Invalid discount.'),
+  total: z.number().positive('Invalid total.'),
 })
 
 // ─── Inferred types ───────────────────────────────────────────────────────────
@@ -54,3 +82,5 @@ export const CreateOrderSchema = z.object({
 export type RegisterUserInput = z.infer<typeof RegisterUserSchema>
 export type CreateAddressInput = z.infer<typeof CreateAddressSchema>
 export type CreateOrderInput = z.infer<typeof CreateOrderSchema>
+export type CreatePaymentOrderInput = z.infer<typeof CreatePaymentOrderSchema>
+export type VerifyPaymentInput = z.infer<typeof VerifyPaymentSchema>

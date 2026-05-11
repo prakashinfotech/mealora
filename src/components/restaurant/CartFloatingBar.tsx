@@ -5,7 +5,6 @@ import { useCartStore } from '@/store/cartStore'
 import { formatPrice } from '@/lib/utils'
 
 export function CartFloatingBar() {
-  const items = useCartStore((s) => s.items)
   const subtotal = useCartStore((s) => s.subtotal())
   const totalItems = useCartStore((s) => s.totalItems())
 

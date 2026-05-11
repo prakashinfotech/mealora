@@ -123,12 +123,39 @@ export interface IOrder {
   discount: number
   total: number
   otp?: string | null
+  razorpayOrderId?: string | null
+  razorpayPaymentId?: string | null
   createdAt: Date
   updatedAt: Date
   restaurant?: Pick<IRestaurant, 'id' | 'name' | 'imageUrl' | 'area'>
   address?: IAddress
   items?: IOrderItem[]
   timeline?: IOrderTimelineEntry[]
+}
+
+// ─── Razorpay ─────────────────────────────────────────────────────────────────
+
+export interface RazorpayCreateOrderResponse {
+  razorpayOrderId: string
+  keyId: string
+  amount: number
+  currency: string
+  subtotal: number
+  deliveryFee: number
+  taxes: number
+  total: number
+  items: Array<{
+    menuItemId: string
+    name: string
+    price: number
+    quantity: number
+  }>
+}
+
+export interface RazorpayPaymentResponse {
+  razorpay_order_id: string
+  razorpay_payment_id: string
+  razorpay_signature: string
 }
 
 // ─── API contracts ────────────────────────────────────────────────────────────
@@ -163,7 +190,13 @@ export interface RestaurantFilters {
 }
 
 // Input types are defined in shared/schemas and re-exported here for convenience
-export type { RegisterUserInput, CreateAddressInput, CreateOrderInput } from '@shared/schemas'
+export type {
+  RegisterUserInput,
+  CreateAddressInput,
+  CreateOrderInput,
+  CreatePaymentOrderInput,
+  VerifyPaymentInput,
+} from '@shared/schemas'
 
 // ─── Legacy aliases (keep existing component imports working) ─────────────────
 export type User = IUser

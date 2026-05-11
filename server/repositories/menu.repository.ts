@@ -1,6 +1,12 @@
 import { prisma } from '@/lib/prisma'
 
 export const menuRepository = {
+  findByIds: async (ids: string[]) =>
+    prisma.menuItem.findMany({
+      where: { id: { in: ids }, isAvailable: true },
+      select: { id: true, name: true, price: true },
+    }),
+
   searchItems: async (query: string, limit = 8) =>
     prisma.menuItem.findMany({
       where: {

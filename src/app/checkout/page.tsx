@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { Navbar } from '@/components/layout/Navbar'
@@ -11,13 +11,50 @@ import { Input } from '@/components/ui/Input'
 import { useCartStore } from '@/store/cartStore'
 import { useCityStore } from '@/store/cityStore'
 import { formatPrice, calculateTaxes, calculateDeliveryFee } from '@/lib/utils'
-import type { Address, PaymentMode } from '@/types'
+import { loadRazorpayScript } from '@/lib/razorpay'
+import { setOrderPlacedFlag } from '@/components/order/OrderSuccessBanner'
+import type { Address, PaymentMode, RazorpayCreateOrderResponse } from '@/types'
 
-const PAYMENT_OPTIONS: { mode: PaymentMode; label: string; icon: string }[] = [
-  { mode: 'CASH_ON_DELIVERY', label: 'Cash on Delivery', icon: '💵' },
-  { mode: 'ONLINE', label: 'Pay Online (Mock)', icon: '💳' },
-  { mode: 'WALLET', label: 'Swiggy Wallet', icon: '👛' },
+type PaymentStage = 'idle' | 'preparing' | 'processing' | 'verifying'
+
+const PAYMENT_NOT_CONFIGURED = 'Online payments are not configured.'
+
+function CheckoutError({ message }: { message: string }) {
+  const isConfigError = message.includes(PAYMENT_NOT_CONFIGURED)
+
+  return (
+    <div
+      role="alert"
+      className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 space-y-1"
+    >
+      <p className="text-sm font-semibold text-swiggy-red">
+        {isConfigError ? 'Online payment unavailable' : 'Something went wrong'}
+      </p>
+      <p className="text-xs text-red-600 leading-snug">
+        {isConfigError
+          ? 'Please use Cash on Delivery, or try again later.'
+          : message}
+      </p>
+      {isConfigError && process.env.NODE_ENV === 'development' && (
+        <p className="text-xs text-red-400 font-mono mt-1 leading-snug">
+          Dev: add NEXT_PUBLIC_RAZORPAY_KEY_ID &amp; RAZORPAY_KEY_SECRET to .env.local and restart.
+        </p>
+      )}
+    </div>
+  )
+}
+
+const PAYMENT_OPTIONS: { mode: PaymentMode; label: string; description: string; icon: string }[] = [
+  { mode: 'CASH_ON_DELIVERY', label: 'Cash on Delivery', description: 'Pay when your order arrives', icon: '💵' },
+  { mode: 'ONLINE', label: 'Pay Online', description: 'UPI · Cards · Net Banking · Wallets · EMI', icon: '💳' },
 ]
+
+const STAGE_LABELS: Record<PaymentStage, string> = {
+  idle: '',
+  preparing: 'Creating payment…',
+  processing: 'Opening payment window…',
+  verifying: 'Verifying payment…',
+}
 
 export default function CheckoutPage() {
   const { data: session, status } = useSession()
@@ -25,6 +62,7 @@ export default function CheckoutPage() {
   const items = useCartStore((s) => s.items)
   const subtotal = useCartStore((s) => s.subtotal())
   const restaurantId = useCartStore((s) => s.restaurantId)
+  const restaurantName = useCartStore((s) => s.restaurantName)
   const clearCart = useCartStore((s) => s.clearCart)
   const currentCity = useCityStore((s) => s.city)
 
@@ -35,9 +73,10 @@ export default function CheckoutPage() {
   const [selectedAddressId, setSelectedAddressId] = useState<string>('')
   const [paymentMode, setPaymentMode] = useState<PaymentMode>('CASH_ON_DELIVERY')
   const [placing, setPlacing] = useState(false)
+  const [paymentStage, setPaymentStage] = useState<PaymentStage>('idle')
   const [error, setError] = useState('')
+  const orderDone = useRef(false)
 
-  // New address form state
   const [showAddressForm, setShowAddressForm] = useState(false)
   const [newAddress, setNewAddress] = useState({
     label: 'Home',
@@ -52,9 +91,10 @@ export default function CheckoutPage() {
       router.push('/login?callbackUrl=/checkout')
       return
     }
-    if (items.length === 0) {
+    // Skip the cart redirect if we just placed an order — clearCart() fires
+    // before router.push('/orders') completes, which would hijack the redirect.
+    if (items.length === 0 && !orderDone.current) {
       router.push('/cart')
-      return
     }
   }, [status, items.length, router])
 
@@ -92,14 +132,9 @@ export default function CheckoutPage() {
     }
   }
 
-  const handlePlaceOrder = async () => {
-    if (!selectedAddressId) {
-      setError('Please select a delivery address.')
-      return
-    }
+  const handleCODOrder = async () => {
     setPlacing(true)
     setError('')
-
     try {
       const res = await fetch('/api/orders', {
         method: 'POST',
@@ -107,7 +142,7 @@ export default function CheckoutPage() {
         body: JSON.stringify({
           restaurantId,
           addressId: selectedAddressId,
-          paymentMode,
+          paymentMode: 'CASH_ON_DELIVERY',
           items: items.map((i) => ({
             menuItemId: i.menuItemId,
             name: i.name,
@@ -121,17 +156,137 @@ export default function CheckoutPage() {
           total: subtotal + deliveryFee + taxes,
         }),
       })
-
       const data = await res.json()
       if (!data.success) throw new Error(data.error ?? 'Failed to place order')
-
+      orderDone.current = true
+      setOrderPlacedFlag()
       clearCart()
-      router.push(`/orders/${data.data.id}`)
+      router.push('/orders')
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Something went wrong')
     } finally {
       setPlacing(false)
     }
+  }
+
+  const handlePaymentSuccess = useCallback(
+    async (
+      response: { razorpay_payment_id: string; razorpay_order_id: string; razorpay_signature: string },
+      rzpData: RazorpayCreateOrderResponse,
+    ) => {
+      setPaymentStage('verifying')
+      try {
+        const res = await fetch('/api/payments/verify', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            razorpayOrderId: response.razorpay_order_id,
+            razorpayPaymentId: response.razorpay_payment_id,
+            razorpaySignature: response.razorpay_signature,
+            restaurantId,
+            addressId: selectedAddressId,
+            items: rzpData.items,
+            subtotal: rzpData.subtotal,
+            deliveryFee: rzpData.deliveryFee,
+            taxes: rzpData.taxes,
+            discount: 0,
+            total: rzpData.total,
+          }),
+        })
+        const data = await res.json()
+        if (!data.success) throw new Error(data.error ?? 'Payment verification failed.')
+        orderDone.current = true
+        setOrderPlacedFlag()
+        clearCart()
+        router.push('/orders')
+      } catch (err) {
+        setPaymentStage('idle')
+        setError(
+          err instanceof Error
+            ? err.message
+            : 'Payment verification failed. Please contact support with your payment ID.',
+        )
+      }
+    },
+    [restaurantId, selectedAddressId, clearCart, router],
+  )
+
+  const handleOnlinePayment = async () => {
+    setPaymentStage('preparing')
+    setError('')
+    try {
+      const createRes = await fetch('/api/payments/create-order', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          restaurantId,
+          items: items.map((i) => ({ menuItemId: i.menuItemId, quantity: i.quantity })),
+        }),
+      })
+      const createData = await createRes.json()
+      if (!createData.success) {
+        if (createData.error?.includes(PAYMENT_NOT_CONFIGURED)) {
+          setPaymentMode('CASH_ON_DELIVERY')
+        }
+        throw new Error(createData.error ?? 'Failed to initiate payment.')
+      }
+
+      const rzpData: RazorpayCreateOrderResponse = createData.data
+
+      const loaded = await loadRazorpayScript()
+      if (!loaded) throw new Error('Payment SDK failed to load. Please check your connection and try again.')
+
+      setPaymentStage('processing')
+
+      const rzp = new window.Razorpay({
+        key: rzpData.keyId,
+        amount: rzpData.amount,
+        currency: rzpData.currency,
+        name: 'Swiggy Clone',
+        description: `Order from ${restaurantName ?? 'restaurant'}`,
+        order_id: rzpData.razorpayOrderId,
+        prefill: {
+          name: session?.user?.name ?? '',
+          email: session?.user?.email ?? '',
+        },
+        theme: { color: '#fc8019' },
+        modal: {
+          ondismiss: () => {
+            setPaymentStage('idle')
+            setError('Payment was cancelled. Your cart is still intact.')
+          },
+        },
+        handler: (response) => {
+          handlePaymentSuccess(response, rzpData)
+        },
+      })
+
+      rzp.open()
+    } catch (err) {
+      setPaymentStage('idle')
+      setError(err instanceof Error ? err.message : 'Payment failed. Please try again.')
+    }
+  }
+
+  const handlePlaceOrder = () => {
+    if (!selectedAddressId) {
+      setError('Please select a delivery address.')
+      return
+    }
+    if (paymentMode === 'ONLINE') {
+      handleOnlinePayment()
+    } else {
+      handleCODOrder()
+    }
+  }
+
+  const isBusy = placing || paymentStage !== 'idle'
+
+  const buttonLabel = () => {
+    if (placing) return 'Placing order…'
+    if (paymentStage !== 'idle') return STAGE_LABELS[paymentStage]
+    if (paymentMode === 'ONLINE') return `Pay ${formatPrice(subtotal + deliveryFee + taxes)}`
+    return 'Place Order'
   }
 
   if (status === 'loading') return null
@@ -248,7 +403,10 @@ export default function CheckoutPage() {
                         className="accent-brand-orange"
                       />
                       <span className="text-lg">{opt.icon}</span>
-                      <span className="text-sm font-semibold text-swiggy-black">{opt.label}</span>
+                      <div>
+                        <p className="text-sm font-semibold text-swiggy-black">{opt.label}</p>
+                        <p className="text-xs text-swiggy-gray">{opt.description}</p>
+                      </div>
                     </label>
                   ))}
                 </div>
@@ -283,18 +441,33 @@ export default function CheckoutPage() {
                 />
               </div>
 
-              {error && (
-                <p className="text-sm text-swiggy-red bg-red-50 rounded-lg px-4 py-3">{error}</p>
+              {error && <CheckoutError message={error} />}
+
+              {paymentStage === 'verifying' && (
+                <div className="flex items-center gap-2 text-sm text-swiggy-gray bg-white rounded-lg px-4 py-3 shadow-card">
+                  <svg className="animate-spin w-4 h-4 text-brand-orange shrink-0" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
+                  </svg>
+                  Verifying your payment, please wait…
+                </div>
               )}
 
               <Button
                 onClick={handlePlaceOrder}
-                loading={placing}
+                loading={isBusy}
+                disabled={isBusy}
                 size="lg"
                 className="w-full"
               >
-                Place Order
+                {buttonLabel()}
               </Button>
+
+              {paymentMode === 'ONLINE' && paymentStage === 'idle' && (
+                <p className="text-xs text-center text-swiggy-gray">
+                  Secured by Razorpay · 256-bit SSL encryption
+                </p>
+              )}
             </div>
           </div>
         </div>

@@ -5,6 +5,7 @@ import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
 import { formatPrice, ORDER_STATUS_LABELS, ORDER_STATUS_COLORS } from '@/lib/utils'
 import { orderService } from '@server/services/order.service'
+import { OrderSuccessBanner } from '@/components/order/OrderSuccessBanner'
 import { cn } from '@/lib/utils'
 import Link from 'next/link'
 
@@ -22,6 +23,8 @@ export default async function OrdersPage() {
       <main className="bg-swiggy-gray-bg py-8">
         <div className="max-w-3xl mx-auto px-4 sm:px-6">
           <h1 className="text-2xl font-black text-swiggy-black mb-6">My Orders</h1>
+
+          <OrderSuccessBanner />
 
           {orders.length === 0 ? (
             <div className="text-center py-24 bg-white rounded-2xl">

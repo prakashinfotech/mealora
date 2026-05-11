@@ -18,19 +18,28 @@ export const orderService = {
     if (!restaurant) throw new Error('Restaurant not found.')
     if (!restaurant.isOpen) throw new Error('Restaurant is currently closed.')
 
+    const paymentStatus =
+      input.paymentMode === 'CASH_ON_DELIVERY'
+        ? 'PENDING'
+        : input.razorpayPaymentId
+          ? 'PAID'
+          : 'PENDING'
+
     return orderRepository.create({
       userId,
       restaurantId: input.restaurantId,
       addressId: input.addressId || undefined,
       status: 'PLACED',
       paymentMode: input.paymentMode,
-      paymentStatus: input.paymentMode === 'CASH_ON_DELIVERY' ? 'PENDING' : 'PAID',
+      paymentStatus,
       subtotal: input.subtotal,
       deliveryFee: input.deliveryFee,
       taxes: input.taxes,
       discount: input.discount ?? 0,
       total: input.total,
       otp: generateOTP(),
+      razorpayOrderId: input.razorpayOrderId,
+      razorpayPaymentId: input.razorpayPaymentId,
       items: {
         create: input.items.map((i) => ({
           menuItemId: i.menuItemId,

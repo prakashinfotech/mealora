@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { cn, ORDER_STATUS_LABELS } from '@/lib/utils'
-import type { Order, OrderStatus } from '@/types'
+import type { OrderStatus } from '@/types'
 
 const STATUS_STEPS: OrderStatus[] = [
   'PLACED',

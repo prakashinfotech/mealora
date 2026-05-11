@@ -26,7 +26,6 @@ export default function CartPage() {
 
   const deliveryFee = calculateDeliveryFee(subtotal)
   const taxes = calculateTaxes(subtotal)
-  const total = subtotal + deliveryFee + taxes
 
   const handleCheckout = () => {
     if (!session) {
