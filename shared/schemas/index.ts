@@ -249,3 +249,22 @@ export const AdminCouponFiltersSchema = z.object({
 export type AdminCouponInput = z.infer<typeof AdminCouponSchema>
 export type UpdateAdminCouponInput = z.infer<typeof UpdateAdminCouponSchema>
 export type AdminCouponFilters = z.infer<typeof AdminCouponFiltersSchema>
+
+// ─── Admin: Users ─────────────────────────────────────────────────────────────
+
+const USER_ROLE_VALUES = ['CUSTOMER', 'RESTAURANT_OWNER', 'ADMIN'] as const
+
+export const AdminUserFiltersSchema = z.object({
+  page: z.coerce.number().int().min(1).default(1),
+  limit: z.coerce.number().int().min(1).max(50).default(20),
+  search: z.string().trim().optional(),
+  role: z.enum([...USER_ROLE_VALUES, 'all']).default('all'),
+  sort: z.enum(['newest', 'oldest', 'name_asc']).default('newest'),
+})
+
+export const AdminUpdateUserRoleSchema = z.object({
+  role: z.enum(['CUSTOMER', 'ADMIN'], { error: 'Role must be CUSTOMER or ADMIN.' }),
+})
+
+export type AdminUserFilters = z.infer<typeof AdminUserFiltersSchema>
+export type AdminUpdateUserRoleInput = z.infer<typeof AdminUpdateUserRoleSchema>
