@@ -1,8 +1,11 @@
 import { StatCard } from '@/components/admin/ui/StatCard'
+import { adminOrderService } from '@server/services/admin-order.service'
+import { adminRestaurantService } from '@server/services/admin-restaurant.service'
+import { formatPrice } from '@/lib/utils'
 
 export const metadata = { title: 'Dashboard' }
+export const revalidate = 60
 
-// Stat icons
 const icons = {
   orders: (
     <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}>
@@ -19,53 +22,55 @@ const icons = {
       <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 21v-7.5a.75.75 0 01.75-.75h3a.75.75 0 01.75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349m-16.5 11.65V9.35m0 0a3.001 3.001 0 003.75-.615A2.993 2.993 0 009.75 9.75c.896 0 1.7-.393 2.25-1.016a2.993 2.993 0 002.25 1.016c.896 0 1.7-.393 2.25-1.016a3.001 3.001 0 003.75.614m-16.5 0a3.004 3.004 0 01-.621-4.72L4.318 3.44A1.5 1.5 0 015.378 3h13.243a1.5 1.5 0 011.06.44l1.19 1.189a3 3 0 01-.621 4.72m-13.5 8.65h3.75a.75.75 0 00.75-.75V13.5a.75.75 0 00-.75-.75H6.75a.75.75 0 00-.75.75v3.75c0 .415.336.75.75.75z" />
     </svg>
   ),
-  users: (
+  active: (
     <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
+      <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
     </svg>
   ),
 }
 
-export default function AdminDashboardPage() {
+export default async function AdminDashboardPage() {
+  const [orderStats, restaurantStats] = await Promise.all([
+    adminOrderService.getStats(),
+    adminRestaurantService.getStats(),
+  ])
+
   return (
     <div className="space-y-6 max-w-6xl">
-      {/* Page intro */}
       <div>
         <h2 className="text-xl font-bold text-slate-800">Overview</h2>
         <p className="text-sm text-slate-500 mt-0.5">
-          Live stats and quick actions will appear here once modules are connected.
+          Live stats across all orders and restaurants.
         </p>
       </div>
 
-      {/* KPI cards — shell (data wired in next phase) */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <StatCard
           label="Total Orders"
-          value="—"
-          sub="Connect orders module"
+          value={orderStats.totalOrders.toLocaleString()}
+          sub={`${orderStats.todayOrders} today`}
           icon={icons.orders}
         />
         <StatCard
           label="Revenue"
-          value="—"
-          sub="Connect orders module"
+          value={formatPrice(Number(orderStats.revenue))}
+          sub="From paid orders"
           icon={icons.revenue}
         />
         <StatCard
           label="Restaurants"
-          value="—"
-          sub="Connect restaurants module"
+          value={restaurantStats.total.toLocaleString()}
+          sub={`${restaurantStats.active} active`}
           icon={icons.restaurants}
         />
         <StatCard
-          label="Users"
-          value="—"
-          sub="Connect users module"
-          icon={icons.users}
+          label="Active Orders"
+          value={orderStats.activeOrders.toLocaleString()}
+          sub="In progress now"
+          icon={icons.active}
         />
       </div>
 
-      {/* Quick links */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {[
           { label: 'Manage Restaurants', href: '/admin/restaurants', desc: 'Add, edit, toggle open/closed' },
@@ -83,19 +88,10 @@ export default function AdminDashboardPage() {
             </p>
             <p className="text-xs text-slate-400 mt-1">{item.desc}</p>
             <span className="text-xs text-brand-orange font-semibold mt-3 inline-block opacity-0 group-hover:opacity-100 transition-opacity">
-              Coming soon →
+              Go →
             </span>
           </a>
         ))}
-      </div>
-
-      {/* Foundation status */}
-      <div className="bg-amber-50 border border-amber-200 rounded-xl p-5">
-        <p className="text-sm font-semibold text-amber-800">Admin Panel — Foundation Phase</p>
-        <p className="text-xs text-amber-600 mt-1">
-          Infrastructure is in place: role guard, layout, sidebar, table system, form system, design system.
-          CRUD modules (restaurants, orders, coupons, users) will be built in the next phase.
-        </p>
       </div>
     </div>
   )
