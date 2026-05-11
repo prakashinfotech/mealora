@@ -115,6 +115,8 @@ model Restaurant {
   minOrderAmount Float         @default(0)
   isOpen        Boolean        @default(true)
   isPureVeg     Boolean        @default(false)
+  isActive      Boolean        @default(true)   // admin-controlled listing visibility
+  isFeatured    Boolean        @default(false)  // shown in featured section
   city          String
   area          String
   address       String
@@ -126,6 +128,7 @@ model Restaurant {
   categories    MenuCategory[]
   orders        Order[]
 
+  @@index([city, isActive])
   @@map("restaurants")
 }
 

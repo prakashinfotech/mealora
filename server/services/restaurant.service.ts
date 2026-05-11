@@ -13,7 +13,7 @@ const ORDER_BY_MAP: Record<string, Prisma.RestaurantOrderByWithRelationInput> = 
 }
 
 function buildWhereClause(filters: RestaurantFilters): Prisma.RestaurantWhereInput {
-  const where: Prisma.RestaurantWhereInput = {}
+  const where: Prisma.RestaurantWhereInput = { isActive: true }
 
   if (filters.search) {
     where.OR = [

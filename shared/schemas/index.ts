@@ -93,3 +93,40 @@ export type CreateOrderInput = z.infer<typeof CreateOrderSchema>
 export type CreatePaymentOrderInput = z.infer<typeof CreatePaymentOrderSchema>
 export type VerifyPaymentInput = z.infer<typeof VerifyPaymentSchema>
 export type CouponValidateInput = z.infer<typeof CouponValidateSchema>
+
+// ─── Admin: Restaurant ────────────────────────────────────────────────────────
+
+export const AdminRestaurantSchema = z.object({
+  name: z.string().trim().min(2, 'Name must be at least 2 characters.'),
+  slug: z.string().trim().min(2, 'Slug is required.').regex(/^[a-z0-9-]+$/, 'Slug must be lowercase letters, numbers, and hyphens only.'),
+  description: z.string().trim().optional(),
+  imageUrl: z.string().trim().url('Must be a valid URL.').or(z.literal('')).optional(),
+  bannerUrl: z.string().trim().url('Must be a valid URL.').or(z.literal('')).optional(),
+  cuisines: z.array(z.string().trim().min(1)).min(1, 'At least one cuisine is required.'),
+  city: z.string().trim().min(1, 'City is required.'),
+  area: z.string().trim().min(1, 'Area / locality is required.'),
+  address: z.string().trim().min(5, 'Full address is required.'),
+  rating: z.number().min(0).max(5).default(0),
+  ratingCount: z.number().int().min(0).default(0),
+  avgDeliveryTime: z.number().int().min(1, 'Delivery time must be at least 1 minute.').default(30),
+  deliveryFee: z.number().min(0).default(0),
+  minOrderAmount: z.number().min(0).default(0),
+  isPureVeg: z.boolean().default(false),
+  isOpen: z.boolean().default(true),
+  isActive: z.boolean().default(true),
+  isFeatured: z.boolean().default(false),
+})
+
+export const UpdateAdminRestaurantSchema = AdminRestaurantSchema.partial()
+
+export const AdminRestaurantFiltersSchema = z.object({
+  page: z.coerce.number().int().min(1).default(1),
+  limit: z.coerce.number().int().min(1).max(50).default(20),
+  search: z.string().trim().optional(),
+  city: z.string().trim().optional(),
+  isActive: z.enum(['true', 'false', 'all']).default('all'),
+})
+
+export type AdminRestaurantInput = z.infer<typeof AdminRestaurantSchema>
+export type UpdateAdminRestaurantInput = z.infer<typeof UpdateAdminRestaurantSchema>
+export type AdminRestaurantFilters = z.infer<typeof AdminRestaurantFiltersSchema>

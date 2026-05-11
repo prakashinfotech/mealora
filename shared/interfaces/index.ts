@@ -58,11 +58,14 @@ export interface IRestaurant {
   minOrderAmount: number
   isOpen: boolean
   isPureVeg: boolean
+  isActive: boolean
+  isFeatured: boolean
   city: string
   area: string
   address: string
   lat?: number | null
   lng?: number | null
+  createdAt?: Date | string
 }
 
 export interface IMenuCategory {

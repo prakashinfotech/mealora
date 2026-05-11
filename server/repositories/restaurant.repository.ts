@@ -30,6 +30,7 @@ export const restaurantRepository = {
   searchByName: async (query: string, limit = 5) =>
     prisma.restaurant.findMany({
       where: {
+        isActive: true,
         OR: [
           { name: { contains: query, mode: 'insensitive' } },
           { area: { contains: query, mode: 'insensitive' } },
@@ -42,6 +43,7 @@ export const restaurantRepository = {
   getFeatured: async (limit: number, city?: string) =>
     prisma.restaurant.findMany({
       where: {
+        isActive: true,
         isOpen: true,
         ...(city ? { city: { equals: city, mode: 'insensitive' } } : {}),
       },
@@ -52,6 +54,7 @@ export const restaurantRepository = {
   getTopRated: async (minRating: number, limit: number, city?: string) =>
     prisma.restaurant.findMany({
       where: {
+        isActive: true,
         rating: { gte: minRating },
         ...(city ? { city: { equals: city, mode: 'insensitive' } } : {}),
       },
