@@ -26,7 +26,20 @@ export async function main() {
       phone: '+91 98765 43210',
     },
   })
-  console.log(`✅ User: ${user.email}\n`)
+  console.log(`✅ User: ${user.email}`)
+
+  const adminPassword = await bcrypt.hash('admin123', 12)
+  const admin = await prisma.user.upsert({
+    where: { email: 'admin@swiggy.com' },
+    update: {},
+    create: {
+      name: 'Admin',
+      email: 'admin@swiggy.com',
+      password: adminPassword,
+      role: 'ADMIN',
+    },
+  })
+  console.log(`✅ Admin: ${admin.email}\n`)
 
   // ─── Restaurants by city ─────────────────────────────────────────────────────
   const allCities = [
