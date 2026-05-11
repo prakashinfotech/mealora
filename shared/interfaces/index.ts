@@ -15,6 +15,7 @@ export type OrderStatus =
   | 'CANCELLED'
 export type PaymentMode = 'CASH_ON_DELIVERY' | 'ONLINE' | 'WALLET'
 export type PaymentStatus = 'PENDING' | 'PAID' | 'FAILED' | 'REFUNDED'
+export type DiscountType = 'PERCENTAGE' | 'FLAT'
 
 // ─── Entities ─────────────────────────────────────────────────────────────────
 
@@ -94,6 +95,25 @@ export interface IRestaurantWithMenu extends IRestaurant {
   categories: IMenuCategoryWithItems[]
 }
 
+export interface ICoupon {
+  id: string
+  code: string
+  title: string
+  description?: string | null
+  discountType: DiscountType
+  discountValue: number
+  minOrderAmount?: number | null
+  maxDiscount?: number | null
+  isActive: boolean
+  expiresAt?: Date | null
+}
+
+export interface ICouponApplied {
+  code: string
+  title: string
+  discount: number
+}
+
 export interface IOrderItem {
   id: string
   menuItemId: string
@@ -123,6 +143,7 @@ export interface IOrder {
   discount: number
   total: number
   otp?: string | null
+  couponCode?: string | null
   razorpayOrderId?: string | null
   razorpayPaymentId?: string | null
   createdAt: Date
@@ -143,6 +164,8 @@ export interface RazorpayCreateOrderResponse {
   subtotal: number
   deliveryFee: number
   taxes: number
+  discount: number
+  couponCode?: string
   total: number
   items: Array<{
     menuItemId: string
@@ -209,3 +232,5 @@ export type MenuCategoryWithItems = IMenuCategoryWithItems
 export type Order = IOrder
 export type OrderItem = IOrderItem
 export type OrderTimelineEntry = IOrderTimelineEntry
+export type Coupon = ICoupon
+export type CouponApplied = ICouponApplied

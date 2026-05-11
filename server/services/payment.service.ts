@@ -1,6 +1,7 @@
 import Razorpay from 'razorpay'
 import crypto from 'crypto'
 import { menuRepository } from '@server/repositories/menu.repository'
+import { couponService } from '@server/services/coupon.service'
 import { calculateOrderTotal } from '@shared/helpers'
 import type { CreatePaymentOrderInput, RazorpayCreateOrderResponse } from '@shared/interfaces'
 
@@ -42,7 +43,14 @@ export const paymentService = {
       return sum + menuItem.price * item.quantity
     }, 0)
 
-    const { deliveryFee, taxes, total } = calculateOrderTotal(subtotal)
+    // Re-validate coupon server-side — Razorpay order amount must reflect real discount
+    let discount = 0
+    if (input.couponCode) {
+      const result = await couponService.validateAndCompute(input.couponCode, subtotal)
+      discount = result.discount
+    }
+
+    const { deliveryFee, taxes, total } = calculateOrderTotal(subtotal, discount)
     const amountInPaise = Math.round(total * 100)
 
     const client = getRazorpayClient()
@@ -60,6 +68,8 @@ export const paymentService = {
       subtotal,
       deliveryFee,
       taxes,
+      discount,
+      couponCode: input.couponCode,
       total,
       items: input.items.map((item) => {
         const m = menuItems.find((mi) => mi.id === item.menuItemId)!

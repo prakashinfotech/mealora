@@ -1,5 +1,6 @@
 import { orderRepository } from '@server/repositories/order.repository'
 import { restaurantRepository } from '@server/repositories/restaurant.repository'
+import { couponService } from '@server/services/coupon.service'
 import { generateOTP } from '@shared/helpers'
 import type { CreateOrderInput, OrderStatus } from '@shared/interfaces'
 
@@ -18,12 +19,21 @@ export const orderService = {
     if (!restaurant) throw new Error('Restaurant not found.')
     if (!restaurant.isOpen) throw new Error('Restaurant is currently closed.')
 
+    // Re-validate coupon server-side — frontend discount value is never trusted
+    let discount = 0
+    if (input.couponCode) {
+      const result = await couponService.validateAndCompute(input.couponCode, input.subtotal)
+      discount = result.discount
+    }
+
     const paymentStatus =
       input.paymentMode === 'CASH_ON_DELIVERY'
         ? 'PENDING'
         : input.razorpayPaymentId
           ? 'PAID'
           : 'PENDING'
+
+    const total = input.subtotal + input.deliveryFee + input.taxes - discount
 
     return orderRepository.create({
       userId,
@@ -35,8 +45,9 @@ export const orderService = {
       subtotal: input.subtotal,
       deliveryFee: input.deliveryFee,
       taxes: input.taxes,
-      discount: input.discount ?? 0,
-      total: input.total,
+      discount,
+      total,
+      couponCode: input.couponCode,
       otp: generateOTP(),
       razorpayOrderId: input.razorpayOrderId,
       razorpayPaymentId: input.razorpayPaymentId,

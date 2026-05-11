@@ -60,10 +60,16 @@ export default async function OrdersPage() {
                       <p className="text-sm text-swiggy-gray mt-0.5 truncate">
                         {order.items.map((i) => `${i.name} × ${i.quantity}`).join(', ')}
                       </p>
-                      <div className="flex items-center gap-3 mt-2 text-xs text-swiggy-gray-light">
+                      <div className="flex items-center gap-3 mt-2 text-xs text-swiggy-gray-light flex-wrap">
                         <span>{new Date(order.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
                         <span>•</span>
                         <span className="font-semibold text-swiggy-black">{formatPrice(order.total)}</span>
+                        {order.discount > 0 && (
+                          <>
+                            <span>•</span>
+                            <span className="text-swiggy-green font-semibold">Saved {formatPrice(order.discount)}</span>
+                          </>
+                        )}
                       </div>
                     </div>
                   </div>

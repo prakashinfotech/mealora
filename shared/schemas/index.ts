@@ -47,6 +47,7 @@ export const CreateOrderSchema = z.object({
   taxes: z.number().nonnegative('Invalid taxes.'),
   discount: z.number().nonnegative('Invalid discount.'),
   total: z.number().positive('Invalid total.'),
+  couponCode: z.string().trim().toUpperCase().optional(),
   razorpayOrderId: z.string().optional(),
   razorpayPaymentId: z.string().optional(),
 })
@@ -61,6 +62,12 @@ export const CreatePaymentOrderSchema = z.object({
       quantity: z.number().int().min(1, 'Quantity must be at least 1.'),
     })
   ).min(1, 'Order must have at least one item.'),
+  couponCode: z.string().trim().toUpperCase().optional(),
+})
+
+export const CouponValidateSchema = z.object({
+  code: z.string().trim().min(1, 'Coupon code is required.').toUpperCase(),
+  subtotal: z.number().positive('Subtotal must be positive.'),
 })
 
 export const VerifyPaymentSchema = z.object({
@@ -75,6 +82,7 @@ export const VerifyPaymentSchema = z.object({
   taxes: z.number().nonnegative('Invalid taxes.'),
   discount: z.number().nonnegative('Invalid discount.'),
   total: z.number().positive('Invalid total.'),
+  couponCode: z.string().trim().toUpperCase().optional(),
 })
 
 // ─── Inferred types ───────────────────────────────────────────────────────────
@@ -84,3 +92,4 @@ export type CreateAddressInput = z.infer<typeof CreateAddressSchema>
 export type CreateOrderInput = z.infer<typeof CreateOrderSchema>
 export type CreatePaymentOrderInput = z.infer<typeof CreatePaymentOrderSchema>
 export type VerifyPaymentInput = z.infer<typeof VerifyPaymentSchema>
+export type CouponValidateInput = z.infer<typeof CouponValidateSchema>

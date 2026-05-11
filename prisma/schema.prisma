@@ -188,6 +188,7 @@ model Order {
   discount     Float       @default(0)
   total        Float
   otp               String?     // 4-digit OTP for delivery confirmation
+  couponCode        String?
   razorpayOrderId   String?
   razorpayPaymentId String?
   createdAt         DateTime    @default(now())
@@ -244,9 +245,33 @@ enum PaymentMode {
   WALLET
 }
 
+enum DiscountType {
+  PERCENTAGE
+  FLAT
+}
+
 enum PaymentStatus {
   PENDING
   PAID
   FAILED
   REFUNDED
+}
+
+// ─── Coupons ──────────────────────────────────────────────────────────────────
+
+model Coupon {
+  id             String       @id @default(cuid())
+  code           String       @unique
+  title          String
+  description    String?
+  discountType   DiscountType
+  discountValue  Float
+  minOrderAmount Float?
+  maxDiscount    Float?
+  isActive       Boolean      @default(true)
+  expiresAt      DateTime?
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  @@map("coupons")
 }

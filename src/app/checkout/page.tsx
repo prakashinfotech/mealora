@@ -13,7 +13,8 @@ import { useCityStore } from '@/store/cityStore'
 import { formatPrice, calculateTaxes, calculateDeliveryFee } from '@/lib/utils'
 import { loadRazorpayScript } from '@/lib/razorpay'
 import { setOrderPlacedFlag } from '@/components/order/OrderSuccessBanner'
-import type { Address, PaymentMode, RazorpayCreateOrderResponse } from '@/types'
+import { CouponSelector } from '@/components/checkout/CouponSelector'
+import type { Address, PaymentMode, RazorpayCreateOrderResponse, CouponApplied } from '@/types'
 
 type PaymentStage = 'idle' | 'preparing' | 'processing' | 'verifying'
 
@@ -75,7 +76,10 @@ export default function CheckoutPage() {
   const [placing, setPlacing] = useState(false)
   const [paymentStage, setPaymentStage] = useState<PaymentStage>('idle')
   const [error, setError] = useState('')
+  const [appliedCoupon, setAppliedCoupon] = useState<CouponApplied | null>(null)
   const orderDone = useRef(false)
+
+  const discount = appliedCoupon?.discount ?? 0
 
   const [showAddressForm, setShowAddressForm] = useState(false)
   const [newAddress, setNewAddress] = useState({
@@ -152,8 +156,9 @@ export default function CheckoutPage() {
           subtotal,
           deliveryFee,
           taxes,
-          discount: 0,
-          total: subtotal + deliveryFee + taxes,
+          discount,
+          total: subtotal + deliveryFee + taxes - discount,
+          couponCode: appliedCoupon?.code,
         }),
       })
       const data = await res.json()
@@ -189,8 +194,9 @@ export default function CheckoutPage() {
             subtotal: rzpData.subtotal,
             deliveryFee: rzpData.deliveryFee,
             taxes: rzpData.taxes,
-            discount: 0,
+            discount: rzpData.discount,
             total: rzpData.total,
+            couponCode: rzpData.couponCode,
           }),
         })
         const data = await res.json()
@@ -221,6 +227,7 @@ export default function CheckoutPage() {
         body: JSON.stringify({
           restaurantId,
           items: items.map((i) => ({ menuItemId: i.menuItemId, quantity: i.quantity })),
+          couponCode: appliedCoupon?.code,
         }),
       })
       const createData = await createRes.json()
@@ -285,7 +292,7 @@ export default function CheckoutPage() {
   const buttonLabel = () => {
     if (placing) return 'Placing order…'
     if (paymentStage !== 'idle') return STAGE_LABELS[paymentStage]
-    if (paymentMode === 'ONLINE') return `Pay ${formatPrice(subtotal + deliveryFee + taxes)}`
+    if (paymentMode === 'ONLINE') return `Pay ${formatPrice(subtotal + deliveryFee + taxes - discount)}`
     return 'Place Order'
   }
 
@@ -412,6 +419,17 @@ export default function CheckoutPage() {
                 </div>
               </section>
 
+              {/* Coupon */}
+              <section className="bg-white rounded-2xl shadow-card p-5">
+                <h2 className="font-bold text-swiggy-black mb-3">Offers & Coupons</h2>
+                <CouponSelector
+                  subtotal={subtotal}
+                  applied={appliedCoupon}
+                  onApply={setAppliedCoupon}
+                  onRemove={() => setAppliedCoupon(null)}
+                />
+              </section>
+
               {/* Order summary items */}
               <section className="bg-white rounded-2xl shadow-card p-5">
                 <h2 className="font-bold text-swiggy-black mb-4">Order Summary</h2>
@@ -438,6 +456,7 @@ export default function CheckoutPage() {
                   subtotal={subtotal}
                   deliveryFee={deliveryFee}
                   taxes={taxes}
+                  discount={discount}
                 />
               </div>
 

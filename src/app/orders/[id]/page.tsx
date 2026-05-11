@@ -87,6 +87,23 @@ export default async function OrderTrackingPage({ params }: PageProps) {
                   ))}
                 </div>
 
+                {/* Coupon badge */}
+                {order.couponCode && order.discount > 0 && (
+                  <div className="mt-3 flex items-center gap-2 bg-swiggy-green/10 border border-swiggy-green/25 rounded-xl px-3 py-2">
+                    <svg className="w-3.5 h-3.5 text-swiggy-green shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <div className="min-w-0">
+                      <p className="text-[10px] font-black uppercase tracking-wider text-swiggy-green">
+                        {order.couponCode} applied
+                      </p>
+                      <p className="text-xs text-swiggy-green font-medium">
+                        You saved {formatPrice(order.discount)}
+                      </p>
+                    </div>
+                  </div>
+                )}
+
                 <div className="border-t border-swiggy-border mt-3 pt-3 space-y-1.5 text-sm">
                   <div className="flex justify-between text-swiggy-gray">
                     <span>Subtotal</span><span>{formatPrice(order.subtotal)}</span>
@@ -98,7 +115,13 @@ export default async function OrderTrackingPage({ params }: PageProps) {
                   <div className="flex justify-between text-swiggy-gray">
                     <span>Taxes</span><span>{formatPrice(order.taxes)}</span>
                   </div>
-                  <div className="flex justify-between font-bold text-swiggy-black pt-1 border-t border-swiggy-border">
+                  {order.discount > 0 && (
+                    <div className="flex justify-between text-swiggy-green font-medium">
+                      <span>Coupon discount</span>
+                      <span>−{formatPrice(order.discount)}</span>
+                    </div>
+                  )}
+                  <div className="flex justify-between font-bold text-swiggy-black pt-1.5 border-t border-swiggy-border">
                     <span>Total</span><span>{formatPrice(order.total)}</span>
                   </div>
                 </div>
