@@ -200,6 +200,7 @@ model Order {
   items      OrderItem[]
   timeline   OrderTimeline[]
 
+  @@index([userId, createdAt])
   @@map("orders")
 }
 

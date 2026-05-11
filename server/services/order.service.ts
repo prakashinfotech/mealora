@@ -2,11 +2,15 @@ import { orderRepository } from '@server/repositories/order.repository'
 import { restaurantRepository } from '@server/repositories/restaurant.repository'
 import { couponService } from '@server/services/coupon.service'
 import { generateOTP } from '@shared/helpers'
-import type { CreateOrderInput, OrderStatus } from '@shared/interfaces'
+import type { CreateOrderInput, OrderStatus, PaginationParams } from '@shared/interfaces'
 
 export const orderService = {
-  listForUser: async (userId: string) =>
-    orderRepository.findByUser(userId),
+  listForUser: async (userId: string, params: PaginationParams = {}) => {
+    const page = Math.max(1, params.page ?? 1)
+    const limit = Math.min(50, Math.max(1, params.limit ?? 10))
+    const { orders, total } = await orderRepository.findByUser(userId, { page, limit })
+    return { items: orders, total, page, limit, hasMore: page * limit < total }
+  },
 
   findForUser: async (id: string, userId: string) => {
     const order = await orderRepository.findByIdForUser(id, userId)

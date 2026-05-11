@@ -17,7 +17,7 @@ export default async function ProfilePage() {
 
   const [dbUser, orders, addresses] = await Promise.all([
     userService.findById(session.user.id),
-    orderService.listForUser(session.user.id),
+    orderService.listForUser(session.user.id).then((r) => r.items),
     addressService.listForUser(session.user.id),
   ])
 

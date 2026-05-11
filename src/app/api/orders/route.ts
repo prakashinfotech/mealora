@@ -4,9 +4,12 @@ import { orderService } from '@server/services/order.service'
 import { validateCreateOrderInput } from '@server/validators/order.validator'
 import { withAuth } from '@server/middleware/withAuth'
 
-export const GET = withAuth(async (_request, session) => {
-  const orders = await orderService.listForUser(session.user.id)
-  return NextResponse.json({ success: true, data: orders })
+export const GET = withAuth(async (request, session) => {
+  const { searchParams } = new URL(request.url)
+  const page = Math.max(1, Number(searchParams.get('page') ?? '1'))
+  const limit = Math.min(50, Math.max(1, Number(searchParams.get('limit') ?? '10')))
+  const result = await orderService.listForUser(session.user.id, { page, limit })
+  return NextResponse.json({ success: true, data: result })
 })
 
 export const POST = withAuth(async (request, session) => {

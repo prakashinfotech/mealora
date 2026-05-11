@@ -1,6 +1,6 @@
 import { prisma } from '@/lib/prisma'
 import type { Prisma } from '@prisma/client'
-import type { OrderStatus } from '@shared/interfaces'
+import type { OrderStatus, PaginationParams } from '@shared/interfaces'
 
 const orderInclude = {
   restaurant: { select: { id: true, name: true, imageUrl: true, area: true } },
@@ -10,15 +10,23 @@ const orderInclude = {
 } satisfies Prisma.OrderInclude
 
 export const orderRepository = {
-  findByUser: async (userId: string) =>
-    prisma.order.findMany({
-      where: { userId },
-      orderBy: { createdAt: 'desc' },
-      include: {
-        restaurant: { select: { id: true, name: true, imageUrl: true, area: true } },
-        items: { select: { name: true, quantity: true } },
-      },
-    }),
+  findByUser: async (userId: string, { page = 1, limit = 10 }: PaginationParams = {}) => {
+    const skip = (page - 1) * limit
+    const [orders, total] = await Promise.all([
+      prisma.order.findMany({
+        where: { userId },
+        orderBy: { createdAt: 'desc' },
+        skip,
+        take: limit,
+        include: {
+          restaurant: { select: { id: true, name: true, imageUrl: true, area: true } },
+          items: { select: { name: true, quantity: true } },
+        },
+      }),
+      prisma.order.count({ where: { userId } }),
+    ])
+    return { orders, total }
+  },
 
   findByIdForUser: async (id: string, userId: string) =>
     prisma.order.findFirst({
