@@ -211,3 +211,41 @@ export const AdminUpdateOrderStatusSchema = z.object({
 
 export type AdminOrderFilters = z.infer<typeof AdminOrderFiltersSchema>
 export type AdminUpdateOrderStatusInput = z.infer<typeof AdminUpdateOrderStatusSchema>
+
+// ─── Admin: Coupons ───────────────────────────────────────────────────────────
+
+const DISCOUNT_TYPE_VALUES = ['PERCENTAGE', 'FLAT'] as const
+
+export const AdminCouponSchema = z.object({
+  code: z
+    .string()
+    .trim()
+    .min(2, 'Code must be at least 2 characters.')
+    .max(32, 'Code must be 32 characters or fewer.')
+    .toUpperCase()
+    .regex(/^[A-Z0-9_-]+$/, 'Code may only contain letters, numbers, underscores, and hyphens.'),
+  title: z.string().trim().min(2, 'Title must be at least 2 characters.').max(80),
+  description: z.string().trim().max(200).optional(),
+  discountType: z.enum(DISCOUNT_TYPE_VALUES, { error: 'Discount type is required.' }),
+  discountValue: z.number().positive('Discount value must be greater than 0.'),
+  minOrderAmount: z.number().min(0, 'Minimum order amount cannot be negative.').optional(),
+  maxDiscount: z.number().positive('Max discount must be greater than 0.').optional(),
+  isActive: z.boolean().default(true),
+  expiresAt: z.string().trim().datetime({ offset: true }).optional().or(z.literal('').transform(() => undefined)),
+  usageLimit: z.number().int().positive('Usage limit must be a positive integer.').optional(),
+})
+
+export const UpdateAdminCouponSchema = AdminCouponSchema.partial()
+
+export const AdminCouponFiltersSchema = z.object({
+  page: z.coerce.number().int().min(1).default(1),
+  limit: z.coerce.number().int().min(1).max(50).default(20),
+  search: z.string().trim().optional(),
+  isActive: z.enum(['true', 'false', 'all']).default('all'),
+  discountType: z.enum([...DISCOUNT_TYPE_VALUES, 'all']).default('all'),
+  expired: z.enum(['true', 'false', 'all']).default('all'),
+})
+
+export type AdminCouponInput = z.infer<typeof AdminCouponSchema>
+export type UpdateAdminCouponInput = z.infer<typeof UpdateAdminCouponSchema>
+export type AdminCouponFilters = z.infer<typeof AdminCouponFiltersSchema>
