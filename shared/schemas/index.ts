@@ -10,7 +10,13 @@ export const PaymentModeSchema = z.enum(['CASH_ON_DELIVERY', 'ONLINE', 'WALLET']
 export const RegisterUserSchema = z.object({
   name: z.string().trim().min(1, 'Name is required.'),
   email: z.string().trim().email('Invalid email address.'),
-  password: z.string().min(MIN_PASSWORD_LENGTH, `Password must be at least ${MIN_PASSWORD_LENGTH} characters.`),
+  password: z
+    .string()
+    .min(MIN_PASSWORD_LENGTH, `Password must be at least ${MIN_PASSWORD_LENGTH} characters.`)
+    .refine((v) => /[A-Z]/.test(v), 'Password must include at least 1 uppercase letter.')
+    .refine((v) => /[a-z]/.test(v), 'Password must include at least 1 lowercase letter.')
+    .refine((v) => /\d/.test(v), 'Password must include at least 1 number.')
+    .refine((v) => /[^a-zA-Z\d]/.test(v), 'Password must include at least 1 special character.'),
   phone: z.string().optional(),
 })
 

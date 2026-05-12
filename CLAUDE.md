@@ -221,7 +221,7 @@ RAZORPAY_KEY_SECRET="..."
 ## Database seed
 
 20 restaurants (Bangalore), 10 menu items each, 3 categories per restaurant, 4 demo coupons.
-Demo user: `demo@swiggy.com / password123`.
+Demo user: `demo@swiggy.com / Demo@1234`.
 Re-seeding is idempotent — upserts on `slug`, updating `imageUrl` and `bannerUrl`.
 
 Coupon codes: `WELCOME20` (20% off, max ₹100), `FLAT50` (₹50 flat), `SAVE100` (₹100 flat, min ₹399), `FESTIVE30` (30% off, max ₹150).

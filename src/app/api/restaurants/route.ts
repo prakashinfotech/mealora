@@ -7,6 +7,7 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url)
 
     const filters: RestaurantFilters = {
+      city: searchParams.get('city') ?? undefined,
       search: searchParams.get('search') ?? undefined,
       cuisine: searchParams.get('cuisine') ?? undefined,
       rating: searchParams.get('rating') ? Number(searchParams.get('rating')) : undefined,

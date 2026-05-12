@@ -15,10 +15,10 @@ export async function main() {
   console.log('🌱 Seeding database...\n')
 
   // ─── Demo User ───────────────────────────────────────────────────────────────
-  const hashedPassword = await bcrypt.hash('password123', 12)
+  const hashedPassword = await bcrypt.hash('Demo@1234', 12)
   const user = await prisma.user.upsert({
     where: { email: 'demo@swiggy.com' },
-    update: {},
+    update: { password: hashedPassword },
     create: {
       name: 'Demo User',
       email: 'demo@swiggy.com',
@@ -116,6 +116,6 @@ export async function main() {
   console.log(`✨ Seeding complete!`)
   console.log(`   ${totalRestaurants} restaurants across ${allCities.length} cities`)
   console.log(`   ${totalMenuItems} menu items total`)
-  console.log(`   Demo login: demo@swiggy.com / password123`)
+  console.log(`   Demo login: demo@swiggy.com / Demo@1234`)
   console.log(`   Coupons: ${coupons.map((c) => c.code).join(', ')}`)
 }

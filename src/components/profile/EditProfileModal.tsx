@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import type { ProfileUser } from './ProfileContent'
+import { validateName, validatePhone } from '@/lib/form-validation'
 
 interface Props {
   user: ProfileUser
@@ -12,21 +13,21 @@ interface Props {
 export function EditProfileModal({ user, onSuccess, onClose }: Props) {
   const [name, setName] = useState(user.name)
   const [phone, setPhone] = useState(user.phone ?? '')
-  const [error, setError] = useState('')
+  const [errors, setErrors] = useState({ name: '', phone: '' })
+  const [serverError, setServerError] = useState('')
   const [submitting, setSubmitting] = useState(false)
+
+  const setFieldError = (field: 'name' | 'phone', value: string) =>
+    setErrors((p) => ({ ...p, [field]: value }))
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setError('')
+    setServerError('')
 
-    if (name.trim().length < 2) {
-      setError('Name must be at least 2 characters.')
-      return
-    }
-    if (phone && !/^\d{10}$/.test(phone)) {
-      setError('Phone must be exactly 10 digits.')
-      return
-    }
+    const nameErr = validateName(name)
+    const phoneErr = validatePhone(phone)
+    setErrors({ name: nameErr, phone: phoneErr })
+    if (nameErr || phoneErr) return
 
     setSubmitting(true)
     try {
@@ -46,7 +47,7 @@ export function EditProfileModal({ user, onSuccess, onClose }: Props) {
         phone: json.data.phone ?? null,
       })
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Something went wrong.')
+      setServerError(err instanceof Error ? err.message : 'Something went wrong.')
     } finally {
       setSubmitting(false)
     }
@@ -76,11 +77,12 @@ export function EditProfileModal({ user, onSuccess, onClose }: Props) {
             <input
               type="text"
               value={name}
-              onChange={(e) => setName(e.target.value)}
+              onChange={(e) => { setName(e.target.value); setFieldError('name', '') }}
+              onBlur={() => setFieldError('name', validateName(name))}
               placeholder="Your name"
-              required
-              className="w-full border border-swiggy-border rounded-xl px-4 py-3 text-sm text-swiggy-black focus:outline-none focus:ring-2 focus:ring-brand-orange/30 focus:border-brand-orange transition-colors"
+              className={`w-full border rounded-xl px-4 py-3 text-sm text-swiggy-black focus:outline-none focus:ring-2 transition-colors ${errors.name ? 'border-swiggy-red focus:ring-swiggy-red/30 focus:border-swiggy-red' : 'border-swiggy-border focus:ring-brand-orange/30 focus:border-brand-orange'}`}
             />
+            {errors.name && <p className="mt-1 text-xs text-swiggy-red">{errors.name}</p>}
           </div>
 
           <div>
@@ -90,10 +92,12 @@ export function EditProfileModal({ user, onSuccess, onClose }: Props) {
             <input
               type="tel"
               value={phone}
-              onChange={(e) => setPhone(e.target.value.replace(/\D/g, '').slice(0, 10))}
+              onChange={(e) => { setPhone(e.target.value.replace(/\D/g, '').slice(0, 10)); setFieldError('phone', '') }}
+              onBlur={() => setFieldError('phone', validatePhone(phone))}
               placeholder="10-digit mobile number"
-              className="w-full border border-swiggy-border rounded-xl px-4 py-3 text-sm text-swiggy-black focus:outline-none focus:ring-2 focus:ring-brand-orange/30 focus:border-brand-orange transition-colors"
+              className={`w-full border rounded-xl px-4 py-3 text-sm text-swiggy-black focus:outline-none focus:ring-2 transition-colors ${errors.phone ? 'border-swiggy-red focus:ring-swiggy-red/30 focus:border-swiggy-red' : 'border-swiggy-border focus:ring-brand-orange/30 focus:border-brand-orange'}`}
             />
+            {errors.phone && <p className="mt-1 text-xs text-swiggy-red">{errors.phone}</p>}
           </div>
 
           <div>
@@ -109,9 +113,9 @@ export function EditProfileModal({ user, onSuccess, onClose }: Props) {
             <p className="text-xs text-swiggy-gray-light mt-1">Email cannot be changed.</p>
           </div>
 
-          {error && (
+          {serverError && (
             <p className="text-xs font-semibold text-swiggy-red bg-red-50 px-3 py-2 rounded-lg">
-              {error}
+              {serverError}
             </p>
           )}
 

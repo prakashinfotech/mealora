@@ -19,7 +19,7 @@ Swiggy clone — full-stack food delivery web app built with Next.js 14, Prisma 
 - [x] Neon cloud PostgreSQL (ap-southeast-1)
 - [x] Seed: 20 Bangalore restaurants, 10 menu items each, 3 categories, 4 demo coupons
 - [x] Seed is idempotent (upserts on slug)
-- [x] Demo user: `demo@swiggy.com / password123`
+- [x] Demo user: `demo@swiggy.com / Demo@1234`
 - [x] DB index on `(userId, createdAt)` for order history queries
 
 ### Auth
