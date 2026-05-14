@@ -17,6 +17,7 @@ class RouteNames {
   static const String orderSuccess = 'orderSuccess';
 
   static const String profile = 'profile';
+  static const String addressManagement = 'addressManagement';
 }
 
 class RoutePaths {
@@ -37,4 +38,5 @@ class RoutePaths {
   static const String orderSuccess = '/order-success/:id';
 
   static const String profile = '/profile';
+  static const String addressManagement = '/profile/addresses';
 }

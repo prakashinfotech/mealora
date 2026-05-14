@@ -4,7 +4,7 @@
 
 | Concern | Choice |
 |---|---|
-| Framework | Next.js 14, App Router |
+| Framework | React, Next.js 14, App Router |
 | Language | TypeScript 5, strict mode |
 | Styling | Tailwind CSS 3, custom design tokens |
 | Database | PostgreSQL via Neon (cloud, ap-southeast-1) |

@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:razorpay_flutter/razorpay_flutter.dart';
 import '../../../core/router/route_names.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
 import '../../../core/utils/formatters.dart';
 import '../../addresses/models/address_model.dart';
 import '../../addresses/providers/address_provider.dart';
+import '../../cart/models/cart_item.dart';
 import '../../cart/providers/cart_provider.dart';
+import '../../checkout/data/models/payment_models.dart';
 import '../../checkout/providers/checkout_provider.dart';
 import '../../coupons/models/coupon_model.dart';
 import '../../coupons/providers/coupon_provider.dart';
@@ -20,22 +23,180 @@ class CheckoutScreen extends ConsumerStatefulWidget {
 }
 
 class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
+  ProviderSubscription<AsyncValue<List<Address>>>? _addressSub;
+
+  // Razorpay — initialized once, cleared on dispose
+  late final Razorpay _razorpay;
+
+  // Stored between Step 1 (initOnlinePayment) and Step 3 (confirmOnlinePayment)
+  // so the SDK success callback has all data needed for verification.
+  RazorpayOrderData? _pendingRzpOrder;
+  String? _pendingRestaurantId;
+  String? _pendingAddressId;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // ── Razorpay setup ──────────────────────────────────────────────────────
+    _razorpay = Razorpay();
+    _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _onRazorpaySuccess);
+    _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _onRazorpayError);
+    _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _onExternalWallet);
+
+    // ── Address auto-selection ───────────────────────────────────────────────
+    _addressSub = ref.listenManual<AsyncValue<List<Address>>>(
+      addressesProvider,
+      (_, next) => _tryAutoSelectAddress(next),
+      fireImmediately: true,
+    );
+  }
+
+  void _tryAutoSelectAddress(AsyncValue<List<Address>> value) {
+    value.whenData((addresses) {
+      if (ref.read(checkoutProvider).selectedAddress == null &&
+          addresses.isNotEmpty) {
+        final defaultAddr = addresses.firstWhere(
+          (a) => a.isDefault,
+          orElse: () => addresses.first,
+        );
+        // Defer to post-frame — prevents !parentDataDirty semantics assertion
+        // that fires when state changes during build/layout/GoRouter animation.
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (mounted) {
+            ref.read(checkoutProvider.notifier).selectAddress(defaultAddr);
+          }
+        });
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _addressSub?.close();
+    _razorpay.clear(); // detach listeners & release native resources
+    super.dispose();
+  }
+
+  // ─── Place-order entry point ─────────────────────────────────────────────
+
+  Future<void> _handlePlaceOrder(CartState cart) async {
+    final checkout = ref.read(checkoutProvider);
+    if (checkout.selectedAddress == null || checkout.isPlacingOrder) return;
+
+    if (checkout.paymentMode == 'ONLINE') {
+      await _startOnlinePayment(cart, checkout.selectedAddress!);
+    } else {
+      await _placeCodOrder(cart);
+    }
+  }
+
+  // ─── COD ─────────────────────────────────────────────────────────────────
+
+  Future<void> _placeCodOrder(CartState cart) async {
+    final order = await ref.read(checkoutProvider.notifier).placeOrder(cart);
+    if (order != null && mounted) {
+      ref.read(cartProvider.notifier).clearCart();
+      context.goNamed(RouteNames.orderSuccess, pathParameters: {'id': order.id});
+    }
+  }
+
+  // ─── ONLINE Step 1: create Razorpay order on backend ─────────────────────
+
+  Future<void> _startOnlinePayment(CartState cart, Address address) async {
+    final rzpData = await ref.read(checkoutProvider.notifier).initOnlinePayment(cart);
+    if (rzpData == null || !mounted) return;
+
+    // Store for the SDK success callback
+    _pendingRzpOrder = rzpData;
+    _pendingRestaurantId = cart.restaurantId;
+    _pendingAddressId = address.id;
+
+    final options = <String, dynamic>{
+      'key': rzpData.keyId,
+      'amount': rzpData.amount,        // already in paise from backend
+      'currency': rzpData.currency,
+      'order_id': rzpData.razorpayOrderId,
+      'name': 'Swiggy Clone',
+      'description': 'Food Order',
+      'theme': {'color': '#FC8019'},
+    };
+
+    try {
+      _razorpay.open(options);
+    } catch (e) {
+      ref.read(checkoutProvider.notifier)
+          .setOrderError('Could not open payment gateway. Please try again.');
+    }
+  }
+
+  // ─── ONLINE Step 3: Razorpay SDK success callback ─────────────────────────
+
+  Future<void> _onRazorpaySuccess(PaymentSuccessResponse response) async {
+    final pending = _pendingRzpOrder;
+    final restaurantId = _pendingRestaurantId;
+    final addressId = _pendingAddressId;
+
+    // Guard: if any pending data is missing, abort safely
+    if (pending == null ||
+        restaurantId == null ||
+        addressId == null ||
+        response.paymentId == null ||
+        response.orderId == null ||
+        response.signature == null) {
+      ref.read(checkoutProvider.notifier).setOrderError(
+        'Payment completed but order data is missing. Contact support.',
+      );
+      return;
+    }
+
+    _pendingRzpOrder = null;
+    _pendingRestaurantId = null;
+    _pendingAddressId = null;
+
+    final order = await ref.read(checkoutProvider.notifier).confirmOnlinePayment(
+      razorpayOrderId: response.orderId!,
+      razorpayPaymentId: response.paymentId!,
+      razorpaySignature: response.signature!,
+      restaurantId: restaurantId,
+      addressId: addressId,
+      items: pending.items.map((e) => e.toJson()).toList(),
+      subtotal: pending.subtotal,
+      deliveryFee: pending.deliveryFee,
+      taxes: pending.taxes,
+      discount: pending.discount,
+      total: pending.total,
+      couponCode: pending.couponCode,
+    );
+
+    if (order != null && mounted) {
+      ref.read(cartProvider.notifier).clearCart();
+      context.goNamed(RouteNames.orderSuccess, pathParameters: {'id': order.id});
+    }
+  }
+
+  // ─── ONLINE: payment cancelled or failed ──────────────────────────────────
+
+  void _onRazorpayError(PaymentFailureResponse response) {
+    _pendingRzpOrder = null;
+    _pendingRestaurantId = null;
+    _pendingAddressId = null;
+
+    final isCancelled = response.code == Razorpay.PAYMENT_CANCELLED;
+    ref.read(checkoutProvider.notifier).setOrderError(
+      isCancelled
+          ? 'Payment cancelled.'
+          : response.message ?? 'Payment failed. Please try again.',
+    );
+  }
+
+  void _onExternalWallet(ExternalWalletResponse response) {
+    // External wallet selected (e.g. Paytm). The wallet app handles the flow.
+    // Razorpay fires EVENT_PAYMENT_SUCCESS or ERROR when it completes.
+  }
+
   @override
   Widget build(BuildContext context) {
-    // Auto-select default address the moment addresses finish loading.
-    ref.listen<AsyncValue<List<Address>>>(addressesProvider, (_, next) {
-      next.whenData((addresses) {
-        if (ref.read(checkoutProvider).selectedAddress == null &&
-            addresses.isNotEmpty) {
-          final defaultAddr = addresses.firstWhere(
-            (a) => a.isDefault,
-            orElse: () => addresses.first,
-          );
-          ref.read(checkoutProvider.notifier).selectAddress(defaultAddr);
-        }
-      });
-    });
-
     final cart = ref.watch(cartProvider);
     final checkout = ref.watch(checkoutProvider);
 
@@ -122,7 +283,10 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
             ),
         ],
       ),
-      bottomNavigationBar: _PlaceOrderBar(total: total),
+      bottomNavigationBar: _PlaceOrderBar(
+        total: total,
+        onPlaceOrder: () => _handlePlaceOrder(cart),
+      ),
     );
   }
 }
@@ -413,11 +577,10 @@ class _PaymentSection extends ConsumerWidget {
           _PaymentOption(
             value: 'ONLINE',
             label: 'Online Payment',
-            subtitle: 'Coming soon',
+            subtitle: 'UPI, cards, net banking',
             icon: Icons.credit_card_outlined,
             selected: mode,
-            onSelect: (_) {}, // disabled
-            disabled: true,
+            onSelect: ref.read(checkoutProvider.notifier).setPaymentMode,
           ),
         ],
       ),
@@ -433,7 +596,6 @@ class _PaymentOption extends StatelessWidget {
     required this.selected,
     required this.onSelect,
     this.subtitle,
-    this.disabled = false,
   });
 
   final String value;
@@ -442,13 +604,12 @@ class _PaymentOption extends StatelessWidget {
   final IconData icon;
   final String selected;
   final ValueChanged<String> onSelect;
-  final bool disabled;
 
   @override
   Widget build(BuildContext context) {
-    final isSelected = selected == value && !disabled;
+    final isSelected = selected == value;
     return GestureDetector(
-      onTap: disabled ? null : () => onSelect(value),
+      onTap: () => onSelect(value),
       child: Container(
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
@@ -463,22 +624,13 @@ class _PaymentOption extends StatelessWidget {
           children: [
             Icon(icon,
                 size: 20,
-                color: disabled
-                    ? AppColors.swiggyLightGray
-                    : isSelected
-                        ? AppColors.brandOrange
-                        : AppColors.swiggyGray),
+                color: isSelected ? AppColors.brandOrange : AppColors.swiggyGray),
             const SizedBox(width: 10),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    label,
-                    style: AppTextStyles.titleLarge.copyWith(
-                      color: disabled ? AppColors.swiggyLightGray : AppColors.swiggyBlack,
-                    ),
-                  ),
+                  Text(label, style: AppTextStyles.titleLarge),
                   if (subtitle != null)
                     Text(subtitle!, style: AppTextStyles.bodySmall),
                 ],
@@ -853,13 +1005,13 @@ class _Row extends StatelessWidget {
 // ─── Place Order Bar ──────────────────────────────────────────────────────────
 
 class _PlaceOrderBar extends ConsumerWidget {
-  const _PlaceOrderBar({required this.total});
+  const _PlaceOrderBar({required this.total, required this.onPlaceOrder});
   final double total;
+  final VoidCallback onPlaceOrder;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final checkout = ref.watch(checkoutProvider);
-    final cart = ref.watch(cartProvider);
     final canPlace = checkout.selectedAddress != null && !checkout.isPlacingOrder;
 
     return Container(
@@ -873,19 +1025,7 @@ class _PlaceOrderBar extends ConsumerWidget {
         child: SizedBox(
           width: double.infinity,
           child: ElevatedButton(
-            onPressed: canPlace
-                ? () async {
-                    final order =
-                        await ref.read(checkoutProvider.notifier).placeOrder(cart);
-                    if (order != null && context.mounted) {
-                      ref.read(cartProvider.notifier).clearCart();
-                      context.goNamed(
-                        RouteNames.orderSuccess,
-                        pathParameters: {'id': order.id},
-                      );
-                    }
-                  }
-                : null,
+            onPressed: canPlace ? onPlaceOrder : null,
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.brandOrange,
               disabledBackgroundColor: AppColors.swiggyLightGray,

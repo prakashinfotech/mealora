@@ -42,15 +42,6 @@ class LoginInput {
 
   final String email;
   final String password;
-
-  Map<String, String> toFormData(String csrfToken) => {
-        'csrfToken': csrfToken,
-        'email': email,
-        'password': password,
-        'redirect': 'false',
-        'callbackUrl': '/',
-        'json': 'true',
-      };
 }
 
 class RegisterInput {

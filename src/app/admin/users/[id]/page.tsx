@@ -106,7 +106,6 @@ export default async function AdminUserDetailPage({ params }: Props) {
                         <Link
                           href={`/admin/orders/${order.id}`}
                           className="font-mono text-xs font-semibold text-brand-orange hover:underline"
-                          onClick={(e) => e.stopPropagation()}
                         >
                           #{order.id.slice(-8).toUpperCase()}
                         </Link>

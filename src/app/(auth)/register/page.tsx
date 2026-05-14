@@ -153,7 +153,7 @@ export default function RegisterPage() {
             <Input
               label="Password"
               type={showPassword ? 'text' : 'password'}
-              placeholder="At least 6 characters"
+              placeholder="At least 8 characters"
               value={form.password}
               onChange={set('password')}
               onBlur={() => handleBlur('password')}

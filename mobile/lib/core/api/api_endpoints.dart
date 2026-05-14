@@ -1,11 +1,9 @@
 class ApiEndpoints {
   ApiEndpoints._();
 
-  // ─── Auth (NextAuth) ──────────────────────────────────────────────────────
-  static const String csrf = '/api/auth/csrf';
-  static const String credentialsCallback = '/api/auth/callback/credentials';
+  // ─── Auth ─────────────────────────────────────────────────────────────────
+  static const String mobileLogin = '/api/auth/mobile';
   static const String session = '/api/auth/session';
-  static const String signOut = '/api/auth/signout';
   static const String register = '/api/auth/register';
 
   // ─── User ─────────────────────────────────────────────────────────────────

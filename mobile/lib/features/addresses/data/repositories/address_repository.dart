@@ -18,4 +18,10 @@ class AddressRepository {
         data: body,
         fromJson: (data) => Address.fromJson(data as Map<String, dynamic>),
       );
+
+  Future<void> setDefault(String id) =>
+      _client.voidPatch(ApiEndpoints.addressById(id));
+
+  Future<void> deleteAddress(String id) =>
+      _client.delete(ApiEndpoints.addressById(id));
 }

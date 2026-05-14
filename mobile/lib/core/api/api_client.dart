@@ -99,6 +99,25 @@ class ApiClient {
     }
   }
 
+  /// For PATCH endpoints that return only `{ success: true }` without a data payload.
+  Future<void> voidPatch(String path, {dynamic data}) async {
+    try {
+      final response = await _dio.patch<Map<String, dynamic>>(path, data: data);
+      _assertSuccess(response);
+    } on DioException catch (e) {
+      throw _unwrapDioError(e);
+    }
+  }
+
+  Future<void> delete(String path) async {
+    try {
+      final response = await _dio.delete<Map<String, dynamic>>(path);
+      _assertSuccess(response);
+    } on DioException catch (e) {
+      throw _unwrapDioError(e);
+    }
+  }
+
   /// Raw Dio for special cases (auth cookie extraction, form submissions).
   Future<Response<dynamic>> rawPost(
     String path, {

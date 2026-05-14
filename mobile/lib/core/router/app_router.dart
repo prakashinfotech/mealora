@@ -11,20 +11,12 @@ import '../../features/home/screens/home_screen.dart';
 import '../../features/orders/screens/order_detail_screen.dart';
 import '../../features/orders/screens/order_success_screen.dart';
 import '../../features/orders/screens/orders_screen.dart';
+import '../../features/addresses/screens/address_management_screen.dart';
+import '../../features/profile/screens/profile_screen.dart';
 import '../../features/restaurants/screens/restaurant_detail_screen.dart';
 import '../../features/restaurants/screens/restaurants_screen.dart';
 import '../../shared/screens/main_shell.dart';
 import 'route_names.dart';
-
-class _ComingSoonScreen extends StatelessWidget {
-  const _ComingSoonScreen(this.title);
-  final String title;
-  @override
-  Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(title: Text(title)),
-        body: const Center(child: Text('Coming soon')),
-      );
-}
 
 // Triggers GoRouter.redirect re-evaluation when auth state changes,
 // without recreating the router itself.
@@ -149,7 +141,14 @@ final routerProvider = Provider<GoRouter>((ref) {
           GoRoute(
             path: RoutePaths.profile,
             name: RouteNames.profile,
-            builder: (_, __) => const _ComingSoonScreen('Profile'),
+            builder: (_, __) => const ProfileScreen(),
+            routes: [
+              GoRoute(
+                path: 'addresses',
+                name: RouteNames.addressManagement,
+                builder: (_, __) => const AddressManagementScreen(),
+              ),
+            ],
           ),
         ],
       ),
