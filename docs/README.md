@@ -2,6 +2,33 @@
 
 A production-grade Swiggy clone built with Next.js 14 (App Router), TypeScript, Tailwind CSS, PostgreSQL, and Prisma.
 
+---
+
+## Documentation Index
+
+### Architecture & Engineering
+| Document | Purpose |
+|---|---|
+| [ARCHITECTURE.md](ARCHITECTURE.md) | Full system design — layers, directory layout, DB schema, data flow |
+| [RULES.md](RULES.md) | Non-negotiable engineering rules and layer contracts |
+| [SKILLS.md](SKILLS.md) | Implemented capabilities and infrastructure reference |
+
+### Development
+| Document | Purpose |
+|---|---|
+| [COMMANDS.md](COMMANDS.md) | All CLI commands — dev server, DB, Flutter, git workflow |
+| [PROJECT_PROGRESS.md](PROJECT_PROGRESS.md) | Phase-by-phase feature completion tracker |
+
+### AI Workflow
+| Document | Purpose |
+|---|---|
+| [AGENTS.md](AGENTS.md) | Agent roster, boundaries, and collaboration workflow |
+| [`../CLAUDE.md`](../CLAUDE.md) | Claude Code project instructions — lives at repo root (required by tooling) |
+
+> All file paths in this documentation are relative to the **project root** (`../`), not to this `docs/` folder.
+
+---
+
 ## Tech Stack
 
 | Layer | Technology |
