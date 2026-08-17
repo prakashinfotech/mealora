@@ -4,7 +4,7 @@
 
 ## Project
 
-Full-stack Swiggy food delivery clone. Next.js 14 App Router, TypeScript strict, PostgreSQL (Neon) via Prisma, NextAuth.js v4, Zustand, Tailwind CSS, Razorpay payments.
+Full-stack Mealora food delivery platform. Next.js 14 App Router, TypeScript strict, PostgreSQL (Neon) via Prisma, NextAuth.js v4, Zustand, Tailwind CSS, Razorpay payments.
 
 ## Commands
 
@@ -64,7 +64,7 @@ npm run db:studio    # Prisma Studio GUI
 - `src/lib/utils.ts` re-exports `@shared/helpers`, `@shared/constants`, plus `cn()`.
 
 ### Design
-- **Design tokens only.** Use `brand-orange`, `swiggy-black`, `swiggy-gray`, `swiggy-green`, `swiggy-red`. Never hardcode hex values.
+- **Design tokens only.** Use `brand-primary`, `app-black`, `app-gray`, `app-green`, `app-red`. Never hardcode hex values.
 - **`cn()` for class merging.** `import { cn } from '@/lib/utils'` — clsx + tailwind-merge.
 
 ---
@@ -75,9 +75,9 @@ Three stores, all with `persist` middleware:
 
 | Store | Key | Purpose |
 |---|---|---|
-| `cartStore` | `swiggy-cart` | Cart items, restaurantId, restaurantName, subtotal |
-| `cityStore` | `swiggy-city` | Selected city + stateAbbr; `_hasHydrated` flag |
-| `settingsStore` | `swiggy-settings` | User notification preferences |
+| `cartStore` | `mealora-cart` | Cart items, restaurantId, restaurantName, subtotal |
+| `cityStore` | `mealora-city` | Selected city + stateAbbr; `_hasHydrated` flag |
+| `settingsStore` | `mealora-settings` | User notification preferences |
 
 **Cart rules:** Client-only. No DB cart table. Cart auto-clears on restaurant change. Server re-validates all totals on order creation — never trust client-computed amounts.
 
@@ -182,7 +182,7 @@ Middleware (`src/middleware.ts`) redirects unauthenticated users away from `/pro
 
 ## City persistence strategy
 
-- City is stored in `cityStore` (Zustand + localStorage, key `swiggy-city`).
+- City is stored in `cityStore` (Zustand + localStorage, key `mealora-city`).
 - `_hasHydrated` flag prevents SSR flash — only render city-dependent UI after hydration.
 - `CitySync` (homepage) and `CityParamSync` (restaurants page) bridge the store into URL search params so server components can read the city from `searchParams`.
 - `CityMismatchBanner` (restaurant detail) warns when the restaurant's city differs from the selected city.
@@ -223,7 +223,7 @@ RAZORPAY_KEY_SECRET="..."
 ## Database seed
 
 20 restaurants (Bangalore), 10 menu items each, 3 categories per restaurant, 4 demo coupons.
-Demo user: `demo@swiggy.com / Demo@1234`.
+Demo user: `demo@mealora.app / Demo@1234`.
 Re-seeding is idempotent — upserts on `slug`, updating `imageUrl` and `bannerUrl`.
 
 Coupon codes: `WELCOME20` (20% off, max ₹100), `FLAT50` (₹50 flat), `SAVE100` (₹100 flat, min ₹399), `FESTIVE30` (30% off, max ₹150).

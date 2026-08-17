@@ -16,6 +16,7 @@ export async function GET(request: Request) {
       sortBy: (searchParams.get('sortBy') as RestaurantFilters['sortBy']) ?? undefined,
       page: Number(searchParams.get('page') ?? 1),
       limit: Number(searchParams.get('limit') ?? 12),
+      maxCost: searchParams.get('maxCost') ? Number(searchParams.get('maxCost')) : undefined,
     }
 
     const data = await restaurantService.list(filters)

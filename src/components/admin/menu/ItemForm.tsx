@@ -231,7 +231,7 @@ export function ItemForm({ mode, restaurantId, categories, defaultValues }: Prop
           <button
             type="submit"
             disabled={saving}
-            className="px-6 py-2.5 rounded-xl bg-brand-orange text-white text-sm font-bold hover:bg-brand-orange-dark transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="px-6 py-2.5 rounded-xl bg-brand-primary text-white text-sm font-bold hover:bg-brand-primary-dark transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {saving ? 'Saving…' : mode === 'create' ? 'Create Item' : 'Save Changes'}
           </button>

@@ -70,7 +70,7 @@ class _CitySelectionSheetState extends State<_CitySelectionSheet> {
               padding: EdgeInsets.fromLTRB(20, 16, 20, 12),
               child: Row(
                 children: [
-                  Icon(Icons.location_city_outlined, color: AppColors.brandOrange, size: 20),
+                  Icon(Icons.location_city_outlined, color: AppColors.brandPrimary, size: 20),
                   SizedBox(width: 8),
                   Text('Select your city', style: AppTextStyles.headlineSmall),
                 ],
@@ -86,7 +86,7 @@ class _CitySelectionSheetState extends State<_CitySelectionSheet> {
                 decoration: InputDecoration(
                   hintText: 'Search city',
                   hintStyle: AppTextStyles.bodyMedium,
-                  prefixIcon: const Icon(Icons.search, size: 18, color: AppColors.swiggyLightGray),
+                  prefixIcon: const Icon(Icons.search, size: 18, color: AppColors.textTertiary),
                   suffixIcon: _searchController.text.isNotEmpty
                       ? IconButton(
                           icon: const Icon(Icons.close, size: 16),
@@ -156,7 +156,7 @@ class _CityListTile extends StatelessWidget {
             Icon(
               Icons.location_on_outlined,
               size: 18,
-              color: isSelected ? AppColors.brandOrange : AppColors.swiggyGray,
+              color: isSelected ? AppColors.brandPrimary : AppColors.textSecondary,
             ),
             const SizedBox(width: 12),
             Expanded(
@@ -164,12 +164,12 @@ class _CityListTile extends StatelessWidget {
                 city,
                 style: AppTextStyles.bodyLarge.copyWith(
                   fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
-                  color: isSelected ? AppColors.swiggyBlack : AppColors.swiggyGray,
+                  color: isSelected ? AppColors.textPrimary : AppColors.textSecondary,
                 ),
               ),
             ),
             if (isSelected)
-              const Icon(Icons.check_circle, size: 18, color: AppColors.brandOrange),
+              const Icon(Icons.check_circle, size: 18, color: AppColors.brandPrimary),
           ],
         ),
       ),

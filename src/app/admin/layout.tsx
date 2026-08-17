@@ -4,7 +4,7 @@ import { authOptions } from '@/lib/auth'
 import { AdminSidebar } from '@/components/admin/layout/AdminSidebar'
 import { AdminHeader } from '@/components/admin/layout/AdminHeader'
 
-export const metadata = { title: { default: 'Admin', template: '%s | Admin' } }
+export const metadata = { title: { default: 'Mealora Admin', template: '%s | Mealora Admin' } }
 
 export default async function AdminLayout({
   children,

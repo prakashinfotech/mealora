@@ -54,7 +54,7 @@ class _OrdersScreenState extends ConsumerState<OrdersScreen> {
       ),
       body: state.when(
         loading: () => const Center(
-          child: CircularProgressIndicator(color: AppColors.brandOrange),
+          child: CircularProgressIndicator(color: AppColors.brandPrimary),
         ),
         error: (e, _) => Center(
           child: Padding(
@@ -62,13 +62,13 @@ class _OrdersScreenState extends ConsumerState<OrdersScreen> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Icon(Icons.error_outline, size: 48, color: AppColors.swiggyLightGray),
+                const Icon(Icons.error_outline, size: 48, color: AppColors.textTertiary),
                 const SizedBox(height: 12),
                 Text(e.toString(), style: AppTextStyles.bodyMedium, textAlign: TextAlign.center),
                 const SizedBox(height: 16),
                 ElevatedButton(
                   onPressed: () => ref.invalidate(ordersProvider),
-                  style: ElevatedButton.styleFrom(backgroundColor: AppColors.brandOrange),
+                  style: ElevatedButton.styleFrom(backgroundColor: AppColors.brandPrimary),
                   child: const Text('Retry', style: TextStyle(color: Colors.white)),
                 ),
               ],
@@ -90,7 +90,7 @@ class _OrdersScreenState extends ConsumerState<OrdersScreen> {
                   child: Padding(
                     padding: EdgeInsets.all(16),
                     child: CircularProgressIndicator(
-                        color: AppColors.brandOrange, strokeWidth: 2),
+                        color: AppColors.brandPrimary, strokeWidth: 2),
                   ),
                 );
               }
@@ -124,11 +124,11 @@ class _EmptyOrders extends StatelessWidget {
               width: 90,
               height: 90,
               decoration: const BoxDecoration(
-                color: AppColors.brandOrangeLight,
+                color: AppColors.brandPrimaryLight,
                 shape: BoxShape.circle,
               ),
               child: const Icon(Icons.receipt_long_outlined,
-                  size: 40, color: AppColors.brandOrange),
+                  size: 40, color: AppColors.brandPrimary),
             ),
             const SizedBox(height: 20),
             const Text('No orders yet', style: AppTextStyles.headlineSmall),
@@ -142,7 +142,7 @@ class _EmptyOrders extends StatelessWidget {
             ElevatedButton(
               onPressed: () => context.goNamed(RouteNames.restaurants),
               style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.brandOrange,
+                backgroundColor: AppColors.brandPrimary,
                 padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 14),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
               ),
@@ -252,11 +252,11 @@ class _OrderCard extends StatelessWidget {
                   children: [
                     Text('View Details',
                         style: TextStyle(
-                            color: AppColors.brandOrange,
+                            color: AppColors.brandPrimary,
                             fontSize: 12,
                             fontWeight: FontWeight.w600)),
                     SizedBox(width: 2),
-                    Icon(Icons.chevron_right, size: 16, color: AppColors.brandOrange),
+                    Icon(Icons.chevron_right, size: 16, color: AppColors.brandPrimary),
                   ],
                 ),
               ],
@@ -270,7 +270,7 @@ class _OrderCard extends StatelessWidget {
   static Color _statusColor(String status) => switch (status) {
         'DELIVERED' => AppColors.vegGreen,
         'CANCELLED' => AppColors.error,
-        'OUT_FOR_DELIVERY' => AppColors.brandOrange,
+        'OUT_FOR_DELIVERY' => AppColors.brandPrimary,
         _ => AppColors.warning,
       };
 
@@ -302,7 +302,7 @@ class _PlaceholderImage extends StatelessWidget {
         color: AppColors.shimmerBase,
         borderRadius: BorderRadius.circular(8),
       ),
-      child: const Icon(Icons.restaurant, color: AppColors.swiggyLightGray),
+      child: const Icon(Icons.restaurant, color: AppColors.textTertiary),
     );
   }
 }

@@ -22,7 +22,7 @@ export function CityMismatchBanner({ restaurantCity }: Props) {
         </p>
         <Link
           href={`/restaurants?city=${encodeURIComponent(currentCity)}`}
-          className="shrink-0 text-sm font-bold text-brand-orange hover:text-brand-orange-dark transition-colors"
+          className="shrink-0 text-sm font-bold text-brand-primary hover:text-brand-primary-dark transition-colors"
         >
           Browse {currentCity} restaurants →
         </Link>

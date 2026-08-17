@@ -8,12 +8,11 @@ class AppTheme {
   static ThemeData get light => ThemeData(
         useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(
-          seedColor: AppColors.brandOrange,
-          primary: AppColors.brandOrange,
+          seedColor: AppColors.brandPrimary,
+          primary: AppColors.brandPrimary,
           onPrimary: Colors.white,
           surface: AppColors.surface,
-          onSurface: AppColors.swiggyBlack,
-          background: AppColors.background,
+          onSurface: AppColors.textPrimary,
           error: AppColors.error,
         ),
         scaffoldBackgroundColor: AppColors.background,
@@ -22,7 +21,7 @@ class AppTheme {
         // AppBar
         appBarTheme: const AppBarTheme(
           backgroundColor: AppColors.surface,
-          foregroundColor: AppColors.swiggyBlack,
+          foregroundColor: AppColors.textPrimary,
           elevation: 0,
           scrolledUnderElevation: 1,
           centerTitle: false,
@@ -53,20 +52,20 @@ class AppTheme {
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
-            borderSide: const BorderSide(color: AppColors.brandOrange, width: 1.5),
+            borderSide: const BorderSide(color: AppColors.brandPrimary, width: 1.5),
           ),
           errorBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
             borderSide: const BorderSide(color: AppColors.error),
           ),
-          hintStyle: AppTextStyles.bodyLarge.copyWith(color: AppColors.swiggyLightGray),
+          hintStyle: AppTextStyles.bodyLarge.copyWith(color: AppColors.textTertiary),
           labelStyle: AppTextStyles.bodyLarge,
         ),
 
         // Buttons
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-            backgroundColor: AppColors.brandOrange,
+            backgroundColor: AppColors.brandPrimary,
             foregroundColor: Colors.white,
             minimumSize: const Size(double.infinity, 52),
             shape: RoundedRectangleBorder(
@@ -83,7 +82,7 @@ class AppTheme {
 
         textButtonTheme: TextButtonThemeData(
           style: TextButton.styleFrom(
-            foregroundColor: AppColors.brandOrange,
+            foregroundColor: AppColors.brandPrimary,
             textStyle: AppTextStyles.labelLarge,
           ),
         ),
@@ -91,8 +90,8 @@ class AppTheme {
         // Bottom nav
         bottomNavigationBarTheme: const BottomNavigationBarThemeData(
           backgroundColor: AppColors.surface,
-          selectedItemColor: AppColors.brandOrange,
-          unselectedItemColor: AppColors.swiggyLightGray,
+          selectedItemColor: AppColors.brandPrimary,
+          unselectedItemColor: AppColors.textTertiary,
           showSelectedLabels: true,
           showUnselectedLabels: true,
           type: BottomNavigationBarType.fixed,
@@ -108,8 +107,8 @@ class AppTheme {
 
         // Chip
         chipTheme: ChipThemeData(
-          backgroundColor: AppColors.brandOrangeLight,
-          labelStyle: AppTextStyles.labelSmall.copyWith(color: AppColors.brandOrange),
+          backgroundColor: AppColors.brandPrimaryLight,
+          labelStyle: AppTextStyles.labelSmall.copyWith(color: AppColors.brandPrimary),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
           ),

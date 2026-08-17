@@ -85,8 +85,8 @@ function RouteProgressBar() {
           width: '0%',
           opacity: 0,
           zIndex: 9999,
-          backgroundColor: '#FC8019',
-          boxShadow: '0 0 8px rgba(252,128,25,0.6)',
+          backgroundColor: '#5B4BDB',
+          boxShadow: '0 0 8px rgba(91,75,219,0.6)',
           pointerEvents: 'none',
         }}
       />

@@ -225,7 +225,7 @@ export function CategoryListClient({ restaurantId }: Props) {
         <div className="flex items-center gap-2">
           <button
             onClick={(e) => { e.stopPropagation(); openEdit(row) }}
-            className="text-xs font-semibold text-brand-orange hover:underline"
+            className="text-xs font-semibold text-brand-primary hover:underline"
           >
             Edit
           </button>
@@ -276,7 +276,7 @@ export function CategoryListClient({ restaurantId }: Props) {
         {!showForm && (
           <button
             onClick={openCreate}
-            className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-brand-orange text-white text-sm font-bold hover:bg-brand-orange-dark transition-colors"
+            className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-brand-primary text-white text-sm font-bold hover:bg-brand-primary-dark transition-colors"
           >
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
@@ -351,7 +351,7 @@ export function CategoryListClient({ restaurantId }: Props) {
               <button
                 onClick={handleSubmit}
                 disabled={formSaving}
-                className="px-5 py-2 rounded-xl bg-brand-orange text-white text-sm font-bold hover:bg-brand-orange-dark transition-colors disabled:opacity-50"
+                className="px-5 py-2 rounded-xl bg-brand-primary text-white text-sm font-bold hover:bg-brand-primary-dark transition-colors disabled:opacity-50"
               >
                 {formSaving ? 'Saving…' : isEditing ? 'Save Changes' : 'Create Category'}
               </button>

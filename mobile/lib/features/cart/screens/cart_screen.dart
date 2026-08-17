@@ -31,7 +31,7 @@ class CartScreen extends ConsumerWidget {
           ],
         ),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: AppColors.swiggyBlack),
+          icon: const Icon(Icons.arrow_back, color: AppColors.textPrimary),
           onPressed: () => context.pop(),
         ),
         elevation: 0,
@@ -66,11 +66,11 @@ class _EmptyCart extends StatelessWidget {
               width: 90,
               height: 90,
               decoration: const BoxDecoration(
-                color: AppColors.brandOrangeLight,
+                color: AppColors.brandPrimaryLight,
                 shape: BoxShape.circle,
               ),
               child: const Icon(Icons.shopping_cart_outlined,
-                  size: 40, color: AppColors.brandOrange),
+                  size: 40, color: AppColors.brandPrimary),
             ),
             const SizedBox(height: 20),
             const Text('Your cart is empty', style: AppTextStyles.headlineSmall),
@@ -84,7 +84,7 @@ class _EmptyCart extends StatelessWidget {
             ElevatedButton(
               onPressed: onBrowse,
               style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.brandOrange,
+                backgroundColor: AppColors.brandPrimary,
                 padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 14),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
               ),
@@ -252,7 +252,7 @@ class _QuantityControl extends StatelessWidget {
       children: [
         Container(
           decoration: BoxDecoration(
-            color: AppColors.brandOrange,
+            color: AppColors.brandPrimary,
             borderRadius: BorderRadius.circular(6),
           ),
           child: Row(
@@ -350,7 +350,7 @@ class _CheckoutBar extends StatelessWidget {
           child: ElevatedButton(
             onPressed: () => context.pushNamed(RouteNames.checkout),
             style: ElevatedButton.styleFrom(
-              backgroundColor: AppColors.brandOrange,
+              backgroundColor: AppColors.brandPrimary,
               padding: const EdgeInsets.symmetric(vertical: 14),
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
             ),

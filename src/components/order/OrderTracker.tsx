@@ -54,8 +54,8 @@ export function OrderTracker({ orderId, initialStatus }: Props) {
     return (
       <div className="bg-red-50 border border-red-200 rounded-2xl p-6 text-center">
         <span className="text-4xl">❌</span>
-        <p className="font-bold text-swiggy-red mt-3">Order Cancelled</p>
-        <p className="text-sm text-swiggy-gray mt-1">
+        <p className="font-bold text-app-red mt-3">Order Cancelled</p>
+        <p className="text-sm text-app-gray mt-1">
           If you were charged, a refund will be processed in 3-5 business days.
         </p>
       </div>
@@ -66,15 +66,15 @@ export function OrderTracker({ orderId, initialStatus }: Props) {
 
   return (
     <div className="bg-white rounded-2xl shadow-card p-6">
-      <h2 className="font-bold text-swiggy-black text-lg mb-6">
+      <h2 className="font-bold text-app-black text-lg mb-6">
         {ORDER_STATUS_LABELS[currentStatus]}
       </h2>
 
       <div className="relative">
         {/* Progress line */}
-        <div className="absolute left-5 top-5 bottom-5 w-0.5 bg-swiggy-border" />
+        <div className="absolute left-5 top-5 bottom-5 w-0.5 bg-app-border" />
         <div
-          className="absolute left-5 top-5 w-0.5 bg-brand-orange transition-all duration-700"
+          className="absolute left-5 top-5 w-0.5 bg-brand-primary transition-all duration-700"
           style={{
             height: currentIndex > 0
               ? `${(currentIndex / (STATUS_STEPS.length - 1)) * 100}%`
@@ -93,10 +93,10 @@ export function OrderTracker({ orderId, initialStatus }: Props) {
                   className={cn(
                     'relative z-10 w-10 h-10 rounded-full flex items-center justify-center text-lg border-2 shrink-0',
                     isCompleted
-                      ? 'bg-brand-orange border-brand-orange text-white'
+                      ? 'bg-brand-primary border-brand-primary text-white'
                       : isCurrent
-                      ? 'bg-white border-brand-orange text-brand-orange'
-                      : 'bg-white border-swiggy-border text-swiggy-gray-light'
+                      ? 'bg-white border-brand-primary text-brand-primary'
+                      : 'bg-white border-app-border text-app-gray-light'
                   )}
                 >
                   {isCompleted ? (
@@ -111,12 +111,12 @@ export function OrderTracker({ orderId, initialStatus }: Props) {
                 <div>
                   <p className={cn(
                     'font-semibold text-sm',
-                    isCurrent ? 'text-brand-orange' : isCompleted ? 'text-swiggy-black' : 'text-swiggy-gray-light'
+                    isCurrent ? 'text-brand-primary' : isCompleted ? 'text-app-black' : 'text-app-gray-light'
                   )}>
                     {ORDER_STATUS_LABELS[step]}
                   </p>
                   {isCurrent && (
-                    <p className="text-xs text-swiggy-gray mt-0.5 animate-pulse">In progress...</p>
+                    <p className="text-xs text-app-gray mt-0.5 animate-pulse">In progress...</p>
                   )}
                 </div>
               </div>

@@ -48,7 +48,7 @@ export function AdminHeader({ user }: Props) {
       <div className="flex items-center gap-4">
         {/* User info */}
         <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-full bg-brand-orange flex items-center justify-center text-white text-xs font-bold">
+          <div className="w-8 h-8 rounded-full bg-brand-primary flex items-center justify-center text-white text-xs font-bold">
             {user.image ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img src={user.image} alt={user.name ?? ''} className="w-full h-full rounded-full object-cover" />

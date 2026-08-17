@@ -23,7 +23,7 @@ export const useCityStore = create<CityState>()(
       setHasHydrated: (v: boolean) => set({ _hasHydrated: v }),
     }),
     {
-      name: 'swiggy-city',
+      name: 'mealora-city',
       // Only persist city data — _hasHydrated must always start false
       partialize: (state) => ({ city: state.city, stateAbbr: state.stateAbbr }),
       onRehydrateStorage: () => (state) => {

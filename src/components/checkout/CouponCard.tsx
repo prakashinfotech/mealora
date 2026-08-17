@@ -50,15 +50,15 @@ export function CouponCard({ coupon, subtotal, isApplied, isApplying, onApply, o
       className={cn(
         'relative rounded-2xl border-2 p-4 transition-all duration-200',
         isApplied
-          ? 'border-brand-orange bg-brand-orange-light'
+          ? 'border-brand-primary bg-brand-primary-light'
           : isEligible
-            ? 'border-swiggy-border bg-white hover:border-brand-orange/40'
-            : 'border-dashed border-swiggy-border/60 bg-swiggy-gray-bg opacity-70',
+            ? 'border-app-border bg-white hover:border-brand-primary/40'
+            : 'border-dashed border-app-border/60 bg-app-gray-bg opacity-70',
       )}
     >
       {/* Applied badge */}
       {isApplied && (
-        <span className="absolute top-3 right-3 text-[10px] font-black uppercase tracking-wider text-white bg-brand-orange rounded-full px-2 py-0.5">
+        <span className="absolute top-3 right-3 text-[10px] font-black uppercase tracking-wider text-white bg-brand-primary rounded-full px-2 py-0.5">
           Applied
         </span>
       )}
@@ -66,24 +66,24 @@ export function CouponCard({ coupon, subtotal, isApplied, isApplying, onApply, o
       {/* Top row: code + offer label */}
       <div className="flex items-start gap-3 pr-16">
         <div>
-          <p className={cn('text-sm font-black tracking-widest uppercase', isApplied ? 'text-brand-orange' : 'text-swiggy-black')}>
+          <p className={cn('text-sm font-black tracking-widest uppercase', isApplied ? 'text-brand-primary' : 'text-app-black')}>
             {coupon.code}
           </p>
-          <p className="text-xs font-semibold text-swiggy-black mt-0.5">{getOfferLabel(coupon)}</p>
+          <p className="text-xs font-semibold text-app-black mt-0.5">{getOfferLabel(coupon)}</p>
         </div>
       </div>
 
       {/* Description */}
       {coupon.description && (
-        <p className="text-xs text-swiggy-gray mt-1.5 leading-snug">{coupon.description}</p>
+        <p className="text-xs text-app-gray mt-1.5 leading-snug">{coupon.description}</p>
       )}
 
       {/* Divider */}
-      <div className={cn('my-3 border-t', isApplied ? 'border-brand-orange/20' : 'border-swiggy-border/60')} />
+      <div className={cn('my-3 border-t', isApplied ? 'border-brand-primary/20' : 'border-app-border/60')} />
 
       {/* Bottom row: savings / shortfall + action */}
       <div className="flex items-center justify-between gap-2">
-        <p className={cn('text-xs font-medium', isEligible ? 'text-swiggy-green' : 'text-swiggy-gray')}>
+        <p className={cn('text-xs font-medium', isEligible ? 'text-app-green' : 'text-app-gray')}>
           {isApplied
             ? `You save ${formatPrice(savings)} 🎉`
             : isEligible
@@ -94,7 +94,7 @@ export function CouponCard({ coupon, subtotal, isApplied, isApplying, onApply, o
         {isApplied ? (
           <button
             onClick={onRemove}
-            className="text-xs font-bold text-brand-orange hover:text-brand-orange-dark transition-colors shrink-0"
+            className="text-xs font-bold text-brand-primary hover:text-brand-primary-dark transition-colors shrink-0"
           >
             Remove
           </button>
@@ -105,8 +105,8 @@ export function CouponCard({ coupon, subtotal, isApplied, isApplying, onApply, o
             className={cn(
               'text-xs font-bold px-3 py-1.5 rounded-lg transition-all shrink-0',
               isEligible
-                ? 'bg-brand-orange text-white hover:bg-brand-orange-dark disabled:opacity-60'
-                : 'bg-swiggy-border text-swiggy-gray cursor-not-allowed',
+                ? 'bg-brand-primary text-white hover:bg-brand-primary-dark disabled:opacity-60'
+                : 'bg-app-border text-app-gray cursor-not-allowed',
             )}
           >
             {isApplying ? (
@@ -121,7 +121,7 @@ export function CouponCard({ coupon, subtotal, isApplied, isApplying, onApply, o
 
       {/* Min order note */}
       {coupon.minOrderAmount && !isApplied && (
-        <p className="text-[10px] text-swiggy-gray-light mt-1.5">
+        <p className="text-[10px] text-app-gray-light mt-1.5">
           Min order {formatPrice(coupon.minOrderAmount)}
         </p>
       )}

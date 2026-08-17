@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { adminUserService } from '@server/services/admin-user.service'
-import { AdminBadge, ORDER_STATUS_VARIANT, PAYMENT_STATUS_VARIANT } from '@/components/admin/ui/AdminBadge'
+import { AdminBadge, ORDER_STATUS_VARIANT } from '@/components/admin/ui/AdminBadge'
 import { UserRoleUpdater } from '@/components/admin/users/UserRoleUpdater'
 import { formatPrice } from '@/lib/utils'
 
@@ -55,7 +55,7 @@ export default async function AdminUserDetailPage({ params }: Props) {
           </Link>
         </div>
         <div className="flex items-center gap-3 mt-2">
-          <div className="w-10 h-10 rounded-full bg-brand-orange/10 flex items-center justify-center text-brand-orange font-bold text-sm shrink-0">
+          <div className="w-10 h-10 rounded-full bg-brand-primary/10 flex items-center justify-center text-brand-primary font-bold text-sm shrink-0">
             {initials}
           </div>
           <div>
@@ -81,7 +81,7 @@ export default async function AdminUserDetailPage({ params }: Props) {
               <h3 className="text-sm font-semibold text-slate-800">Recent Orders</h3>
               <Link
                 href={`/admin/orders?search=${encodeURIComponent(user.email)}`}
-                className="text-xs text-brand-orange hover:underline font-medium"
+                className="text-xs text-brand-primary hover:underline font-medium"
               >
                 View all →
               </Link>
@@ -105,7 +105,7 @@ export default async function AdminUserDetailPage({ params }: Props) {
                       <td className="px-5 py-3">
                         <Link
                           href={`/admin/orders/${order.id}`}
-                          className="font-mono text-xs font-semibold text-brand-orange hover:underline"
+                          className="font-mono text-xs font-semibold text-brand-primary hover:underline"
                         >
                           #{order.id.slice(-8).toUpperCase()}
                         </Link>

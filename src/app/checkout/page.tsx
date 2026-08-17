@@ -28,7 +28,7 @@ function CheckoutError({ message }: { message: string }) {
       role="alert"
       className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 space-y-1"
     >
-      <p className="text-sm font-semibold text-swiggy-red">
+      <p className="text-sm font-semibold text-app-red">
         {isConfigError ? 'Online payment unavailable' : 'Something went wrong'}
       </p>
       <p className="text-xs text-red-600 leading-snug">
@@ -249,14 +249,14 @@ export default function CheckoutPage() {
         key: rzpData.keyId,
         amount: rzpData.amount,
         currency: rzpData.currency,
-        name: 'Swiggy Clone',
+        name: 'Mealora',
         description: `Order from ${restaurantName ?? 'restaurant'}`,
         order_id: rzpData.razorpayOrderId,
         prefill: {
           name: session?.user?.name ?? '',
           email: session?.user?.email ?? '',
         },
-        theme: { color: '#fc8019' },
+        theme: { color: '#5B4BDB' },
         modal: {
           ondismiss: () => {
             setPaymentStage('idle')
@@ -301,9 +301,9 @@ export default function CheckoutPage() {
   return (
     <>
       <Navbar />
-      <main className="bg-swiggy-gray-bg py-8">
+      <main className="bg-app-gray-bg py-8">
         <div className="max-w-5xl mx-auto px-4 sm:px-6">
-          <h1 className="text-2xl font-black text-swiggy-black mb-6">Checkout</h1>
+          <h1 className="text-2xl font-black text-app-black mb-6">Checkout</h1>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Left column */}
@@ -311,17 +311,17 @@ export default function CheckoutPage() {
               {/* Delivery address */}
               <section className="bg-white rounded-2xl shadow-card p-5">
                 <div className="flex items-center justify-between mb-4">
-                  <h2 className="font-bold text-swiggy-black">Delivery Address</h2>
+                  <h2 className="font-bold text-app-black">Delivery Address</h2>
                   <button
                     onClick={() => setShowAddressForm(!showAddressForm)}
-                    className="text-brand-orange text-sm font-semibold"
+                    className="text-brand-primary text-sm font-semibold"
                   >
                     + Add new
                   </button>
                 </div>
 
                 {showAddressForm && (
-                  <div className="mb-4 p-4 border border-swiggy-border rounded-xl space-y-3">
+                  <div className="mb-4 p-4 border border-app-border rounded-xl space-y-3">
                     <div className="flex gap-2">
                       {['Home', 'Work', 'Other'].map((l) => (
                         <button
@@ -329,8 +329,8 @@ export default function CheckoutPage() {
                           onClick={() => setNewAddress((p) => ({ ...p, label: l }))}
                           className={`px-3 py-1.5 text-xs font-semibold rounded-full border transition-colors ${
                             newAddress.label === l
-                              ? 'bg-brand-orange text-white border-brand-orange'
-                              : 'text-swiggy-black border-swiggy-border'
+                              ? 'bg-brand-primary text-white border-brand-primary'
+                              : 'text-app-black border-app-border'
                           }`}
                         >
                           {l}
@@ -364,8 +364,8 @@ export default function CheckoutPage() {
                       key={addr.id}
                       className={`flex items-start gap-3 p-3 rounded-xl border-2 cursor-pointer transition-colors ${
                         selectedAddressId === addr.id
-                          ? 'border-brand-orange bg-brand-orange-light'
-                          : 'border-swiggy-border hover:border-swiggy-gray-light'
+                          ? 'border-brand-primary bg-brand-primary-light'
+                          : 'border-app-border hover:border-app-gray-light'
                       }`}
                     >
                       <input
@@ -374,14 +374,14 @@ export default function CheckoutPage() {
                         value={addr.id}
                         checked={selectedAddressId === addr.id}
                         onChange={() => setSelectedAddressId(addr.id)}
-                        className="mt-1 accent-brand-orange"
+                        className="mt-1 accent-brand-primary"
                       />
                       <div>
-                        <span className="text-xs font-bold uppercase text-brand-orange">{addr.label}</span>
-                        <p className="text-sm text-swiggy-black mt-0.5">
+                        <span className="text-xs font-bold uppercase text-brand-primary">{addr.label}</span>
+                        <p className="text-sm text-app-black mt-0.5">
                           {addr.line1}{addr.line2 ? `, ${addr.line2}` : ''}
                         </p>
-                        <p className="text-xs text-swiggy-gray">{addr.city}, {addr.state} — {addr.pincode}</p>
+                        <p className="text-xs text-app-gray">{addr.city}, {addr.state} — {addr.pincode}</p>
                       </div>
                     </label>
                   ))}
@@ -390,15 +390,15 @@ export default function CheckoutPage() {
 
               {/* Payment */}
               <section className="bg-white rounded-2xl shadow-card p-5">
-                <h2 className="font-bold text-swiggy-black mb-4">Payment Method</h2>
+                <h2 className="font-bold text-app-black mb-4">Payment Method</h2>
                 <div className="space-y-3">
                   {PAYMENT_OPTIONS.map((opt) => (
                     <label
                       key={opt.mode}
                       className={`flex items-center gap-3 p-3 rounded-xl border-2 cursor-pointer transition-colors ${
                         paymentMode === opt.mode
-                          ? 'border-brand-orange bg-brand-orange-light'
-                          : 'border-swiggy-border hover:border-swiggy-gray-light'
+                          ? 'border-brand-primary bg-brand-primary-light'
+                          : 'border-app-border hover:border-app-gray-light'
                       }`}
                     >
                       <input
@@ -407,12 +407,12 @@ export default function CheckoutPage() {
                         value={opt.mode}
                         checked={paymentMode === opt.mode}
                         onChange={() => setPaymentMode(opt.mode)}
-                        className="accent-brand-orange"
+                        className="accent-brand-primary"
                       />
                       <span className="text-lg">{opt.icon}</span>
                       <div>
-                        <p className="text-sm font-semibold text-swiggy-black">{opt.label}</p>
-                        <p className="text-xs text-swiggy-gray">{opt.description}</p>
+                        <p className="text-sm font-semibold text-app-black">{opt.label}</p>
+                        <p className="text-xs text-app-gray">{opt.description}</p>
                       </div>
                     </label>
                   ))}
@@ -421,7 +421,7 @@ export default function CheckoutPage() {
 
               {/* Coupon */}
               <section className="bg-white rounded-2xl shadow-card p-5">
-                <h2 className="font-bold text-swiggy-black mb-3">Offers & Coupons</h2>
+                <h2 className="font-bold text-app-black mb-3">Offers & Coupons</h2>
                 <CouponSelector
                   subtotal={subtotal}
                   applied={appliedCoupon}
@@ -432,14 +432,14 @@ export default function CheckoutPage() {
 
               {/* Order summary items */}
               <section className="bg-white rounded-2xl shadow-card p-5">
-                <h2 className="font-bold text-swiggy-black mb-4">Order Summary</h2>
+                <h2 className="font-bold text-app-black mb-4">Order Summary</h2>
                 <div className="space-y-2">
                   {items.map((item) => (
                     <div key={item.menuItemId} className="flex justify-between text-sm">
-                      <span className="text-swiggy-black">
+                      <span className="text-app-black">
                         {item.name} × {item.quantity}
                       </span>
-                      <span className="font-medium text-swiggy-black">
+                      <span className="font-medium text-app-black">
                         {formatPrice(item.price * item.quantity)}
                       </span>
                     </div>
@@ -451,7 +451,7 @@ export default function CheckoutPage() {
             {/* Right: bill + CTA */}
             <div className="space-y-4">
               <div className="bg-white rounded-2xl shadow-card p-5">
-                <h3 className="font-bold text-swiggy-black mb-4">Bill Details</h3>
+                <h3 className="font-bold text-app-black mb-4">Bill Details</h3>
                 <CartSummary
                   subtotal={subtotal}
                   deliveryFee={deliveryFee}
@@ -463,8 +463,8 @@ export default function CheckoutPage() {
               {error && <CheckoutError message={error} />}
 
               {paymentStage === 'verifying' && (
-                <div className="flex items-center gap-2 text-sm text-swiggy-gray bg-white rounded-lg px-4 py-3 shadow-card">
-                  <svg className="animate-spin w-4 h-4 text-brand-orange shrink-0" fill="none" viewBox="0 0 24 24">
+                <div className="flex items-center gap-2 text-sm text-app-gray bg-white rounded-lg px-4 py-3 shadow-card">
+                  <svg className="animate-spin w-4 h-4 text-brand-primary shrink-0" fill="none" viewBox="0 0 24 24">
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
                   </svg>
@@ -483,7 +483,7 @@ export default function CheckoutPage() {
               </Button>
 
               {paymentMode === 'ONLINE' && paymentStage === 'idle' && (
-                <p className="text-xs text-center text-swiggy-gray">
+                <p className="text-xs text-center text-app-gray">
                   Secured by Razorpay · 256-bit SSL encryption
                 </p>
               )}

@@ -117,9 +117,9 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
       'amount': rzpData.amount,        // already in paise from backend
       'currency': rzpData.currency,
       'order_id': rzpData.razorpayOrderId,
-      'name': 'Swiggy Clone',
+      'name': 'Mealora',
       'description': 'Food Order',
-      'theme': {'color': '#FC8019'},
+      'theme': {'color': '#5B4BDB'},
     };
 
     try {
@@ -207,7 +207,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
           backgroundColor: AppColors.surface,
           title: const Text('Checkout', style: AppTextStyles.headlineSmall),
           leading: IconButton(
-            icon: const Icon(Icons.arrow_back, color: AppColors.swiggyBlack),
+            icon: const Icon(Icons.arrow_back, color: AppColors.textPrimary),
             onPressed: () => context.pop(),
           ),
           elevation: 0,
@@ -237,7 +237,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
         backgroundColor: AppColors.surface,
         title: const Text('Checkout', style: AppTextStyles.headlineSmall),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: AppColors.swiggyBlack),
+          icon: const Icon(Icons.arrow_back, color: AppColors.textPrimary),
           onPressed: () => context.pop(),
         ),
         elevation: 0,
@@ -308,7 +308,7 @@ class _AddressSection extends ConsumerWidget {
           const Text('Delivery Address', style: AppTextStyles.headlineSmall),
           const SizedBox(height: 12),
           addressesAsync.when(
-            loading: () => const LinearProgressIndicator(color: AppColors.brandOrange),
+            loading: () => const LinearProgressIndicator(color: AppColors.brandPrimary),
             error: (e, _) => Text(e.toString(), style: AppTextStyles.bodyMedium),
             data: (addresses) {
               if (addresses.isEmpty) {
@@ -356,11 +356,11 @@ class _AddressTile extends StatelessWidget {
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
           border: Border.all(
-            color: isSelected ? AppColors.brandOrange : AppColors.divider,
+            color: isSelected ? AppColors.brandPrimary : AppColors.divider,
             width: isSelected ? 2 : 1,
           ),
           borderRadius: BorderRadius.circular(8),
-          color: isSelected ? AppColors.brandOrangeLight : AppColors.surface,
+          color: isSelected ? AppColors.brandPrimaryLight : AppColors.surface,
         ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -368,7 +368,7 @@ class _AddressTile extends StatelessWidget {
             Icon(
               Icons.location_on_outlined,
               size: 18,
-              color: isSelected ? AppColors.brandOrange : AppColors.swiggyGray,
+              color: isSelected ? AppColors.brandPrimary : AppColors.textSecondary,
             ),
             const SizedBox(width: 8),
             Expanded(
@@ -378,7 +378,7 @@ class _AddressTile extends StatelessWidget {
                   Text(
                     address.label,
                     style: AppTextStyles.titleLarge.copyWith(
-                      color: isSelected ? AppColors.brandOrange : AppColors.swiggyBlack,
+                      color: isSelected ? AppColors.brandPrimary : AppColors.textPrimary,
                     ),
                   ),
                   const SizedBox(height: 2),
@@ -387,7 +387,7 @@ class _AddressTile extends StatelessWidget {
               ),
             ),
             if (isSelected)
-              const Icon(Icons.check_circle, color: AppColors.brandOrange, size: 18),
+              const Icon(Icons.check_circle, color: AppColors.brandPrimary, size: 18),
           ],
         ),
       ),
@@ -408,9 +408,9 @@ class _AddAddressInlineState extends ConsumerState<_AddAddressInline> {
     if (!_isExpanded) {
       return TextButton.icon(
         onPressed: () => setState(() => _isExpanded = true),
-        icon: const Icon(Icons.add, size: 16, color: AppColors.brandOrange),
+        icon: const Icon(Icons.add, size: 16, color: AppColors.brandPrimary),
         label: const Text('Add new address',
-            style: TextStyle(color: AppColors.brandOrange, fontWeight: FontWeight.w600)),
+            style: TextStyle(color: AppColors.brandPrimary, fontWeight: FontWeight.w600)),
       );
     }
     return _AddAddressForm(
@@ -497,13 +497,13 @@ class _AddAddressFormState extends ConsumerState<_AddAddressForm> {
               TextButton(
                 onPressed: widget.onCancel,
                 child: const Text('Cancel',
-                    style: TextStyle(color: AppColors.swiggyGray)),
+                    style: TextStyle(color: AppColors.textSecondary)),
               ),
             const Spacer(),
             ElevatedButton(
               onPressed: _saving ? null : _save,
               style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.brandOrange,
+                backgroundColor: AppColors.brandPrimary,
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
               ),
               child: _saving
@@ -614,17 +614,17 @@ class _PaymentOption extends StatelessWidget {
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
           border: Border.all(
-            color: isSelected ? AppColors.brandOrange : AppColors.divider,
+            color: isSelected ? AppColors.brandPrimary : AppColors.divider,
             width: isSelected ? 2 : 1,
           ),
           borderRadius: BorderRadius.circular(8),
-          color: isSelected ? AppColors.brandOrangeLight : AppColors.surface,
+          color: isSelected ? AppColors.brandPrimaryLight : AppColors.surface,
         ),
         child: Row(
           children: [
             Icon(icon,
                 size: 20,
-                color: isSelected ? AppColors.brandOrange : AppColors.swiggyGray),
+                color: isSelected ? AppColors.brandPrimary : AppColors.textSecondary),
             const SizedBox(width: 10),
             Expanded(
               child: Column(
@@ -637,7 +637,7 @@ class _PaymentOption extends StatelessWidget {
               ),
             ),
             if (isSelected)
-              const Icon(Icons.check_circle, color: AppColors.brandOrange, size: 18),
+              const Icon(Icons.check_circle, color: AppColors.brandPrimary, size: 18),
           ],
         ),
       ),
@@ -703,7 +703,7 @@ class _CouponSectionState extends ConsumerState<_CouponSection> {
               ),
             ),
             IconButton(
-              icon: const Icon(Icons.close, size: 18, color: AppColors.swiggyGray),
+              icon: const Icon(Icons.close, size: 18, color: AppColors.textSecondary),
               onPressed: notifier.removeCoupon,
               padding: EdgeInsets.zero,
               constraints: const BoxConstraints(),
@@ -753,7 +753,7 @@ class _CouponSectionState extends ConsumerState<_CouponSection> {
                     ? null
                     : () => notifier.applyCoupon(_ctrl.text, widget.subtotal),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.brandOrange,
+                  backgroundColor: AppColors.brandPrimary,
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
                 ),
@@ -783,7 +783,7 @@ class _CouponSectionState extends ConsumerState<_CouponSection> {
             onTap: () => setState(() => _showCoupons = !_showCoupons),
             child: Row(
               children: [
-                const Icon(Icons.local_offer_outlined, size: 16, color: AppColors.brandOrange),
+                const Icon(Icons.local_offer_outlined, size: 16, color: AppColors.brandPrimary),
                 const SizedBox(width: 6),
                 Text(
                   _showCoupons ? 'Hide offers' : 'View all offers',
@@ -791,7 +791,7 @@ class _CouponSectionState extends ConsumerState<_CouponSection> {
                 ),
                 Icon(
                   _showCoupons ? Icons.expand_less : Icons.expand_more,
-                  color: AppColors.brandOrange,
+                  color: AppColors.brandPrimary,
                   size: 18,
                 ),
               ],
@@ -824,7 +824,7 @@ class _CouponList extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final couponsAsync = ref.watch(couponsProvider);
     return couponsAsync.when(
-      loading: () => const LinearProgressIndicator(color: AppColors.brandOrange),
+      loading: () => const LinearProgressIndicator(color: AppColors.brandPrimary),
       error: (e, _) => Text(e.toString(), style: AppTextStyles.bodySmall),
       data: (coupons) => Column(
         children: coupons
@@ -871,13 +871,13 @@ class _CouponTile extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                       decoration: BoxDecoration(
-                        color: AppColors.brandOrangeLight,
+                        color: AppColors.brandPrimaryLight,
                         borderRadius: BorderRadius.circular(4),
                       ),
                       child: Text(
                         coupon.code,
                         style: AppTextStyles.bodySmall.copyWith(
-                          color: AppColors.brandOrange,
+                          color: AppColors.brandPrimary,
                           fontWeight: FontWeight.w700,
                         ),
                       ),
@@ -907,7 +907,7 @@ class _CouponTile extends StatelessWidget {
               ),
               child: const Text('Apply',
                   style: TextStyle(
-                      color: AppColors.brandOrange, fontWeight: FontWeight.w700)),
+                      color: AppColors.brandPrimary, fontWeight: FontWeight.w700)),
             ),
         ],
       ),
@@ -1027,8 +1027,8 @@ class _PlaceOrderBar extends ConsumerWidget {
           child: ElevatedButton(
             onPressed: canPlace ? onPlaceOrder : null,
             style: ElevatedButton.styleFrom(
-              backgroundColor: AppColors.brandOrange,
-              disabledBackgroundColor: AppColors.swiggyLightGray,
+              backgroundColor: AppColors.brandPrimary,
+              disabledBackgroundColor: AppColors.textTertiary,
               padding: const EdgeInsets.symmetric(vertical: 14),
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
             ),

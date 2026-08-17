@@ -17,7 +17,7 @@ export function AdminToggle({ label, checked, onChange, description }: Props) {
           checked={checked}
           onChange={(e) => onChange(e.target.checked)}
         />
-        <div className={`w-10 h-6 rounded-full transition-colors ${checked ? 'bg-brand-orange' : 'bg-slate-200'}`} />
+        <div className={`w-10 h-6 rounded-full transition-colors ${checked ? 'bg-brand-primary' : 'bg-slate-200'}`} />
         <div className={`absolute top-1 w-4 h-4 rounded-full bg-white shadow transition-transform ${checked ? 'translate-x-5' : 'translate-x-1'}`} />
       </div>
       <div>

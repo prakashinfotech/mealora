@@ -22,7 +22,7 @@ function CityDropdown({
       role="listbox"
       aria-label="Select city"
       className={[
-        'absolute top-full mt-2 w-60 bg-white border border-swiggy-border rounded-2xl shadow-2xl z-[60] overflow-hidden',
+        'absolute top-full mt-2 w-60 bg-white border border-app-border rounded-2xl shadow-2xl z-[60] overflow-hidden',
         'transition-all duration-200 ease-out',
         open
           ? 'opacity-100 translate-y-0 pointer-events-auto'
@@ -30,8 +30,8 @@ function CityDropdown({
         align === 'right' ? 'right-0' : 'left-0',
       ].join(' ')}
     >
-      <div className="px-4 py-3 border-b border-swiggy-border">
-        <p className="text-[11px] font-black text-swiggy-gray uppercase tracking-widest">
+      <div className="px-4 py-3 border-b border-app-border">
+        <p className="text-[11px] font-black text-app-gray uppercase tracking-widest">
           Select your city
         </p>
       </div>
@@ -49,13 +49,13 @@ function CityDropdown({
                 className={[
                   'w-full flex items-center justify-between px-4 py-2.5 text-sm transition-colors',
                   isSelected
-                    ? 'bg-brand-orange-light text-brand-orange font-bold'
-                    : 'text-swiggy-black hover:bg-swiggy-gray-bg font-medium',
+                    ? 'bg-brand-primary-light text-brand-primary font-bold'
+                    : 'text-app-black hover:bg-app-gray-bg font-medium',
                 ].join(' ')}
               >
                 <div className="flex items-center gap-2.5">
                   <svg
-                    className={`w-3.5 h-3.5 shrink-0 ${isSelected ? 'text-brand-orange' : 'text-swiggy-gray-light'}`}
+                    className={`w-3.5 h-3.5 shrink-0 ${isSelected ? 'text-brand-primary' : 'text-app-gray-light'}`}
                     fill="currentColor"
                     viewBox="0 0 20 20"
                   >
@@ -68,7 +68,7 @@ function CityDropdown({
                   <span>{c.name}</span>
                 </div>
                 {isSelected && (
-                  <svg className="w-4 h-4 text-brand-orange" fill="currentColor" viewBox="0 0 20 20">
+                  <svg className="w-4 h-4 text-brand-primary" fill="currentColor" viewBox="0 0 20 20">
                     <path
                       fillRule="evenodd"
                       d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
@@ -142,9 +142,9 @@ export function NavbarLocationSelector() {
         aria-label="Change delivery city"
         aria-expanded={open}
         aria-haspopup="listbox"
-        className="flex items-center gap-1.5 text-sm font-semibold text-swiggy-black hover:text-brand-orange transition-colors"
+        className="flex items-center gap-1.5 text-sm font-semibold text-app-black hover:text-brand-primary transition-colors"
       >
-        <svg className="w-4 h-4 text-brand-orange shrink-0" fill="currentColor" viewBox="0 0 20 20">
+        <svg className="w-4 h-4 text-brand-primary shrink-0" fill="currentColor" viewBox="0 0 20 20">
           <path
             fillRule="evenodd"
             d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
@@ -153,7 +153,7 @@ export function NavbarLocationSelector() {
         </svg>
         <span className="border-b-2 border-current">{city}</span>
         <svg
-          className={`w-3 h-3 text-swiggy-gray transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
+          className={`w-3 h-3 text-app-gray transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -183,9 +183,9 @@ export function MobileLocationRow({ onAfterSelect }: { onAfterSelect?: () => voi
         onClick={() => setOpen((o) => !o)}
         aria-expanded={open}
         aria-haspopup="listbox"
-        className="flex items-center gap-2 text-sm font-semibold text-swiggy-black w-full"
+        className="flex items-center gap-2 text-sm font-semibold text-app-black w-full"
       >
-        <svg className="w-4 h-4 text-brand-orange shrink-0" fill="currentColor" viewBox="0 0 20 20">
+        <svg className="w-4 h-4 text-brand-primary shrink-0" fill="currentColor" viewBox="0 0 20 20">
           <path
             fillRule="evenodd"
             d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
@@ -194,10 +194,10 @@ export function MobileLocationRow({ onAfterSelect }: { onAfterSelect?: () => voi
         </svg>
         <span>
           {city}
-          {stateAbbr && <span className="text-swiggy-gray font-normal">, {stateAbbr}</span>}
+          {stateAbbr && <span className="text-app-gray font-normal">, {stateAbbr}</span>}
         </span>
         <svg
-          className={`w-3.5 h-3.5 text-swiggy-gray ml-auto transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
+          className={`w-3.5 h-3.5 text-app-gray ml-auto transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -212,7 +212,7 @@ export function MobileLocationRow({ onAfterSelect }: { onAfterSelect?: () => voi
           open ? 'max-h-80 opacity-100 mt-2' : 'max-h-0 opacity-0'
         }`}
       >
-        <ul className="bg-swiggy-gray-bg rounded-xl overflow-hidden">
+        <ul className="bg-app-gray-bg rounded-xl overflow-hidden">
           {CITIES.map((c) => {
             const isSelected = city === c.name
             return (
@@ -222,13 +222,13 @@ export function MobileLocationRow({ onAfterSelect }: { onAfterSelect?: () => voi
                   onClick={() => select(c.name)}
                   className={`w-full flex items-center justify-between px-4 py-2.5 text-sm transition-colors ${
                     isSelected
-                      ? 'text-brand-orange font-bold bg-brand-orange-light'
-                      : 'text-swiggy-black hover:bg-swiggy-border'
+                      ? 'text-brand-primary font-bold bg-brand-primary-light'
+                      : 'text-app-black hover:bg-app-border'
                   }`}
                 >
                   {c.name}
                   {isSelected && (
-                    <svg className="w-4 h-4 text-brand-orange" fill="currentColor" viewBox="0 0 20 20">
+                    <svg className="w-4 h-4 text-brand-primary" fill="currentColor" viewBox="0 0 20 20">
                       <path
                         fillRule="evenodd"
                         d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"

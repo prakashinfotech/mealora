@@ -55,7 +55,7 @@ export function AdminInput({
     <input
       className={cn(
         'w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400',
-        'focus:outline-none focus:ring-2 focus:ring-brand-orange/40 focus:border-brand-orange',
+        'focus:outline-none focus:ring-2 focus:ring-brand-primary/40 focus:border-brand-primary',
         'disabled:bg-slate-50 disabled:text-slate-400 disabled:cursor-not-allowed',
         className,
       )}
@@ -73,7 +73,7 @@ export function AdminSelect({
     <select
       className={cn(
         'w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900',
-        'focus:outline-none focus:ring-2 focus:ring-brand-orange/40 focus:border-brand-orange',
+        'focus:outline-none focus:ring-2 focus:ring-brand-primary/40 focus:border-brand-primary',
         'disabled:bg-slate-50 disabled:text-slate-400 disabled:cursor-not-allowed',
         className,
       )}
@@ -92,7 +92,7 @@ export function AdminTextarea({
     <textarea
       className={cn(
         'w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400',
-        'focus:outline-none focus:ring-2 focus:ring-brand-orange/40 focus:border-brand-orange',
+        'focus:outline-none focus:ring-2 focus:ring-brand-primary/40 focus:border-brand-primary',
         'disabled:bg-slate-50 disabled:text-slate-400 disabled:cursor-not-allowed',
         'resize-none',
         className,

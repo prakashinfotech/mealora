@@ -21,7 +21,7 @@ export function MenuItemCard({ item, restaurant }: Props) {
     : item.imageUrl
 
   return (
-    <div className={`flex gap-4 py-5 border-b border-swiggy-border last:border-b-0 ${!item.isAvailable ? 'opacity-50' : ''}`}>
+    <div className={`flex gap-4 py-5 border-b border-app-border last:border-b-0 ${!item.isAvailable ? 'opacity-50' : ''}`}>
       {/* Info */}
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2 mb-1">
@@ -33,11 +33,11 @@ export function MenuItemCard({ item, restaurant }: Props) {
           )}
         </div>
 
-        <h4 className="font-semibold text-swiggy-black text-sm leading-tight">{item.name}</h4>
-        <p className="font-bold text-swiggy-black mt-1">{formatPrice(item.price)}</p>
+        <h4 className="font-semibold text-app-black text-sm leading-tight">{item.name}</h4>
+        <p className="font-bold text-app-black mt-1">{formatPrice(item.price)}</p>
 
         {item.description && (
-          <p className="text-xs text-swiggy-gray mt-1.5 line-clamp-2 leading-relaxed">
+          <p className="text-xs text-app-gray mt-1.5 line-clamp-2 leading-relaxed">
             {item.description}
           </p>
         )}
@@ -45,7 +45,7 @@ export function MenuItemCard({ item, restaurant }: Props) {
 
       {/* Image + Add button */}
       <div className="shrink-0 flex flex-col items-center gap-2">
-        <div className="relative w-24 h-20 rounded-xl overflow-hidden bg-swiggy-gray-bg">
+        <div className="relative w-24 h-20 rounded-xl overflow-hidden bg-app-gray-bg">
           {displayImage ? (
             <Image
               src={displayImage}
@@ -74,12 +74,12 @@ export function MenuItemCard({ item, restaurant }: Props) {
                   restaurantName: restaurant.name,
                 })
               }
-              className="w-24 py-1.5 border-2 border-brand-orange text-brand-orange text-sm font-bold rounded-lg hover:bg-brand-orange-light transition-colors"
+              className="w-24 py-1.5 border-2 border-brand-primary text-brand-primary text-sm font-bold rounded-lg hover:bg-brand-primary-light transition-colors"
             >
               ADD
             </button>
           ) : (
-            <div className="flex items-center w-24 justify-between bg-brand-orange rounded-lg px-2 py-1">
+            <div className="flex items-center w-24 justify-between bg-brand-primary rounded-lg px-2 py-1">
               <button
                 aria-label={`Remove one ${item.name}`}
                 onClick={() => decrementItem(item.id)}
@@ -99,7 +99,7 @@ export function MenuItemCard({ item, restaurant }: Props) {
           )
         )}
         {!item.isAvailable && (
-          <span className="text-[10px] font-medium text-swiggy-red">Not available</span>
+          <span className="text-[10px] font-medium text-app-red">Not available</span>
         )}
       </div>
     </div>

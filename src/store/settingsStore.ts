@@ -26,6 +26,6 @@ export const useSettingsStore = create<SettingsState>()(
       setPreference: (key, value) =>
         set({ preferences: { ...get().preferences, [key]: value } }),
     }),
-    { name: 'swiggy-settings' }
+    { name: 'mealora-settings' }
   )
 )

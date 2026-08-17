@@ -39,11 +39,11 @@ export default function CartPage() {
     return (
       <>
         <Navbar />
-        <main className="bg-swiggy-gray-bg py-16 flex items-center justify-center">
+        <main className="bg-app-gray-bg py-16 flex items-center justify-center">
           <div className="text-center">
             <span className="text-7xl">🛒</span>
-            <h2 className="text-2xl font-black text-swiggy-black mt-6">Your cart is empty</h2>
-            <p className="text-swiggy-gray mt-2">Add items from a restaurant to get started.</p>
+            <h2 className="text-2xl font-black text-app-black mt-6">Your cart is empty</h2>
+            <p className="text-app-gray mt-2">Add items from a restaurant to get started.</p>
             <Link href={buildRestaurantsUrl({ city })} className="btn-primary inline-block mt-6">
               Browse restaurants
             </Link>
@@ -57,9 +57,9 @@ export default function CartPage() {
   return (
     <>
       <Navbar />
-      <main className="bg-swiggy-gray-bg py-8">
+      <main className="bg-app-gray-bg py-8">
         <div className="max-w-5xl mx-auto px-4 sm:px-6">
-          <h1 className="text-2xl font-black text-swiggy-black mb-6">Your Cart</h1>
+          <h1 className="text-2xl font-black text-app-black mb-6">Your Cart</h1>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Items */}
@@ -67,17 +67,17 @@ export default function CartPage() {
               {/* Restaurant info */}
               <div className="bg-white rounded-2xl p-4 flex items-center justify-between shadow-card">
                 <div>
-                  <p className="text-xs text-swiggy-gray uppercase font-semibold tracking-wide">Ordering from</p>
+                  <p className="text-xs text-app-gray uppercase font-semibold tracking-wide">Ordering from</p>
                   <Link
                     href={restaurantId ? `/restaurants/${restaurantId}` : '#'}
-                    className="font-bold text-swiggy-black hover:text-brand-orange transition-colors"
+                    className="font-bold text-app-black hover:text-brand-primary transition-colors"
                   >
                     {restaurantName}
                   </Link>
                 </div>
                 <button
                   onClick={() => clearCart()}
-                  className="text-xs text-swiggy-red font-semibold hover:underline"
+                  className="text-xs text-app-red font-semibold hover:underline"
                 >
                   Clear cart
                 </button>
@@ -92,15 +92,15 @@ export default function CartPage() {
 
               {/* Delivery note */}
               {subtotal < FREE_DELIVERY_THRESHOLD && (
-                <div className="bg-brand-orange-light border border-orange-200 rounded-xl px-4 py-3 text-sm text-swiggy-black">
-                  Add <span className="font-bold text-brand-orange">{formatPrice(FREE_DELIVERY_THRESHOLD - subtotal)}</span> more for free delivery!
+                <div className="bg-brand-primary-light border border-orange-200 rounded-xl px-4 py-3 text-sm text-app-black">
+                  Add <span className="font-bold text-brand-primary">{formatPrice(FREE_DELIVERY_THRESHOLD - subtotal)}</span> more for free delivery!
                 </div>
               )}
 
               {/* Add more items */}
               <Link
                 href={restaurantId ? `/restaurants/${restaurantId}` : '/restaurants'}
-                className="flex items-center gap-2 text-brand-orange text-sm font-semibold hover:underline"
+                className="flex items-center gap-2 text-brand-primary text-sm font-semibold hover:underline"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -112,7 +112,7 @@ export default function CartPage() {
             {/* Summary */}
             <div className="space-y-4">
               <div className="bg-white rounded-2xl shadow-card p-5">
-                <h3 className="font-bold text-swiggy-black mb-4">Bill Details</h3>
+                <h3 className="font-bold text-app-black mb-4">Bill Details</h3>
                 <CartSummary
                   subtotal={subtotal}
                   deliveryFee={deliveryFee}
@@ -128,7 +128,7 @@ export default function CartPage() {
                 Proceed to Checkout
               </Button>
 
-              <p className="text-xs text-center text-swiggy-gray-light">
+              <p className="text-xs text-center text-app-gray-light">
                 By placing your order, you agree to our{' '}
                 <Link href="#" className="underline">Terms of Service</Link>.
               </p>

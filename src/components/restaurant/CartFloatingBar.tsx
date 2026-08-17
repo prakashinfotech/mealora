@@ -14,10 +14,10 @@ export function CartFloatingBar() {
     <div className="fixed bottom-0 inset-x-0 z-40 max-w-4xl mx-auto px-4 pb-4 pointer-events-none animate-slide-up-bar">
       <Link
         href="/cart"
-        className="pointer-events-auto flex items-center justify-between bg-swiggy-green text-white px-5 py-4 rounded-2xl shadow-2xl"
+        className="pointer-events-auto flex items-center justify-between bg-app-green text-white px-5 py-4 rounded-2xl shadow-2xl"
       >
         <div className="flex items-center gap-3">
-          <span className="bg-white text-swiggy-green text-xs font-black w-6 h-6 rounded flex items-center justify-center">
+          <span className="bg-white text-app-green text-xs font-black w-6 h-6 rounded flex items-center justify-center">
             {totalItems}
           </span>
           <span className="font-semibold text-sm">

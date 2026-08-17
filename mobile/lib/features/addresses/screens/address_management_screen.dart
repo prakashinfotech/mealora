@@ -19,7 +19,7 @@ class AddressManagementScreen extends ConsumerWidget {
         elevation: 0,
         title: const Text('My Addresses', style: AppTextStyles.headlineSmall),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: AppColors.swiggyBlack),
+          icon: const Icon(Icons.arrow_back, color: AppColors.textPrimary),
           onPressed: () => Navigator.of(context).pop(),
         ),
         bottom: const PreferredSize(
@@ -29,7 +29,7 @@ class AddressManagementScreen extends ConsumerWidget {
       ),
       body: addressesAsync.when(
         loading: () =>
-            const Center(child: CircularProgressIndicator(color: AppColors.brandOrange)),
+            const Center(child: CircularProgressIndicator(color: AppColors.brandPrimary)),
         error: (e, _) => _ErrorRetry(
           message: e.toString().replaceAll('Exception: ', ''),
           onRetry: () => ref.invalidate(addressesProvider),
@@ -51,7 +51,7 @@ class AddressManagementScreen extends ConsumerWidget {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => _showAddSheet(context, ref),
-        backgroundColor: AppColors.brandOrange,
+        backgroundColor: AppColors.brandPrimary,
         icon: const Icon(Icons.add, color: Colors.white),
         label: const Text(
           'Add Address',
@@ -85,7 +85,7 @@ class AddressManagementScreen extends ConsumerWidget {
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
             child: const Text('Cancel',
-                style: TextStyle(color: AppColors.swiggyGray)),
+                style: TextStyle(color: AppColors.textSecondary)),
           ),
           TextButton(
             onPressed: () => Navigator.pop(ctx, true),
@@ -121,7 +121,7 @@ class AddressManagementScreen extends ConsumerWidget {
   void _showSnack(BuildContext context, String msg, {bool isError = false}) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text(msg),
-      backgroundColor: isError ? AppColors.error : AppColors.swiggyBlack,
+      backgroundColor: isError ? AppColors.error : AppColors.textPrimary,
       behavior: SnackBarBehavior.floating,
       duration: const Duration(seconds: 3),
     ));
@@ -149,7 +149,7 @@ class _AddressCard extends StatelessWidget {
         color: AppColors.surface,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: address.isDefault ? AppColors.brandOrange : AppColors.divider,
+          color: address.isDefault ? AppColors.brandPrimary : AppColors.divider,
           width: address.isDefault ? 1.5 : 1,
         ),
         boxShadow: const [
@@ -165,7 +165,7 @@ class _AddressCard extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 decoration: BoxDecoration(
                   color: address.isDefault
-                      ? AppColors.brandOrangeLight
+                      ? AppColors.brandPrimaryLight
                       : AppColors.background,
                   borderRadius: BorderRadius.circular(6),
                 ),
@@ -176,8 +176,8 @@ class _AddressCard extends StatelessWidget {
                       _labelIcon(address.label),
                       size: 14,
                       color: address.isDefault
-                          ? AppColors.brandOrange
-                          : AppColors.swiggyGray,
+                          ? AppColors.brandPrimary
+                          : AppColors.textSecondary,
                     ),
                     const SizedBox(width: 4),
                     Text(
@@ -185,8 +185,8 @@ class _AddressCard extends StatelessWidget {
                       style: AppTextStyles.bodySmall.copyWith(
                         fontWeight: FontWeight.w700,
                         color: address.isDefault
-                            ? AppColors.brandOrange
-                            : AppColors.swiggyBlack,
+                            ? AppColors.brandPrimary
+                            : AppColors.textPrimary,
                       ),
                     ),
                   ],
@@ -212,7 +212,7 @@ class _AddressCard extends StatelessWidget {
               const Spacer(),
               IconButton(
                 icon: const Icon(Icons.delete_outline,
-                    size: 20, color: AppColors.swiggyGray),
+                    size: 20, color: AppColors.textSecondary),
                 onPressed: onDelete,
                 tooltip: 'Delete',
                 padding: EdgeInsets.zero,
@@ -266,7 +266,7 @@ class _EmptyAddresses extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             const Icon(Icons.location_off_outlined,
-                size: 64, color: AppColors.swiggyLightGray),
+                size: 64, color: AppColors.textTertiary),
             const SizedBox(height: 16),
             const Text('No saved addresses',
                 style: AppTextStyles.headlineSmall),
@@ -283,7 +283,7 @@ class _EmptyAddresses extends StatelessWidget {
               label: const Text('Add Address',
                   style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600)),
               style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.brandOrange,
+                backgroundColor: AppColors.brandPrimary,
                 padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
               ),
@@ -311,7 +311,7 @@ class _ErrorRetry extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             const Icon(Icons.wifi_off_outlined,
-                size: 48, color: AppColors.swiggyLightGray),
+                size: 48, color: AppColors.textTertiary),
             const SizedBox(height: 16),
             const Text('Could not load addresses',
                 style: AppTextStyles.headlineSmall),
@@ -323,7 +323,7 @@ class _ErrorRetry extends StatelessWidget {
             ElevatedButton(
               onPressed: onRetry,
               style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.brandOrange,
+                backgroundColor: AppColors.brandPrimary,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8)),
               ),
@@ -413,7 +413,7 @@ class _AddAddressSheetState extends State<_AddAddressSheet> {
                 const Text('Add New Address', style: AppTextStyles.headlineSmall),
                 const Spacer(),
                 IconButton(
-                  icon: const Icon(Icons.close, color: AppColors.swiggyGray),
+                  icon: const Icon(Icons.close, color: AppColors.textSecondary),
                   onPressed: () => Navigator.of(context).pop(),
                   padding: EdgeInsets.zero,
                   constraints: const BoxConstraints(),
@@ -442,7 +442,7 @@ class _AddAddressSheetState extends State<_AddAddressSheet> {
               child: ElevatedButton(
                 onPressed: _saving ? null : _save,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.brandOrange,
+                  backgroundColor: AppColors.brandPrimary,
                   padding: const EdgeInsets.symmetric(vertical: 14),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8)),
@@ -493,7 +493,7 @@ class _AddAddressSheetState extends State<_AddAddressSheet> {
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
-              borderSide: const BorderSide(color: AppColors.brandOrange, width: 1.5),
+              borderSide: const BorderSide(color: AppColors.brandPrimary, width: 1.5),
             ),
           ),
         ),

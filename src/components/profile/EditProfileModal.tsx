@@ -60,10 +60,10 @@ export function EditProfileModal({ user, onSuccess, onClose }: Props) {
 
       <div className="relative bg-white rounded-2xl shadow-2xl w-full max-w-md p-6">
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-lg font-black text-swiggy-black">Edit Profile</h2>
+          <h2 className="text-lg font-black text-app-black">Edit Profile</h2>
           <button
             onClick={onClose}
-            className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-swiggy-gray-bg text-swiggy-gray transition-colors"
+            className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-app-gray-bg text-app-gray transition-colors"
           >
             ✕
           </button>
@@ -71,7 +71,7 @@ export function EditProfileModal({ user, onSuccess, onClose }: Props) {
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-xs font-semibold text-swiggy-gray uppercase tracking-wide mb-1.5">
+            <label className="block text-xs font-semibold text-app-gray uppercase tracking-wide mb-1.5">
               Full name
             </label>
             <input
@@ -80,13 +80,13 @@ export function EditProfileModal({ user, onSuccess, onClose }: Props) {
               onChange={(e) => { setName(e.target.value); setFieldError('name', '') }}
               onBlur={() => setFieldError('name', validateName(name))}
               placeholder="Your name"
-              className={`w-full border rounded-xl px-4 py-3 text-sm text-swiggy-black focus:outline-none focus:ring-2 transition-colors ${errors.name ? 'border-swiggy-red focus:ring-swiggy-red/30 focus:border-swiggy-red' : 'border-swiggy-border focus:ring-brand-orange/30 focus:border-brand-orange'}`}
+              className={`w-full border rounded-xl px-4 py-3 text-sm text-app-black focus:outline-none focus:ring-2 transition-colors ${errors.name ? 'border-app-red focus:ring-app-red/30 focus:border-app-red' : 'border-app-border focus:ring-brand-primary/30 focus:border-brand-primary'}`}
             />
-            {errors.name && <p className="mt-1 text-xs text-swiggy-red">{errors.name}</p>}
+            {errors.name && <p className="mt-1 text-xs text-app-red">{errors.name}</p>}
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-swiggy-gray uppercase tracking-wide mb-1.5">
+            <label className="block text-xs font-semibold text-app-gray uppercase tracking-wide mb-1.5">
               Mobile number <span className="normal-case font-normal">(optional)</span>
             </label>
             <input
@@ -95,26 +95,26 @@ export function EditProfileModal({ user, onSuccess, onClose }: Props) {
               onChange={(e) => { setPhone(e.target.value.replace(/\D/g, '').slice(0, 10)); setFieldError('phone', '') }}
               onBlur={() => setFieldError('phone', validatePhone(phone))}
               placeholder="10-digit mobile number"
-              className={`w-full border rounded-xl px-4 py-3 text-sm text-swiggy-black focus:outline-none focus:ring-2 transition-colors ${errors.phone ? 'border-swiggy-red focus:ring-swiggy-red/30 focus:border-swiggy-red' : 'border-swiggy-border focus:ring-brand-orange/30 focus:border-brand-orange'}`}
+              className={`w-full border rounded-xl px-4 py-3 text-sm text-app-black focus:outline-none focus:ring-2 transition-colors ${errors.phone ? 'border-app-red focus:ring-app-red/30 focus:border-app-red' : 'border-app-border focus:ring-brand-primary/30 focus:border-brand-primary'}`}
             />
-            {errors.phone && <p className="mt-1 text-xs text-swiggy-red">{errors.phone}</p>}
+            {errors.phone && <p className="mt-1 text-xs text-app-red">{errors.phone}</p>}
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-swiggy-gray uppercase tracking-wide mb-1.5">
+            <label className="block text-xs font-semibold text-app-gray uppercase tracking-wide mb-1.5">
               Email
             </label>
             <input
               type="email"
               value={user.email}
               disabled
-              className="w-full border border-swiggy-border rounded-xl px-4 py-3 text-sm text-swiggy-gray-light bg-swiggy-gray-bg cursor-not-allowed"
+              className="w-full border border-app-border rounded-xl px-4 py-3 text-sm text-app-gray-light bg-app-gray-bg cursor-not-allowed"
             />
-            <p className="text-xs text-swiggy-gray-light mt-1">Email cannot be changed.</p>
+            <p className="text-xs text-app-gray-light mt-1">Email cannot be changed.</p>
           </div>
 
           {serverError && (
-            <p className="text-xs font-semibold text-swiggy-red bg-red-50 px-3 py-2 rounded-lg">
+            <p className="text-xs font-semibold text-app-red bg-red-50 px-3 py-2 rounded-lg">
               {serverError}
             </p>
           )}
@@ -123,14 +123,14 @@ export function EditProfileModal({ user, onSuccess, onClose }: Props) {
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 py-3 rounded-xl border border-swiggy-border text-sm font-semibold text-swiggy-black hover:bg-swiggy-gray-bg transition-colors"
+              className="flex-1 py-3 rounded-xl border border-app-border text-sm font-semibold text-app-black hover:bg-app-gray-bg transition-colors"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={submitting}
-              className="flex-1 py-3 rounded-xl bg-brand-orange text-white text-sm font-bold hover:bg-brand-orange-dark transition-colors disabled:opacity-60"
+              className="flex-1 py-3 rounded-xl bg-brand-primary text-white text-sm font-bold hover:bg-brand-primary-dark transition-colors disabled:opacity-60"
             >
               {submitting ? 'Saving…' : 'Save changes'}
             </button>

@@ -50,14 +50,14 @@ class _AuthTextFieldState extends State<AuthTextField> {
         labelText: widget.label,
         hintText: widget.hint,
         prefixIcon: widget.prefixIcon != null
-            ? Icon(widget.prefixIcon, size: 20, color: AppColors.swiggyLightGray)
+            ? Icon(widget.prefixIcon, size: 20, color: AppColors.textTertiary)
             : null,
         suffixIcon: isPassword
             ? IconButton(
                 icon: Icon(
                   _obscured ? Icons.visibility_outlined : Icons.visibility_off_outlined,
                   size: 20,
-                  color: AppColors.swiggyLightGray,
+                  color: AppColors.textTertiary,
                 ),
                 onPressed: () => setState(() => _obscured = !_obscured),
               )

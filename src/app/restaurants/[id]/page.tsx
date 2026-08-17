@@ -54,7 +54,7 @@ export default async function RestaurantDetailPage({ params }: PageProps) {
     <>
       <Navbar />
       <CityMismatchBanner restaurantCity={restaurant.city} />
-      <main className="bg-swiggy-gray-bg pb-24">
+      <main className="bg-app-gray-bg pb-24">
         <RestaurantHeader restaurant={restaurant} />
 
         {/* Sticky category jump nav */}
@@ -65,8 +65,8 @@ export default async function RestaurantDetailPage({ params }: PageProps) {
           {categories.length === 0 ? (
             <div className="bg-white rounded-2xl text-center py-20">
               <p className="text-4xl mb-4">🍽️</p>
-              <p className="text-base font-bold text-swiggy-black">No menu items available</p>
-              <p className="text-sm text-swiggy-gray mt-1">Check back soon — the kitchen is warming up!</p>
+              <p className="text-base font-bold text-app-black">No menu items available</p>
+              <p className="text-sm text-app-gray mt-1">Check back soon — the kitchen is warming up!</p>
             </div>
           ) : (
             <div className="bg-white rounded-2xl overflow-hidden shadow-card">

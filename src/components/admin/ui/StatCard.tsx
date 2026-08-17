@@ -18,7 +18,7 @@ export function StatCard({ label, value, sub, icon, trend, className }: Props) {
           <p className="text-2xl font-black text-slate-900 mt-1">{value}</p>
           {sub && <p className="text-xs text-slate-400 mt-0.5">{sub}</p>}
         </div>
-        <div className="w-10 h-10 rounded-lg bg-brand-orange/10 flex items-center justify-center text-brand-orange shrink-0">
+        <div className="w-10 h-10 rounded-lg bg-brand-primary/10 flex items-center justify-center text-brand-primary shrink-0">
           {icon}
         </div>
       </div>

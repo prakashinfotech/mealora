@@ -17,7 +17,7 @@ class OrderDetailScreen extends ConsumerWidget {
 
     return orderAsync.when(
       loading: () => const Scaffold(
-        body: Center(child: CircularProgressIndicator(color: AppColors.brandOrange)),
+        body: Center(child: CircularProgressIndicator(color: AppColors.brandPrimary)),
       ),
       error: (e, _) => Scaffold(
         appBar: AppBar(),
@@ -27,14 +27,14 @@ class OrderDetailScreen extends ConsumerWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Icon(Icons.error_outline, size: 48, color: AppColors.swiggyLightGray),
+                const Icon(Icons.error_outline, size: 48, color: AppColors.textTertiary),
                 const SizedBox(height: 12),
                 Text(e.toString(),
                     style: AppTextStyles.bodyMedium, textAlign: TextAlign.center),
                 const SizedBox(height: 16),
                 ElevatedButton(
                   onPressed: () => ref.invalidate(orderDetailProvider(id)),
-                  style: ElevatedButton.styleFrom(backgroundColor: AppColors.brandOrange),
+                  style: ElevatedButton.styleFrom(backgroundColor: AppColors.brandPrimary),
                   child: const Text('Retry', style: TextStyle(color: Colors.white)),
                 ),
               ],
@@ -68,7 +68,7 @@ class _OrderDetailView extends StatelessWidget {
           ],
         ),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: AppColors.swiggyBlack),
+          icon: const Icon(Icons.arrow_back, color: AppColors.textPrimary),
           onPressed: () => Navigator.of(context).pop(),
         ),
         elevation: 0,
@@ -144,7 +144,7 @@ class _StatusBanner extends StatelessWidget {
   static Color _statusColor(String s) => switch (s) {
         'DELIVERED' => AppColors.vegGreen,
         'CANCELLED' => AppColors.error,
-        'OUT_FOR_DELIVERY' => AppColors.brandOrange,
+        'OUT_FOR_DELIVERY' => AppColors.brandPrimary,
         _ => AppColors.warning,
       };
 
@@ -205,7 +205,7 @@ class _TimelineSection extends StatelessWidget {
                       width: 12,
                       height: 12,
                       decoration: BoxDecoration(
-                        color: isLast ? AppColors.brandOrange : AppColors.vegGreen,
+                        color: isLast ? AppColors.brandPrimary : AppColors.vegGreen,
                         shape: BoxShape.circle,
                       ),
                     ),
@@ -278,7 +278,7 @@ class _ItemsSection extends StatelessWidget {
                       width: 20,
                       height: 20,
                       decoration: BoxDecoration(
-                        color: AppColors.brandOrangeLight,
+                        color: AppColors.brandPrimaryLight,
                         borderRadius: BorderRadius.circular(4),
                       ),
                       child: Center(
@@ -287,7 +287,7 @@ class _ItemsSection extends StatelessWidget {
                           style: const TextStyle(
                             fontSize: 11,
                             fontWeight: FontWeight.w700,
-                            color: AppColors.brandOrange,
+                            color: AppColors.brandPrimary,
                           ),
                         ),
                       ),
@@ -351,7 +351,7 @@ class _BillSection extends StatelessWidget {
           const SizedBox(height: 8),
           Row(
             children: [
-              const Icon(Icons.payments_outlined, size: 14, color: AppColors.swiggyGray),
+              const Icon(Icons.payments_outlined, size: 14, color: AppColors.textSecondary),
               const SizedBox(width: 6),
               Text(
                 _paymentLabel(order.paymentMode),
@@ -415,7 +415,7 @@ class _AddressSection extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Icon(Icons.location_on_outlined,
-                  size: 18, color: AppColors.brandOrange),
+                  size: 18, color: AppColors.brandPrimary),
               const SizedBox(width: 8),
               Expanded(
                 child: Column(

@@ -24,7 +24,7 @@ export function Toast({ type, message, onDismiss }: ToastProps) {
         'fixed bottom-6 left-1/2 -translate-x-1/2 z-[100] flex items-center gap-3',
         'px-5 py-3.5 rounded-2xl shadow-2xl text-sm font-semibold text-white',
         'animate-in fade-in slide-in-from-bottom-4 duration-300',
-        type === 'success' ? 'bg-swiggy-green' : 'bg-swiggy-red'
+        type === 'success' ? 'bg-app-green' : 'bg-app-red'
       )}
     >
       <span className="text-base">{type === 'success' ? '✓' : '✕'}</span>

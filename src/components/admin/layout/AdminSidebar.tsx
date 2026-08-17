@@ -62,7 +62,7 @@ export function AdminSidebar() {
     <aside className="w-60 shrink-0 bg-slate-900 flex flex-col h-full">
       {/* Brand */}
       <div className="h-16 flex items-center px-5 border-b border-slate-800">
-        <span className="text-brand-orange font-black text-lg tracking-tight">Swiggy</span>
+        <span className="text-brand-primary font-black text-lg tracking-tight">Mealora</span>
         <span className="ml-2 text-xs font-semibold text-slate-400 bg-slate-800 rounded px-1.5 py-0.5">
           Admin
         </span>
@@ -77,7 +77,7 @@ export function AdminSidebar() {
             className={cn(
               'flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors',
               isActive(item.href)
-                ? 'bg-brand-orange text-white'
+                ? 'bg-brand-primary text-white'
                 : 'text-slate-400 hover:text-white hover:bg-slate-800',
             )}
           >

@@ -17,11 +17,11 @@ export async function main() {
   // ─── Demo User ───────────────────────────────────────────────────────────────
   const hashedPassword = await bcrypt.hash('Demo@1234', 12)
   const user = await prisma.user.upsert({
-    where: { email: 'demo@swiggy.com' },
+    where: { email: 'demo@mealora.app' },
     update: { password: hashedPassword },
     create: {
       name: 'Demo User',
-      email: 'demo@swiggy.com',
+      email: 'demo@mealora.app',
       password: hashedPassword,
       phone: '+91 98765 43210',
     },
@@ -30,11 +30,11 @@ export async function main() {
 
   const adminPassword = await bcrypt.hash('admin123', 12)
   const admin = await prisma.user.upsert({
-    where: { email: 'admin@swiggy.com' },
+    where: { email: 'admin@mealora.app' },
     update: {},
     create: {
       name: 'Admin',
-      email: 'admin@swiggy.com',
+      email: 'admin@mealora.app',
       password: adminPassword,
       role: 'ADMIN',
     },
@@ -116,6 +116,6 @@ export async function main() {
   console.log(`✨ Seeding complete!`)
   console.log(`   ${totalRestaurants} restaurants across ${allCities.length} cities`)
   console.log(`   ${totalMenuItems} menu items total`)
-  console.log(`   Demo login: demo@swiggy.com / Demo@1234`)
+  console.log(`   Demo login: demo@mealora.app / Demo@1234`)
   console.log(`   Coupons: ${coupons.map((c) => c.code).join(', ')}`)
 }

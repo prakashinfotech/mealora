@@ -9,7 +9,7 @@ interface Props {
   params: { id: string }
 }
 
-export async function generateMetadata({ params }: Props) {
+export async function generateMetadata() {
   return { title: 'Menu Items' }
 }
 
@@ -51,7 +51,7 @@ export default async function MenuItemsPage({ params }: Props) {
 
         <Link
           href={`/admin/restaurants/${params.id}/menu/items/new`}
-          className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-brand-orange text-white text-sm font-bold hover:bg-brand-orange-dark transition-colors"
+          className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-brand-primary text-white text-sm font-bold hover:bg-brand-primary-dark transition-colors"
         >
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />

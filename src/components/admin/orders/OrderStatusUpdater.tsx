@@ -95,7 +95,7 @@ export function OrderStatusUpdater({ orderId, currentStatus }: Props) {
         <button
           type="submit"
           disabled={!isDirty || loading}
-          className="w-full py-2 rounded-lg bg-brand-orange text-white text-sm font-semibold disabled:opacity-50 hover:bg-brand-orange/90 transition-colors"
+          className="w-full py-2 rounded-lg bg-brand-primary text-white text-sm font-semibold disabled:opacity-50 hover:bg-brand-primary/90 transition-colors"
         >
           {loading ? 'Updating…' : 'Update Status'}
         </button>

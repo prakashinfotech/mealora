@@ -301,7 +301,7 @@ export function CouponForm({ mode, initialData }: Props) {
         <button
           type="submit"
           disabled={loading}
-          className="px-6 py-2.5 rounded-lg bg-brand-orange text-white text-sm font-semibold disabled:opacity-60 hover:bg-brand-orange/90 transition-colors"
+          className="px-6 py-2.5 rounded-lg bg-brand-primary text-white text-sm font-semibold disabled:opacity-60 hover:bg-brand-primary/90 transition-colors"
         >
           {loading ? 'Saving…' : mode === 'create' ? 'Create Coupon' : 'Save Changes'}
         </button>

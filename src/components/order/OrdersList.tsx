@@ -45,8 +45,8 @@ export function OrdersList({ initialOrders, initialHasMore, initialPage }: Props
     return (
       <div className="text-center py-24 bg-white rounded-2xl">
         <span className="text-6xl">🍽️</span>
-        <p className="text-lg font-bold text-swiggy-black mt-4">No orders yet</p>
-        <p className="text-swiggy-gray text-sm mt-1">Start exploring restaurants!</p>
+        <p className="text-lg font-bold text-app-black mt-4">No orders yet</p>
+        <p className="text-app-gray text-sm mt-1">Start exploring restaurants!</p>
         <Link href="/restaurants" className="btn-primary inline-block mt-5">Browse restaurants</Link>
       </div>
     )
@@ -62,7 +62,7 @@ export function OrdersList({ initialOrders, initialHasMore, initialPage }: Props
             className="block bg-white rounded-2xl shadow-card hover:shadow-card-hover transition-shadow p-4"
           >
             <div className="flex gap-4">
-              <div className="relative w-16 h-16 rounded-xl overflow-hidden bg-swiggy-gray-bg shrink-0">
+              <div className="relative w-16 h-16 rounded-xl overflow-hidden bg-app-gray-bg shrink-0">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={order.restaurant.imageUrl}
@@ -72,15 +72,15 @@ export function OrdersList({ initialOrders, initialHasMore, initialPage }: Props
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-start justify-between gap-2">
-                  <h3 className="font-bold text-swiggy-black">{order.restaurant.name}</h3>
+                  <h3 className="font-bold text-app-black">{order.restaurant.name}</h3>
                   <span className={cn('text-xs font-semibold shrink-0', ORDER_STATUS_COLORS[order.status])}>
                     {ORDER_STATUS_LABELS[order.status]}
                   </span>
                 </div>
-                <p className="text-sm text-swiggy-gray mt-0.5 truncate">
+                <p className="text-sm text-app-gray mt-0.5 truncate">
                   {order.items.map((i) => `${i.name} × ${i.quantity}`).join(', ')}
                 </p>
-                <div className="flex items-center gap-3 mt-2 text-xs text-swiggy-gray-light flex-wrap">
+                <div className="flex items-center gap-3 mt-2 text-xs text-app-gray-light flex-wrap">
                   <span>
                     {new Date(order.createdAt).toLocaleDateString('en-IN', {
                       day: 'numeric',
@@ -89,11 +89,11 @@ export function OrdersList({ initialOrders, initialHasMore, initialPage }: Props
                     })}
                   </span>
                   <span>•</span>
-                  <span className="font-semibold text-swiggy-black">{formatPrice(order.total)}</span>
+                  <span className="font-semibold text-app-black">{formatPrice(order.total)}</span>
                   {order.discount > 0 && (
                     <>
                       <span>•</span>
-                      <span className="text-swiggy-green font-semibold">Saved {formatPrice(order.discount)}</span>
+                      <span className="text-app-green font-semibold">Saved {formatPrice(order.discount)}</span>
                     </>
                   )}
                 </div>
@@ -108,7 +108,7 @@ export function OrdersList({ initialOrders, initialHasMore, initialPage }: Props
           <button
             onClick={loadMore}
             disabled={loading}
-            className="px-8 py-3 rounded-xl border-2 border-brand-orange text-brand-orange font-bold text-sm hover:bg-brand-orange-light transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="px-8 py-3 rounded-xl border-2 border-brand-primary text-brand-primary font-bold text-sm hover:bg-brand-primary-light transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {loading ? (
               <span className="flex items-center gap-2">

@@ -81,13 +81,13 @@ export default async function AdminDashboardPage() {
           <a
             key={item.href}
             href={item.href}
-            className="group bg-white rounded-xl border border-slate-200 p-5 hover:border-brand-orange/50 hover:shadow-sm transition-all"
+            className="group bg-white rounded-xl border border-slate-200 p-5 hover:border-brand-primary/50 hover:shadow-sm transition-all"
           >
-            <p className="text-sm font-semibold text-slate-800 group-hover:text-brand-orange transition-colors">
+            <p className="text-sm font-semibold text-slate-800 group-hover:text-brand-primary transition-colors">
               {item.label}
             </p>
             <p className="text-xs text-slate-400 mt-1">{item.desc}</p>
-            <span className="text-xs text-brand-orange font-semibold mt-3 inline-block opacity-0 group-hover:opacity-100 transition-opacity">
+            <span className="text-xs text-brand-primary font-semibold mt-3 inline-block opacity-0 group-hover:opacity-100 transition-opacity">
               Go →
             </span>
           </a>

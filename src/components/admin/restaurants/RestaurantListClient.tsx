@@ -173,7 +173,7 @@ export function RestaurantListClient() {
           <span className="text-slate-300">|</span>
           <button
             onClick={(e) => { e.stopPropagation(); router.push(`/admin/restaurants/${row.id}/edit`) }}
-            className="text-xs font-semibold text-brand-orange hover:underline"
+            className="text-xs font-semibold text-brand-primary hover:underline"
           >
             Edit
           </button>
@@ -222,7 +222,7 @@ export function RestaurantListClient() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search restaurants…"
-            className="w-full pl-9 pr-3 py-2 rounded-lg border border-slate-300 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-brand-orange/40 focus:border-brand-orange"
+            className="w-full pl-9 pr-3 py-2 rounded-lg border border-slate-300 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-brand-primary/40 focus:border-brand-primary"
           />
         </div>
 

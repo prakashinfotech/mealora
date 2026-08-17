@@ -8,7 +8,7 @@ interface Props {
   params: { id: string }
 }
 
-export async function generateMetadata({ params }: Props) {
+export async function generateMetadata() {
   return { title: 'Menu Management' }
 }
 
@@ -63,15 +63,15 @@ export default async function MenuOverviewPage({ params }: Props) {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <Link
           href={`/admin/restaurants/${params.id}/menu/categories`}
-          className="group bg-white rounded-xl border border-slate-200 px-6 py-5 hover:border-brand-orange hover:shadow-sm transition-all"
+          className="group bg-white rounded-xl border border-slate-200 px-6 py-5 hover:border-brand-primary hover:shadow-sm transition-all"
         >
           <div className="flex items-center justify-between mb-2">
-            <div className="w-10 h-10 rounded-lg bg-orange-50 flex items-center justify-center text-brand-orange">
+            <div className="w-10 h-10 rounded-lg bg-orange-50 flex items-center justify-center text-brand-primary">
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 12h16.5m-16.5 3.75h16.5M3.75 19.5h16.5M5.625 4.5h12.75a1.875 1.875 0 010 3.75H5.625a1.875 1.875 0 010-3.75z" />
               </svg>
             </div>
-            <svg className="w-4 h-4 text-slate-300 group-hover:text-brand-orange transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <svg className="w-4 h-4 text-slate-300 group-hover:text-brand-primary transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
             </svg>
           </div>
@@ -81,15 +81,15 @@ export default async function MenuOverviewPage({ params }: Props) {
 
         <Link
           href={`/admin/restaurants/${params.id}/menu/items`}
-          className="group bg-white rounded-xl border border-slate-200 px-6 py-5 hover:border-brand-orange hover:shadow-sm transition-all"
+          className="group bg-white rounded-xl border border-slate-200 px-6 py-5 hover:border-brand-primary hover:shadow-sm transition-all"
         >
           <div className="flex items-center justify-between mb-2">
-            <div className="w-10 h-10 rounded-lg bg-orange-50 flex items-center justify-center text-brand-orange">
+            <div className="w-10 h-10 rounded-lg bg-orange-50 flex items-center justify-center text-brand-primary">
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
               </svg>
             </div>
-            <svg className="w-4 h-4 text-slate-300 group-hover:text-brand-orange transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <svg className="w-4 h-4 text-slate-300 group-hover:text-brand-primary transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
             </svg>
           </div>

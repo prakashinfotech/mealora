@@ -11,11 +11,11 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: {
-    default: 'Swiggy — Order Food Online',
-    template: '%s | Swiggy',
+    default: 'Mealora — Order Food Online',
+    template: '%s | Mealora',
   },
   description:
-    'Order food online from the best restaurants near you. Fast delivery, great food.',
+    'Mealora — Discover food. Order with ease. Fast delivery from the best restaurants near you.',
   icons: { icon: '/favicon.ico' },
 }
 

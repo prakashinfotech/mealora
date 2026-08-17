@@ -210,8 +210,8 @@ export function RestaurantForm({ mode, defaultValues }: Props) {
                   onClick={() => toggleCuisine(cuisine)}
                   className={`px-3 py-1.5 rounded-full text-xs font-semibold border transition-colors ${
                     active
-                      ? 'bg-brand-orange text-white border-brand-orange'
-                      : 'bg-white text-slate-600 border-slate-300 hover:border-brand-orange'
+                      ? 'bg-brand-primary text-white border-brand-primary'
+                      : 'bg-white text-slate-600 border-slate-300 hover:border-brand-primary'
                   }`}
                 >
                   {cuisine}
@@ -360,7 +360,7 @@ export function RestaurantForm({ mode, defaultValues }: Props) {
           <button
             type="submit"
             disabled={saving}
-            className="px-6 py-2.5 rounded-xl bg-brand-orange text-white text-sm font-bold hover:bg-brand-orange-dark transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="px-6 py-2.5 rounded-xl bg-brand-primary text-white text-sm font-bold hover:bg-brand-primary-dark transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {saving ? 'Saving…' : mode === 'create' ? 'Create Restaurant' : 'Save Changes'}
           </button>

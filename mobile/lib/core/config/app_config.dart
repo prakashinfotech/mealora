@@ -10,7 +10,7 @@ class AppConfig {
   static const Duration connectTimeout = Duration(seconds: 15);
   static const Duration receiveTimeout = Duration(seconds: 30);
 
-  static const String appName = 'Swiggy Clone';
+  static const String appName = 'Mealora';
 
   // StorageKeys used across the app
   static const String sessionTokenKey = 'next_auth_session_token';

@@ -119,9 +119,9 @@ class _Header extends StatelessWidget {
             children: [
               const TextSpan(text: 'Welcome to '),
               TextSpan(
-                text: 'Swiggy',
+                text: 'Mealora',
                 style: AppTextStyles.displayLarge.copyWith(
-                  color: AppColors.brandOrange,
+                  color: AppColors.brandPrimary,
                 ),
               ),
             ],
@@ -185,7 +185,7 @@ class _DemoHint extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: AppColors.brandOrangeLight,
+        color: AppColors.brandPrimaryLight,
         borderRadius: BorderRadius.circular(10),
       ),
       child: Column(
@@ -194,7 +194,7 @@ class _DemoHint extends StatelessWidget {
           Text('Demo credentials', style: AppTextStyles.labelLarge),
           const SizedBox(height: 4),
           Text(
-            'demo@swiggy.com  ·  Demo@1234',
+            'demo@mealora.app  ·  Demo@1234',
             style: AppTextStyles.bodyMedium.copyWith(
               fontFamily: 'monospace',
             ),

@@ -119,7 +119,7 @@ class _RestaurantsScreenState extends ConsumerState<RestaurantsScreen> {
                           child: Padding(
                             padding: EdgeInsets.all(16),
                             child: CircularProgressIndicator(
-                              color: AppColors.brandOrange,
+                              color: AppColors.brandPrimary,
                               strokeWidth: 2,
                             ),
                           ),
@@ -164,7 +164,7 @@ class _TopBar extends StatelessWidget {
             onChanged: onSearchChanged,
             decoration: InputDecoration(
               hintText: 'Search restaurants or cuisines',
-              prefixIcon: const Icon(Icons.search, size: 20, color: AppColors.swiggyLightGray),
+              prefixIcon: const Icon(Icons.search, size: 20, color: AppColors.textTertiary),
               suffixIcon: searchController.text.isNotEmpty
                   ? IconButton(
                       icon: const Icon(Icons.close, size: 18),
@@ -216,15 +216,15 @@ class _CuisineFilter extends StatelessWidget {
             label: Text(cuisine),
             selected: isSelected,
             onSelected: (_) => onSelect(cuisine),
-            selectedColor: AppColors.brandOrange,
+            selectedColor: AppColors.brandPrimary,
             labelStyle: TextStyle(
-              color: isSelected ? Colors.white : AppColors.swiggyGray,
+              color: isSelected ? Colors.white : AppColors.textSecondary,
               fontSize: 12,
               fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
             ),
             backgroundColor: AppColors.surface,
             side: BorderSide(
-              color: isSelected ? AppColors.brandOrange : AppColors.divider,
+              color: isSelected ? AppColors.brandPrimary : AppColors.divider,
             ),
             padding: const EdgeInsets.symmetric(horizontal: 8),
             visualDensity: VisualDensity.compact,

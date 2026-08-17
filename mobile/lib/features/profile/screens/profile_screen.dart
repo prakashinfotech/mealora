@@ -72,7 +72,7 @@ class _ProfileContent extends ConsumerWidget {
             tiles: [
               _ProfileMenuTile(
                 icon: Icons.info_outline,
-                title: 'About Swiggy Clone',
+                title: 'About Mealora',
                 onTap: () => _showAbout(context),
               ),
               const _ProfileMenuTile(
@@ -106,7 +106,7 @@ class _ProfileContent extends ConsumerWidget {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Swiggy Clone', style: AppTextStyles.headlineSmall),
+        title: const Text('Mealora', style: AppTextStyles.headlineSmall),
         content: const Text(
           'A full-stack food delivery demo built with Flutter, Next.js, and Prisma.\n\nv1.0.0',
           style: AppTextStyles.bodyMedium,
@@ -115,7 +115,7 @@ class _ProfileContent extends ConsumerWidget {
           TextButton(
             onPressed: () => Navigator.pop(ctx),
             child: const Text('Close',
-                style: TextStyle(color: AppColors.brandOrange)),
+                style: TextStyle(color: AppColors.brandPrimary)),
           ),
         ],
       ),
@@ -143,11 +143,11 @@ class _ProfileHeaderCard extends StatelessWidget {
               // Avatar
               CircleAvatar(
                 radius: 32,
-                backgroundColor: AppColors.brandOrangeLight,
+                backgroundColor: AppColors.brandPrimaryLight,
                 child: Text(
                   initials,
                   style: const TextStyle(
-                    color: AppColors.brandOrange,
+                    color: AppColors.brandPrimary,
                     fontSize: 22,
                     fontWeight: FontWeight.w800,
                   ),
@@ -167,7 +167,7 @@ class _ProfileHeaderCard extends StatelessWidget {
                       Row(
                         children: [
                           const Icon(Icons.phone_outlined,
-                              size: 13, color: AppColors.swiggyGray),
+                              size: 13, color: AppColors.textSecondary),
                           const SizedBox(width: 4),
                           Text(user.phone!, style: AppTextStyles.bodyMedium),
                         ],
@@ -183,12 +183,12 @@ class _ProfileHeaderCard extends StatelessWidget {
           OutlinedButton.icon(
             onPressed: () => _showEditComingSoon(context),
             icon: const Icon(Icons.edit_outlined,
-                size: 15, color: AppColors.brandOrange),
+                size: 15, color: AppColors.brandPrimary),
             label: const Text('Edit Profile',
                 style: TextStyle(
-                    color: AppColors.brandOrange, fontWeight: FontWeight.w600)),
+                    color: AppColors.brandPrimary, fontWeight: FontWeight.w600)),
             style: OutlinedButton.styleFrom(
-              side: const BorderSide(color: AppColors.brandOrange),
+              side: const BorderSide(color: AppColors.brandPrimary),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8)),
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
@@ -248,8 +248,8 @@ class _QuickActionsSection extends ConsumerWidget {
               _QuickActionCard(
                 icon: Icons.location_on_outlined,
                 label: 'Addresses',
-                color: AppColors.brandOrangeLight,
-                iconColor: AppColors.brandOrange,
+                color: AppColors.brandPrimaryLight,
+                iconColor: AppColors.brandPrimary,
                 onTap: () => context.goNamed(RouteNames.addressManagement),
               ),
               const SizedBox(width: 12),
@@ -319,7 +319,7 @@ class _QuickActionCard extends StatelessWidget {
               Text(
                 label,
                 style: AppTextStyles.labelSmall.copyWith(
-                  color: AppColors.swiggyBlack,
+                  color: AppColors.textPrimary,
                   fontWeight: FontWeight.w600,
                 ),
                 textAlign: TextAlign.center,
@@ -359,7 +359,7 @@ class _AddressPreviewSection extends ConsumerWidget {
           const SizedBox(height: 12),
           addressesAsync.when(
             loading: () => const LinearProgressIndicator(
-                color: AppColors.brandOrange, minHeight: 2),
+                color: AppColors.brandPrimary, minHeight: 2),
             error: (_, __) => const Text(
               'Could not load addresses.',
               style: AppTextStyles.bodyMedium,
@@ -372,21 +372,21 @@ class _AddressPreviewSection extends ConsumerWidget {
                     padding: const EdgeInsets.all(14),
                     decoration: BoxDecoration(
                       border: Border.all(
-                          color: AppColors.brandOrange, style: BorderStyle.solid),
+                          color: AppColors.brandPrimary, style: BorderStyle.solid),
                       borderRadius: BorderRadius.circular(8),
-                      color: AppColors.brandOrangeLight,
+                      color: AppColors.brandPrimaryLight,
                     ),
                     child: const Row(
                       children: [
                         Icon(Icons.add_location_outlined,
-                            size: 20, color: AppColors.brandOrange),
+                            size: 20, color: AppColors.brandPrimary),
                         SizedBox(width: 10),
                         Expanded(
                           child: Text('Add your first delivery address',
                               style: AppTextStyles.bodyLarge),
                         ),
                         Icon(Icons.arrow_forward_ios,
-                            size: 14, color: AppColors.brandOrange),
+                            size: 14, color: AppColors.brandPrimary),
                       ],
                     ),
                   ),
@@ -446,8 +446,8 @@ class _AddressPreviewCard extends StatelessWidget {
               _labelIcon(address.label),
               size: 18,
               color: address.isDefault
-                  ? AppColors.brandOrange
-                  : AppColors.swiggyGray,
+                  ? AppColors.brandPrimary
+                  : AppColors.textSecondary,
             ),
           ),
           const SizedBox(width: 12),
@@ -467,13 +467,13 @@ class _AddressPreviewCard extends StatelessWidget {
                         padding:
                             const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
                         decoration: BoxDecoration(
-                          color: AppColors.brandOrangeLight,
+                          color: AppColors.brandPrimaryLight,
                           borderRadius: BorderRadius.circular(4),
                         ),
                         child: Text(
                           'DEFAULT',
                           style: AppTextStyles.labelSmall.copyWith(
-                            color: AppColors.brandOrange,
+                            color: AppColors.brandPrimary,
                             fontWeight: FontWeight.w700,
                             fontSize: 9,
                           ),
@@ -572,12 +572,12 @@ class _ProfileMenuTile extends StatelessWidget {
           color: AppColors.background,
           borderRadius: BorderRadius.circular(8),
         ),
-        child: Icon(icon, size: 18, color: AppColors.swiggyGray),
+        child: Icon(icon, size: 18, color: AppColors.textSecondary),
       ),
       title: Text(
         title,
         style: AppTextStyles.bodyLarge.copyWith(
-          color: onTap != null ? AppColors.swiggyBlack : AppColors.swiggyLightGray,
+          color: onTap != null ? AppColors.textPrimary : AppColors.textTertiary,
         ),
       ),
       subtitle: subtitle != null
@@ -585,7 +585,7 @@ class _ProfileMenuTile extends StatelessWidget {
           : null,
       trailing: onTap != null
           ? const Icon(Icons.arrow_forward_ios,
-              size: 14, color: AppColors.swiggyLightGray)
+              size: 14, color: AppColors.textTertiary)
           : null,
       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 2),
       minLeadingWidth: 36,
@@ -628,7 +628,7 @@ class _LogoutButton extends ConsumerWidget {
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
             child: const Text('Cancel',
-                style: TextStyle(color: AppColors.swiggyGray)),
+                style: TextStyle(color: AppColors.textSecondary)),
           ),
           TextButton(
             onPressed: () => Navigator.pop(ctx, true),

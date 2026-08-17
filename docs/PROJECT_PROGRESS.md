@@ -1,6 +1,6 @@
 # Project Progress
 
-Swiggy clone — full-stack food delivery web app built with Next.js 14, Prisma + Neon PostgreSQL, NextAuth.js v4, Zustand, Tailwind CSS, Razorpay.
+Mealora — full-stack food delivery platform built with Next.js 14, Prisma + Neon PostgreSQL, NextAuth.js v4, Zustand, Tailwind CSS, Razorpay.
 
 ---
 
@@ -10,7 +10,7 @@ Swiggy clone — full-stack food delivery web app built with Next.js 14, Prisma 
 - [x] Next.js 14 App Router scaffold with TypeScript strict mode
 - [x] Three-layer architecture: `src/` (frontend) · `server/` (backend) · `shared/` (contracts)
 - [x] Path aliases: `@/*`, `@server/*`, `@shared/*`
-- [x] Tailwind CSS with Swiggy design tokens (colors, shadows, font)
+- [x] Tailwind CSS with Mealora design tokens (colors, shadows, font)
 - [x] Global component classes: `.btn-primary`, `.btn-secondary`, `.input-base`, `.card`
 - [x] `cn()` utility via clsx + tailwind-merge
 
@@ -19,7 +19,7 @@ Swiggy clone — full-stack food delivery web app built with Next.js 14, Prisma 
 - [x] Neon cloud PostgreSQL (ap-southeast-1)
 - [x] Seed: 20 Bangalore restaurants, 10 menu items each, 3 categories, 4 demo coupons
 - [x] Seed is idempotent (upserts on slug)
-- [x] Demo user: `demo@swiggy.com / Demo@1234`
+- [x] Demo user: `demo@mealora.app / Demo@1234`
 - [x] DB index on `(userId, createdAt)` for order history queries
 
 ### Auth

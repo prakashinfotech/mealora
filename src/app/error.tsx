@@ -12,10 +12,10 @@ export default function Error({ error, reset }: ErrorProps) {
   return (
     <>
       <Navbar />
-      <main className="min-h-screen flex flex-col items-center justify-center bg-swiggy-gray-bg text-center px-4">
+      <main className="min-h-screen flex flex-col items-center justify-center bg-app-gray-bg text-center px-4">
         <span className="text-7xl mb-6">⚠️</span>
-        <h1 className="text-2xl font-black text-swiggy-black">Something went wrong</h1>
-        <p className="text-swiggy-gray text-sm mt-2 max-w-xs">
+        <h1 className="text-2xl font-black text-app-black">Something went wrong</h1>
+        <p className="text-app-gray text-sm mt-2 max-w-xs">
           {error.message || 'An unexpected error occurred. Please try again.'}
         </p>
         <button onClick={reset} className="btn-primary mt-8">

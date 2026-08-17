@@ -18,14 +18,14 @@ export function MenuSection({ category, restaurant }: Props) {
       <button
         onClick={() => setCollapsed(!collapsed)}
         aria-expanded={!collapsed}
-        className="w-full flex items-center justify-between py-4 px-4 sm:px-6 bg-white hover:bg-swiggy-gray-bg/50 transition-colors"
+        className="w-full flex items-center justify-between py-4 px-4 sm:px-6 bg-white hover:bg-app-gray-bg/50 transition-colors"
       >
         <div className="flex items-center gap-2">
-          <h3 className="text-base font-bold text-swiggy-black">{category.name}</h3>
-          <span className="text-xs text-swiggy-gray-light">({availableCount})</span>
+          <h3 className="text-base font-bold text-app-black">{category.name}</h3>
+          <span className="text-xs text-app-gray-light">({availableCount})</span>
         </div>
         <svg
-          className={`w-5 h-5 text-swiggy-gray transition-transform duration-300 ${collapsed ? '-rotate-90' : ''}`}
+          className={`w-5 h-5 text-app-gray transition-transform duration-300 ${collapsed ? '-rotate-90' : ''}`}
           fill="none" stroke="currentColor" viewBox="0 0 24 24"
         >
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />

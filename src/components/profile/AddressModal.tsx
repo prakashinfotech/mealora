@@ -69,10 +69,10 @@ export function AddressModal({ onSuccess, onClose }: Props) {
 
       <div className="relative bg-white rounded-2xl shadow-2xl w-full max-w-md p-6 max-h-[90vh] overflow-y-auto">
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-lg font-black text-swiggy-black">Add New Address</h2>
+          <h2 className="text-lg font-black text-app-black">Add New Address</h2>
           <button
             onClick={onClose}
-            className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-swiggy-gray-bg text-swiggy-gray transition-colors"
+            className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-app-gray-bg text-app-gray transition-colors"
           >
             ✕
           </button>
@@ -81,7 +81,7 @@ export function AddressModal({ onSuccess, onClose }: Props) {
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Label chips */}
           <div>
-            <label className="block text-xs font-semibold text-swiggy-gray uppercase tracking-wide mb-2">
+            <label className="block text-xs font-semibold text-app-gray uppercase tracking-wide mb-2">
               Label
             </label>
             <div className="flex gap-2">
@@ -92,8 +92,8 @@ export function AddressModal({ onSuccess, onClose }: Props) {
                   onClick={() => set('label', l)}
                   className={`px-4 py-2 rounded-full text-sm font-semibold border transition-colors ${
                     form.label === l
-                      ? 'bg-brand-orange text-white border-brand-orange'
-                      : 'border-swiggy-border text-swiggy-black hover:border-brand-orange'
+                      ? 'bg-brand-primary text-white border-brand-primary'
+                      : 'border-app-border text-app-black hover:border-brand-primary'
                   }`}
                 >
                   {l === 'Home' ? '🏠' : l === 'Work' ? '💼' : '📍'} {l}
@@ -104,7 +104,7 @@ export function AddressModal({ onSuccess, onClose }: Props) {
 
           {/* Address line 1 */}
           <div>
-            <label className="block text-xs font-semibold text-swiggy-gray uppercase tracking-wide mb-1.5">
+            <label className="block text-xs font-semibold text-app-gray uppercase tracking-wide mb-1.5">
               Address Line 1 *
             </label>
             <input
@@ -113,13 +113,13 @@ export function AddressModal({ onSuccess, onClose }: Props) {
               onChange={(e) => set('line1', e.target.value)}
               placeholder="Flat / House no., Building, Street"
               required
-              className="w-full border border-swiggy-border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-orange/30 focus:border-brand-orange transition-colors"
+              className="w-full border border-app-border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-primary/30 focus:border-brand-primary transition-colors"
             />
           </div>
 
           {/* Address line 2 */}
           <div>
-            <label className="block text-xs font-semibold text-swiggy-gray uppercase tracking-wide mb-1.5">
+            <label className="block text-xs font-semibold text-app-gray uppercase tracking-wide mb-1.5">
               Address Line 2 <span className="normal-case font-normal">(optional)</span>
             </label>
             <input
@@ -127,14 +127,14 @@ export function AddressModal({ onSuccess, onClose }: Props) {
               value={form.line2}
               onChange={(e) => set('line2', e.target.value)}
               placeholder="Area, Locality, Landmark"
-              className="w-full border border-swiggy-border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-orange/30 focus:border-brand-orange transition-colors"
+              className="w-full border border-app-border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-primary/30 focus:border-brand-primary transition-colors"
             />
           </div>
 
           {/* City + State */}
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-semibold text-swiggy-gray uppercase tracking-wide mb-1.5">
+              <label className="block text-xs font-semibold text-app-gray uppercase tracking-wide mb-1.5">
                 City *
               </label>
               <input
@@ -142,11 +142,11 @@ export function AddressModal({ onSuccess, onClose }: Props) {
                 value={form.city}
                 onChange={(e) => set('city', e.target.value)}
                 required
-                className="w-full border border-swiggy-border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-orange/30 focus:border-brand-orange transition-colors"
+                className="w-full border border-app-border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-primary/30 focus:border-brand-primary transition-colors"
               />
             </div>
             <div>
-              <label className="block text-xs font-semibold text-swiggy-gray uppercase tracking-wide mb-1.5">
+              <label className="block text-xs font-semibold text-app-gray uppercase tracking-wide mb-1.5">
                 State *
               </label>
               <input
@@ -154,14 +154,14 @@ export function AddressModal({ onSuccess, onClose }: Props) {
                 value={form.state}
                 onChange={(e) => set('state', e.target.value)}
                 required
-                className="w-full border border-swiggy-border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-orange/30 focus:border-brand-orange transition-colors"
+                className="w-full border border-app-border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-primary/30 focus:border-brand-primary transition-colors"
               />
             </div>
           </div>
 
           {/* Pincode */}
           <div>
-            <label className="block text-xs font-semibold text-swiggy-gray uppercase tracking-wide mb-1.5">
+            <label className="block text-xs font-semibold text-app-gray uppercase tracking-wide mb-1.5">
               Pincode *
             </label>
             <input
@@ -170,7 +170,7 @@ export function AddressModal({ onSuccess, onClose }: Props) {
               onChange={(e) => set('pincode', e.target.value.replace(/\D/g, '').slice(0, 6))}
               placeholder="6-digit pincode"
               required
-              className="w-full border border-swiggy-border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-orange/30 focus:border-brand-orange transition-colors"
+              className="w-full border border-app-border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-primary/30 focus:border-brand-primary transition-colors"
             />
           </div>
 
@@ -180,15 +180,15 @@ export function AddressModal({ onSuccess, onClose }: Props) {
               type="checkbox"
               checked={form.isDefault}
               onChange={(e) => set('isDefault', e.target.checked)}
-              className="w-4 h-4 accent-brand-orange"
+              className="w-4 h-4 accent-brand-primary"
             />
-            <span className="text-sm font-medium text-swiggy-black group-hover:text-brand-orange transition-colors">
+            <span className="text-sm font-medium text-app-black group-hover:text-brand-primary transition-colors">
               Set as default address
             </span>
           </label>
 
           {error && (
-            <p className="text-xs font-semibold text-swiggy-red bg-red-50 px-3 py-2 rounded-lg">
+            <p className="text-xs font-semibold text-app-red bg-red-50 px-3 py-2 rounded-lg">
               {error}
             </p>
           )}
@@ -197,14 +197,14 @@ export function AddressModal({ onSuccess, onClose }: Props) {
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 py-3 rounded-xl border border-swiggy-border text-sm font-semibold text-swiggy-black hover:bg-swiggy-gray-bg transition-colors"
+              className="flex-1 py-3 rounded-xl border border-app-border text-sm font-semibold text-app-black hover:bg-app-gray-bg transition-colors"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={submitting}
-              className="flex-1 py-3 rounded-xl bg-brand-orange text-white text-sm font-bold hover:bg-brand-orange-dark transition-colors disabled:opacity-60"
+              className="flex-1 py-3 rounded-xl bg-brand-primary text-white text-sm font-bold hover:bg-brand-primary-dark transition-colors disabled:opacity-60"
             >
               {submitting ? 'Saving…' : 'Save address'}
             </button>

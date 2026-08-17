@@ -132,10 +132,10 @@ class _Header extends StatelessWidget {
             width: 40,
             height: 40,
             decoration: const BoxDecoration(
-              color: AppColors.brandOrangeLight,
+              color: AppColors.brandPrimaryLight,
               shape: BoxShape.circle,
             ),
-            child: const Icon(Icons.person_outline, color: AppColors.brandOrange, size: 22),
+            child: const Icon(Icons.person_outline, color: AppColors.brandPrimary, size: 22),
           ),
         ],
       ),
@@ -164,7 +164,7 @@ class _SearchTap extends StatelessWidget {
         ),
         child: const Row(
           children: [
-            Icon(Icons.search, color: AppColors.swiggyLightGray, size: 20),
+            Icon(Icons.search, color: AppColors.textTertiary, size: 20),
             SizedBox(width: 10),
             Text('Search for restaurants or food...', style: AppTextStyles.bodyMedium),
           ],

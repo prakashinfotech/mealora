@@ -105,7 +105,7 @@ export default function RegisterPage() {
     <button
       type="button"
       onClick={onToggle}
-      className="text-swiggy-gray hover:text-swiggy-black transition-colors"
+      className="text-app-gray hover:text-app-black transition-colors"
       aria-label={show ? 'Hide password' : 'Show password'}
     >
       {show ? <EyeOffIcon /> : <EyeIcon />}
@@ -113,12 +113,12 @@ export default function RegisterPage() {
   )
 
   return (
-    <div className="min-h-screen bg-swiggy-gray-bg flex items-center justify-center px-4 py-8">
+    <div className="min-h-screen bg-app-gray-bg flex items-center justify-center px-4 py-8">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <Link href="/" className="text-3xl font-black text-brand-orange">swiggy</Link>
-          <h1 className="text-2xl font-black text-swiggy-black mt-4">Create account</h1>
-          <p className="text-swiggy-gray mt-1 text-sm">Join millions of happy customers</p>
+          <Link href="/" className="text-3xl font-black text-brand-primary tracking-tight">Mealora</Link>
+          <h1 className="text-2xl font-black text-app-black mt-4">Create account</h1>
+          <p className="text-app-gray mt-1 text-sm">Join our community of food lovers</p>
         </div>
 
         <div className="bg-white rounded-2xl shadow-card p-8">
@@ -184,7 +184,7 @@ export default function RegisterPage() {
             />
 
             {serverError && (
-              <p className="text-sm text-swiggy-red bg-red-50 rounded-lg px-3 py-2">{serverError}</p>
+              <p className="text-sm text-app-red bg-red-50 rounded-lg px-3 py-2">{serverError}</p>
             )}
 
             <Button type="submit" loading={loading} className="w-full" size="lg">
@@ -192,9 +192,9 @@ export default function RegisterPage() {
             </Button>
           </form>
 
-          <p className="text-center text-sm text-swiggy-gray mt-6">
+          <p className="text-center text-sm text-app-gray mt-6">
             Already have an account?{' '}
-            <Link href="/login" className="text-brand-orange font-semibold hover:underline">Sign in</Link>
+            <Link href="/login" className="text-brand-primary font-semibold hover:underline">Sign in</Link>
           </p>
         </div>
       </div>

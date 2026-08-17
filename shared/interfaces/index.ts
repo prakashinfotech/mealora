@@ -218,6 +218,7 @@ export interface RestaurantFilters {
   city?: string
   page?: number
   limit?: number
+  maxCost?: number   // filters by minOrderAmount ≤ maxCost (user's budget ceiling)
 }
 
 // Input types are defined in shared/schemas and re-exported here for convenience

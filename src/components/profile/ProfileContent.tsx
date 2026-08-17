@@ -113,7 +113,7 @@ function Avatar({ name, image, size = 'md' }: { name: string; image: string | nu
   }
   return (
     <div
-      className={cn('rounded-full bg-brand-orange flex items-center justify-center font-bold text-white shrink-0', textClass)}
+      className={cn('rounded-full bg-brand-primary flex items-center justify-center font-bold text-white shrink-0', textClass)}
       style={{ width: dims, height: dims }}
     >
       {initials}
@@ -134,7 +134,7 @@ function OverviewSection({
     <div className="space-y-4">
       {/* Header card */}
       <div className="bg-white rounded-2xl shadow-card overflow-hidden">
-        <div className="h-20 bg-gradient-to-r from-brand-orange to-orange-400" />
+        <div className="h-20 bg-gradient-to-r from-brand-primary to-orange-400" />
         <div className="px-6 pb-6">
           <div className="-mt-9 mb-4 flex items-end justify-between">
             <div className="ring-4 ring-white rounded-full">
@@ -142,7 +142,7 @@ function OverviewSection({
             </div>
             <button
               onClick={onEditProfile}
-              className="flex items-center gap-1.5 text-xs font-bold text-brand-orange border border-brand-orange/30 px-3 py-1.5 rounded-full hover:bg-brand-orange-light transition-colors"
+              className="flex items-center gap-1.5 text-xs font-bold text-brand-primary border border-brand-primary/30 px-3 py-1.5 rounded-full hover:bg-brand-primary-light transition-colors"
             >
               <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
@@ -150,9 +150,9 @@ function OverviewSection({
               Edit
             </button>
           </div>
-          <h2 className="text-xl font-black text-swiggy-black">{user.name}</h2>
-          <p className="text-sm text-swiggy-gray mt-0.5">{user.email}</p>
-          <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mt-3 text-xs text-swiggy-gray-light">
+          <h2 className="text-xl font-black text-app-black">{user.name}</h2>
+          <p className="text-sm text-app-gray mt-0.5">{user.email}</p>
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mt-3 text-xs text-app-gray-light">
             {user.phone && (
               <span className="flex items-center gap-1">
                 <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -174,20 +174,20 @@ function OverviewSection({
       {/* Stats */}
       <div className="grid grid-cols-2 gap-4">
         <div className="bg-white rounded-2xl shadow-card p-5 text-center">
-          <p className="text-3xl font-black text-brand-orange">{orders.length}</p>
-          <p className="text-xs font-semibold text-swiggy-gray mt-1 uppercase tracking-wide">Orders placed</p>
+          <p className="text-3xl font-black text-brand-primary">{orders.length}</p>
+          <p className="text-xs font-semibold text-app-gray mt-1 uppercase tracking-wide">Orders placed</p>
         </div>
         <div className="bg-white rounded-2xl shadow-card p-5 text-center">
-          <p className="text-3xl font-black text-brand-orange">{addresses.length}</p>
-          <p className="text-xs font-semibold text-swiggy-gray mt-1 uppercase tracking-wide">Saved addresses</p>
+          <p className="text-3xl font-black text-brand-primary">{addresses.length}</p>
+          <p className="text-xs font-semibold text-app-gray mt-1 uppercase tracking-wide">Saved addresses</p>
         </div>
       </div>
 
       {/* Personal details */}
       <div className="bg-white rounded-2xl shadow-card p-6">
         <div className="flex items-center justify-between mb-1">
-          <h3 className="text-sm font-black text-swiggy-black uppercase tracking-wider">Personal Details</h3>
-          <button onClick={onEditProfile} className="text-xs font-bold text-brand-orange hover:underline">Edit</button>
+          <h3 className="text-sm font-black text-app-black uppercase tracking-wider">Personal Details</h3>
+          <button onClick={onEditProfile} className="text-xs font-bold text-brand-primary hover:underline">Edit</button>
         </div>
         <ProfileField label="Full name" value={user.name} />
         <ProfileField label="Email" value={user.email} />
@@ -203,10 +203,10 @@ function OverviewSection({
 function OrdersSection({ orders }: { orders: ProfileOrder[] }) {
   return (
     <div className="bg-white rounded-2xl shadow-card overflow-hidden">
-      <div className="px-6 py-5 border-b border-swiggy-border flex items-center justify-between">
-        <h3 className="text-sm font-black text-swiggy-black uppercase tracking-wider">My Orders</h3>
+      <div className="px-6 py-5 border-b border-app-border flex items-center justify-between">
+        <h3 className="text-sm font-black text-app-black uppercase tracking-wider">My Orders</h3>
         {orders.length > 0 && (
-          <Link href="/orders" className="text-xs font-bold text-brand-orange hover:text-brand-orange-dark transition-colors">
+          <Link href="/orders" className="text-xs font-bold text-brand-primary hover:text-brand-primary-dark transition-colors">
             View all →
           </Link>
         )}
@@ -216,7 +216,7 @@ function OrdersSection({ orders }: { orders: ProfileOrder[] }) {
           description="Your order history will appear here once you place your first order."
           action={{ label: 'Browse restaurants', href: '/restaurants' }} />
       ) : (
-        <div className="divide-y divide-swiggy-border">
+        <div className="divide-y divide-app-border">
           {orders.slice(0, 5).map((order) => (
             <OrderPreviewCard key={order.id} order={order} />
           ))}
@@ -241,11 +241,11 @@ function AddressesSection({
 
   return (
     <div className="bg-white rounded-2xl shadow-card overflow-hidden">
-      <div className="px-6 py-5 border-b border-swiggy-border flex items-center justify-between">
-        <h3 className="text-sm font-black text-swiggy-black uppercase tracking-wider">Saved Addresses</h3>
+      <div className="px-6 py-5 border-b border-app-border flex items-center justify-between">
+        <h3 className="text-sm font-black text-app-black uppercase tracking-wider">Saved Addresses</h3>
         <button
           onClick={onAdd}
-          className="flex items-center gap-1.5 text-xs font-bold text-brand-orange hover:text-brand-orange-dark transition-colors"
+          className="flex items-center gap-1.5 text-xs font-bold text-brand-primary hover:text-brand-primary-dark transition-colors"
         >
           <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -268,7 +268,7 @@ function AddressesSection({
                   <button
                     disabled={loadingId === address.id}
                     onClick={() => onSetDefault(address.id)}
-                    className="text-xs font-semibold text-brand-orange hover:underline disabled:opacity-50"
+                    className="text-xs font-semibold text-brand-primary hover:underline disabled:opacity-50"
                   >
                     {loadingId === address.id ? 'Setting…' : 'Set as default'}
                   </button>
@@ -276,7 +276,7 @@ function AddressesSection({
                 <button
                   disabled={loadingId === address.id}
                   onClick={() => onDelete(address.id)}
-                  className="ml-auto text-xs font-semibold text-swiggy-red hover:underline disabled:opacity-50"
+                  className="ml-auto text-xs font-semibold text-app-red hover:underline disabled:opacity-50"
                 >
                   {loadingId === address.id ? '…' : 'Remove'}
                 </button>
@@ -295,28 +295,28 @@ function PaymentsSection() {
   const methods = [
     { icon: '💵', label: 'Cash on Delivery', detail: 'Pay when your order arrives', available: true },
     { icon: '💳', label: 'Pay Online', detail: 'UPI, Debit / Credit Cards, Net Banking', available: true },
-    { icon: '👛', label: 'Swiggy Wallet', detail: '₹0 balance — top up to use', available: false },
+    { icon: '👛', label: 'Mealora Wallet', detail: '₹0 balance — top up to use', available: false },
   ]
 
   return (
     <div className="space-y-4">
       <div className="bg-white rounded-2xl shadow-card overflow-hidden">
-        <div className="px-6 py-5 border-b border-swiggy-border">
-          <h3 className="text-sm font-black text-swiggy-black uppercase tracking-wider">Payment Methods</h3>
-          <p className="text-xs text-swiggy-gray mt-1">Select your preferred payment at checkout</p>
+        <div className="px-6 py-5 border-b border-app-border">
+          <h3 className="text-sm font-black text-app-black uppercase tracking-wider">Payment Methods</h3>
+          <p className="text-xs text-app-gray mt-1">Select your preferred payment at checkout</p>
         </div>
         <div className="p-5 space-y-3">
           {methods.map((m) => (
             <div key={m.label}
-              className="flex items-center gap-4 p-4 rounded-xl border border-swiggy-border">
+              className="flex items-center gap-4 p-4 rounded-xl border border-app-border">
               <span className="text-2xl shrink-0">{m.icon}</span>
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-semibold text-swiggy-black">{m.label}</p>
-                <p className="text-xs text-swiggy-gray mt-0.5">{m.detail}</p>
+                <p className="text-sm font-semibold text-app-black">{m.label}</p>
+                <p className="text-xs text-app-gray mt-0.5">{m.detail}</p>
               </div>
               <span className={cn(
                 'text-xs font-semibold px-2.5 py-1 rounded-full shrink-0',
-                m.available ? 'bg-green-50 text-swiggy-green' : 'bg-swiggy-gray-bg text-swiggy-gray-light'
+                m.available ? 'bg-green-50 text-app-green' : 'bg-app-gray-bg text-app-gray-light'
               )}>
                 {m.available ? 'Available' : 'Coming soon'}
               </span>
@@ -327,8 +327,8 @@ function PaymentsSection() {
 
       <div className="bg-white rounded-2xl shadow-card p-6 text-center">
         <span className="text-4xl">🔐</span>
-        <p className="text-sm font-bold text-swiggy-black mt-3">Secure payments</p>
-        <p className="text-xs text-swiggy-gray mt-1 max-w-xs mx-auto">
+        <p className="text-sm font-bold text-app-black mt-3">Secure payments</p>
+        <p className="text-xs text-app-gray mt-1 max-w-xs mx-auto">
           All transactions are encrypted and processed securely. No card details are stored.
         </p>
       </div>
@@ -353,18 +353,18 @@ function SettingsSection() {
   return (
     <div className="space-y-4">
       <div className="bg-white rounded-2xl shadow-card overflow-hidden">
-        <div className="px-6 py-5 border-b border-swiggy-border">
-          <h3 className="text-sm font-black text-swiggy-black uppercase tracking-wider">Notifications</h3>
-          <p className="text-xs text-swiggy-gray mt-1">Changes are saved automatically</p>
+        <div className="px-6 py-5 border-b border-app-border">
+          <h3 className="text-sm font-black text-app-black uppercase tracking-wider">Notifications</h3>
+          <p className="text-xs text-app-gray mt-1">Changes are saved automatically</p>
         </div>
-        <div className="divide-y divide-swiggy-border">
+        <div className="divide-y divide-app-border">
           {prefConfig.map((pref) => {
             const enabled = mounted ? preferences[pref.key] : false
             return (
               <div key={pref.key} className="flex items-center justify-between px-6 py-4 gap-6">
                 <div>
-                  <p className="text-sm font-semibold text-swiggy-black">{pref.label}</p>
-                  <p className="text-xs text-swiggy-gray mt-0.5">{pref.description}</p>
+                  <p className="text-sm font-semibold text-app-black">{pref.label}</p>
+                  <p className="text-xs text-app-gray mt-0.5">{pref.description}</p>
                 </div>
                 <button
                   type="button"
@@ -374,8 +374,8 @@ function SettingsSection() {
                   onClick={() => togglePreference(pref.key)}
                   disabled={!mounted}
                   className={cn(
-                    'relative w-11 h-6 rounded-full transition-colors duration-200 shrink-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange/50',
-                    enabled ? 'bg-brand-orange' : 'bg-swiggy-border',
+                    'relative w-11 h-6 rounded-full transition-colors duration-200 shrink-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary/50',
+                    enabled ? 'bg-brand-primary' : 'bg-app-border',
                     !mounted && 'opacity-50'
                   )}
                 >
@@ -392,13 +392,13 @@ function SettingsSection() {
 
       {/* Danger zone */}
       <div className="bg-white rounded-2xl shadow-card overflow-hidden">
-        <div className="px-6 py-5 border-b border-swiggy-border">
-          <h3 className="text-sm font-black text-swiggy-black uppercase tracking-wider">Account</h3>
+        <div className="px-6 py-5 border-b border-app-border">
+          <h3 className="text-sm font-black text-app-black uppercase tracking-wider">Account</h3>
         </div>
         <div className="p-5">
           <button
             onClick={() => signOut({ callbackUrl: '/' })}
-            className="w-full flex items-center gap-3 px-4 py-3.5 rounded-xl border border-red-100 text-swiggy-red hover:bg-red-50 transition-colors text-sm font-semibold"
+            className="w-full flex items-center gap-3 px-4 py-3.5 rounded-xl border border-red-100 text-app-red hover:bg-red-50 transition-colors text-sm font-semibold"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
@@ -491,18 +491,18 @@ export function ProfileContent({ user: initialUser, orders, addresses: initialAd
       key={item.id}
       onClick={() => setSection(item.id)}
       className={cn(
-        'w-full flex items-center gap-3 px-4 py-3.5 text-sm font-semibold transition-colors text-left border-t border-swiggy-border first:border-t-0',
+        'w-full flex items-center gap-3 px-4 py-3.5 text-sm font-semibold transition-colors text-left border-t border-app-border first:border-t-0',
         section === item.id
-          ? 'bg-brand-orange-light text-brand-orange'
-          : 'text-swiggy-black hover:bg-swiggy-gray-bg'
+          ? 'bg-brand-primary-light text-brand-primary'
+          : 'text-app-black hover:bg-app-gray-bg'
       )}
     >
-      <span className={section === item.id ? 'text-brand-orange' : 'text-swiggy-gray'}>
+      <span className={section === item.id ? 'text-brand-primary' : 'text-app-gray'}>
         {item.icon}
       </span>
       {item.label}
       {section === item.id && (
-        <svg className="w-4 h-4 ml-auto text-brand-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="w-4 h-4 ml-auto text-brand-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
         </svg>
       )}
@@ -510,7 +510,7 @@ export function ProfileContent({ user: initialUser, orders, addresses: initialAd
   )
 
   return (
-    <div className="bg-swiggy-gray-bg">
+    <div className="bg-app-gray-bg">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8">
 
         {/* Mobile: horizontal tab chips */}
@@ -522,8 +522,8 @@ export function ProfileContent({ user: initialUser, orders, addresses: initialAd
               className={cn(
                 'shrink-0 flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-semibold border transition-colors',
                 section === item.id
-                  ? 'bg-brand-orange text-white border-brand-orange'
-                  : 'bg-white text-swiggy-black border-swiggy-border hover:border-brand-orange'
+                  ? 'bg-brand-primary text-white border-brand-primary'
+                  : 'bg-white text-app-black border-app-border hover:border-brand-primary'
               )}
             >
               {item.icon}
@@ -532,7 +532,7 @@ export function ProfileContent({ user: initialUser, orders, addresses: initialAd
           ))}
           <button
             onClick={handleSignOut}
-            className="shrink-0 flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-semibold border border-swiggy-border bg-white text-swiggy-red hover:bg-red-50 transition-colors"
+            className="shrink-0 flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-semibold border border-app-border bg-white text-app-red hover:bg-red-50 transition-colors"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
@@ -549,8 +549,8 @@ export function ProfileContent({ user: initialUser, orders, addresses: initialAd
             <div className="bg-white rounded-2xl shadow-card p-4 flex items-center gap-3 overflow-hidden">
               <Avatar name={currentUser.name} image={currentUser.image} size="md" />
               <div className="min-w-0">
-                <p className="font-bold text-swiggy-black text-sm truncate">{currentUser.name}</p>
-                <p className="text-xs text-swiggy-gray truncate">{currentUser.email}</p>
+                <p className="font-bold text-app-black text-sm truncate">{currentUser.name}</p>
+                <p className="text-xs text-app-gray truncate">{currentUser.email}</p>
               </div>
             </div>
 
@@ -559,7 +559,7 @@ export function ProfileContent({ user: initialUser, orders, addresses: initialAd
               {NAV_ITEMS.map((item) => <SidebarItem key={item.id} item={item} />)}
               <button
                 onClick={handleSignOut}
-                className="w-full flex items-center gap-3 px-4 py-3.5 text-sm font-semibold text-swiggy-red hover:bg-red-50 transition-colors border-t border-swiggy-border"
+                className="w-full flex items-center gap-3 px-4 py-3.5 text-sm font-semibold text-app-red hover:bg-red-50 transition-colors border-t border-app-border"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />

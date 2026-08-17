@@ -128,7 +128,7 @@ export default async function AdminOrderDetailPage({ params }: Props) {
               <ol className="relative border-l border-slate-200 space-y-4 ml-2">
                 {order.timeline.map((entry) => (
                   <li key={entry.id} className="ml-4">
-                    <div className="absolute -left-1.5 w-3 h-3 rounded-full bg-brand-orange border-2 border-white" />
+                    <div className="absolute -left-1.5 w-3 h-3 rounded-full bg-brand-primary border-2 border-white" />
                     <div className="flex items-start justify-between gap-4">
                       <div>
                         <AdminBadge variant={ORDER_STATUS_VARIANT[entry.status] ?? 'slate'}>
@@ -173,7 +173,7 @@ export default async function AdminOrderDetailPage({ params }: Props) {
             <div className="mt-3">
               <Link
                 href={`/admin/restaurants/${order.restaurant.id}`}
-                className="text-xs text-brand-orange hover:underline font-medium"
+                className="text-xs text-brand-primary hover:underline font-medium"
               >
                 View restaurant →
               </Link>

@@ -83,7 +83,7 @@ class _Placeholder extends StatelessWidget {
     return Container(
       color: AppColors.shimmerBase,
       child: const Center(
-        child: Icon(Icons.restaurant, size: 40, color: AppColors.swiggyLightGray),
+        child: Icon(Icons.restaurant, size: 40, color: AppColors.textTertiary),
       ),
     );
   }
@@ -171,7 +171,7 @@ class _Dot extends StatelessWidget {
       width: 3,
       height: 3,
       decoration: const BoxDecoration(
-        color: AppColors.swiggyLightGray,
+        color: AppColors.textTertiary,
         shape: BoxShape.circle,
       ),
     );

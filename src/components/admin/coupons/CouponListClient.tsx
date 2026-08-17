@@ -288,7 +288,7 @@ export function CouponListClient() {
           <div className="ml-auto">
             <button
               onClick={() => router.push('/admin/coupons/new')}
-              className="px-4 py-2 rounded-lg bg-brand-orange text-white text-sm font-semibold hover:bg-brand-orange/90 transition-colors"
+              className="px-4 py-2 rounded-lg bg-brand-primary text-white text-sm font-semibold hover:bg-brand-primary/90 transition-colors"
             >
               + New Coupon
             </button>

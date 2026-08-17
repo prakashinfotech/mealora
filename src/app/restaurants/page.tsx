@@ -32,6 +32,7 @@ export default async function RestaurantsPage({ searchParams }: PageProps) {
     sortBy: searchParams.sortBy as RestaurantFilters['sortBy'],
     page: searchParams.page ? Number(searchParams.page) : 1,
     limit: 12,
+    maxCost: searchParams.maxCost ? Number(searchParams.maxCost) : undefined,
   }
 
   const { items: restaurants, total, page, limit, hasMore } = await restaurantService.list(filters)
@@ -47,12 +48,12 @@ export default async function RestaurantsPage({ searchParams }: PageProps) {
   return (
     <>
       <Navbar />
-      <main className="bg-swiggy-gray-bg">
+      <main className="bg-app-gray-bg">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
           {/* Header */}
           <div className="mb-6">
-            <h1 className="text-2xl font-black text-swiggy-black">{heading}</h1>
-            <p className="text-swiggy-gray text-sm mt-1">{total} restaurants</p>
+            <h1 className="text-2xl font-black text-app-black">{heading}</h1>
+            <p className="text-app-gray text-sm mt-1">{total} restaurants</p>
           </div>
 
           {/* Filters */}
@@ -62,8 +63,8 @@ export default async function RestaurantsPage({ searchParams }: PageProps) {
           {restaurants.length === 0 ? (
             <div className="text-center py-24 bg-white rounded-2xl mt-6">
               <span className="text-5xl">😕</span>
-              <p className="text-lg font-bold text-swiggy-black mt-4">No restaurants found</p>
-              <p className="text-swiggy-gray text-sm mt-1">Try adjusting your filters or search query.</p>
+              <p className="text-lg font-bold text-app-black mt-4">No restaurants found</p>
+              <p className="text-app-gray text-sm mt-1">Try adjusting your filters or search query.</p>
             </div>
           ) : (
             <>
@@ -76,20 +77,20 @@ export default async function RestaurantsPage({ searchParams }: PageProps) {
               {/* Pagination */}
               {totalPages > 1 && (
                 <div className="flex items-center justify-between mt-10">
-                  <p className="text-sm text-swiggy-gray">
-                    Showing <span className="font-semibold text-swiggy-black">{(page - 1) * limit + 1}–{Math.min(page * limit, total)}</span> of <span className="font-semibold text-swiggy-black">{total}</span> restaurants
+                  <p className="text-sm text-app-gray">
+                    Showing <span className="font-semibold text-app-black">{(page - 1) * limit + 1}–{Math.min(page * limit, total)}</span> of <span className="font-semibold text-app-black">{total}</span> restaurants
                   </p>
 
                   <div className="flex items-center gap-2">
                     {page > 1 ? (
                       <Link
                         href={buildPageUrl(searchParams, page - 1)}
-                        className="flex items-center gap-1.5 px-4 py-2 text-sm font-semibold rounded-xl border border-swiggy-border bg-white text-swiggy-black hover:border-brand-orange hover:text-brand-orange transition-colors"
+                        className="flex items-center gap-1.5 px-4 py-2 text-sm font-semibold rounded-xl border border-app-border bg-white text-app-black hover:border-brand-primary hover:text-brand-primary transition-colors"
                       >
                         ← Prev
                       </Link>
                     ) : (
-                      <span className="flex items-center gap-1.5 px-4 py-2 text-sm font-semibold rounded-xl border border-swiggy-border bg-white text-swiggy-gray-light cursor-not-allowed">
+                      <span className="flex items-center gap-1.5 px-4 py-2 text-sm font-semibold rounded-xl border border-app-border bg-white text-app-gray-light cursor-not-allowed">
                         ← Prev
                       </span>
                     )}
@@ -102,8 +103,8 @@ export default async function RestaurantsPage({ searchParams }: PageProps) {
                           href={buildPageUrl(searchParams, p)}
                           className={`w-9 h-9 flex items-center justify-center rounded-xl text-sm font-semibold transition-colors ${
                             p === page
-                              ? 'bg-brand-orange text-white'
-                              : 'border border-swiggy-border bg-white text-swiggy-black hover:border-brand-orange hover:text-brand-orange'
+                              ? 'bg-brand-primary text-white'
+                              : 'border border-app-border bg-white text-app-black hover:border-brand-primary hover:text-brand-primary'
                           }`}
                         >
                           {p}
@@ -114,12 +115,12 @@ export default async function RestaurantsPage({ searchParams }: PageProps) {
                     {hasMore ? (
                       <Link
                         href={buildPageUrl(searchParams, page + 1)}
-                        className="flex items-center gap-1.5 px-4 py-2 text-sm font-semibold rounded-xl border border-swiggy-border bg-white text-swiggy-black hover:border-brand-orange hover:text-brand-orange transition-colors"
+                        className="flex items-center gap-1.5 px-4 py-2 text-sm font-semibold rounded-xl border border-app-border bg-white text-app-black hover:border-brand-primary hover:text-brand-primary transition-colors"
                       >
                         Next →
                       </Link>
                     ) : (
-                      <span className="flex items-center gap-1.5 px-4 py-2 text-sm font-semibold rounded-xl border border-swiggy-border bg-white text-swiggy-gray-light cursor-not-allowed">
+                      <span className="flex items-center gap-1.5 px-4 py-2 text-sm font-semibold rounded-xl border border-app-border bg-white text-app-gray-light cursor-not-allowed">
                         Next →
                       </span>
                     )}

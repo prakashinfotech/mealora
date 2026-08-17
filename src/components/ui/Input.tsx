@@ -13,11 +13,11 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     return (
       <div className="w-full">
         {label && (
-          <label className="block text-sm font-medium text-swiggy-black mb-1.5">{label}</label>
+          <label className="block text-sm font-medium text-app-black mb-1.5">{label}</label>
         )}
         <div className="relative">
           {leftIcon && (
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-swiggy-gray-light">
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-app-gray-light">
               {leftIcon}
             </span>
           )}
@@ -27,18 +27,18 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
               'input-base',
               leftIcon && 'pl-10',
               rightIcon && 'pr-10',
-              error && 'border-swiggy-red focus:ring-swiggy-red/30 focus:border-swiggy-red',
+              error && 'border-app-red focus:ring-app-red/30 focus:border-app-red',
               className
             )}
             {...props}
           />
           {rightIcon && (
-            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-swiggy-gray-light">
+            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-app-gray-light">
               {rightIcon}
             </span>
           )}
         </div>
-        {error && <p className="mt-1 text-xs text-swiggy-red">{error}</p>}
+        {error && <p className="mt-1 text-xs text-app-red">{error}</p>}
       </div>
     )
   }

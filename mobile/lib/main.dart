@@ -26,20 +26,20 @@ void main() async {
       overrides: [
         sharedPreferencesProvider.overrideWithValue(prefs),
       ],
-      child: const SwiggyApp(),
+      child: const MealoraApp(),
     ),
   );
 }
 
-class SwiggyApp extends ConsumerWidget {
-  const SwiggyApp({super.key});
+class MealoraApp extends ConsumerWidget {
+  const MealoraApp({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final router = ref.watch(routerProvider);
 
     return MaterialApp.router(
-      title: 'Swiggy Clone',
+      title: 'Mealora',
       theme: AppTheme.light,
       routerConfig: router,
       debugShowCheckedModeBanner: false,

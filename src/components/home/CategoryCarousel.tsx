@@ -33,19 +33,19 @@ export function CategoryCarousel() {
   return (
     <section className="max-w-7xl mx-auto px-4 sm:px-6 py-10">
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-xl font-black text-swiggy-black">What&apos;s on your mind?</h2>
+        <h2 className="text-xl font-black text-app-black">What&apos;s on your mind?</h2>
         <div className="flex gap-2">
           <button
             onClick={() => scroll('left')}
             aria-label="Scroll left"
-            className="w-9 h-9 rounded-full border-2 border-swiggy-border flex items-center justify-center text-swiggy-gray hover:border-swiggy-black hover:text-swiggy-black transition-colors text-sm font-bold"
+            className="w-9 h-9 rounded-full border-2 border-app-border flex items-center justify-center text-app-gray hover:border-app-black hover:text-app-black transition-colors text-sm font-bold"
           >
             ←
           </button>
           <button
             onClick={() => scroll('right')}
             aria-label="Scroll right"
-            className="w-9 h-9 rounded-full border-2 border-swiggy-border flex items-center justify-center text-swiggy-gray hover:border-swiggy-black hover:text-swiggy-black transition-colors text-sm font-bold"
+            className="w-9 h-9 rounded-full border-2 border-app-border flex items-center justify-center text-app-gray hover:border-app-black hover:text-app-black transition-colors text-sm font-bold"
           >
             →
           </button>
@@ -59,10 +59,10 @@ export function CategoryCarousel() {
             href={buildRestaurantsUrl({ city, cuisine: cat.query })}
             className="flex flex-col items-center gap-2.5 shrink-0 group"
           >
-            <div className="w-24 h-24 bg-swiggy-gray-bg rounded-full flex items-center justify-center text-4xl group-hover:scale-105 group-hover:shadow-lg transition-all duration-200">
+            <div className="w-24 h-24 bg-app-gray-bg rounded-full flex items-center justify-center text-4xl group-hover:scale-105 group-hover:shadow-lg transition-all duration-200">
               {cat.emoji}
             </div>
-            <span className="text-xs font-semibold text-swiggy-black text-center w-24 leading-tight group-hover:text-brand-orange transition-colors">
+            <span className="text-xs font-semibold text-app-black text-center w-24 leading-tight group-hover:text-brand-primary transition-colors">
               {cat.name}
             </span>
           </Link>

@@ -151,9 +151,9 @@
     │       ├── OrderPreviewCard.tsx
     │       └── EmptyState.tsx
     ├── store/
-    │   ├── cartStore.ts          # localStorage key: swiggy-cart
-    │   ├── cityStore.ts          # localStorage key: swiggy-city
-    │   └── settingsStore.ts      # localStorage key: swiggy-settings
+    │   ├── cartStore.ts          # localStorage key: mealora-cart
+    │   ├── cityStore.ts          # localStorage key: mealora-city
+    │   └── settingsStore.ts      # localStorage key: mealora-settings
     ├── lib/
     │   ├── auth.ts               # NextAuth authOptions
     │   ├── cities.ts             # city list + getCityEntry()
@@ -325,7 +325,7 @@ OrdersList (client component)
 ## City filtering architecture
 
 ```
-cityStore (Zustand, localStorage key: swiggy-city)
+cityStore (Zustand, localStorage key: mealora-city)
   │
   ├─ Navbar → LocationSelector  (city picker — triggers setCity())
   │
@@ -380,7 +380,7 @@ profile/page.tsx (server component)
 ## Reusable UI systems
 
 ### Design tokens (tailwind.config)
-`brand-orange`, `brand-orange-light`, `brand-orange-dark`, `swiggy-black`, `swiggy-gray`, `swiggy-gray-light`, `swiggy-gray-bg`, `swiggy-green`, `swiggy-red`, `swiggy-border`.
+`brand-primary`, `brand-primary-light`, `brand-primary-dark`, `app-black`, `app-gray`, `app-gray-light`, `app-gray-bg`, `app-green`, `app-red`, `app-border`.
 
 ### Global component classes (globals.css)
 `.btn-primary`, `.btn-secondary`, `.input-base`, `.card`, `.shadow-card`, `.shadow-card-hover`.

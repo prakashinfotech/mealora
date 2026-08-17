@@ -35,7 +35,7 @@ These rules are non-negotiable. They exist to prevent layer pollution, duplicate
 
 ### Frontend
 - **NEVER** add `'use client'` to pages that only fetch data — keep them server components
-- **NEVER** hardcode hex color values — use design tokens (`brand-orange`, `swiggy-black`, etc.)
+- **NEVER** hardcode hex color values — use design tokens (`brand-primary`, `app-black`, etc.)
 - **NEVER** render city-dependent UI before `_hasHydrated` is true (causes SSR mismatch)
 - **NEVER** serialize `Date` objects as props to client components — convert to `.toISOString()` first
 

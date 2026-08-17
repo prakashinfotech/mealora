@@ -71,12 +71,12 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-swiggy-gray-bg flex items-center justify-center px-4">
+    <div className="min-h-screen bg-app-gray-bg flex items-center justify-center px-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <Link href="/" className="text-3xl font-black text-brand-orange">swiggy</Link>
-          <h1 className="text-2xl font-black text-swiggy-black mt-4">Welcome back</h1>
-          <p className="text-swiggy-gray mt-1 text-sm">Sign in to continue</p>
+          <Link href="/" className="text-3xl font-black text-brand-primary tracking-tight">Mealora</Link>
+          <h1 className="text-2xl font-black text-app-black mt-4">Welcome back</h1>
+          <p className="text-app-gray mt-1 text-sm">Sign in to continue</p>
         </div>
 
         <div className="bg-white rounded-2xl shadow-card p-8">
@@ -104,7 +104,7 @@ export default function LoginPage() {
                 <button
                   type="button"
                   onClick={() => setShowPassword((v) => !v)}
-                  className="text-swiggy-gray hover:text-swiggy-black transition-colors"
+                  className="text-app-gray hover:text-app-black transition-colors"
                   aria-label={showPassword ? 'Hide password' : 'Show password'}
                 >
                   {showPassword ? <EyeOffIcon /> : <EyeIcon />}
@@ -113,7 +113,7 @@ export default function LoginPage() {
             />
 
             {serverError && (
-              <p className="text-sm text-swiggy-red bg-red-50 rounded-lg px-3 py-2">{serverError}</p>
+              <p className="text-sm text-app-red bg-red-50 rounded-lg px-3 py-2">{serverError}</p>
             )}
 
             <Button type="submit" loading={loading} className="w-full" size="lg">
@@ -121,9 +121,9 @@ export default function LoginPage() {
             </Button>
           </form>
 
-          <p className="text-center text-sm text-swiggy-gray mt-6">
+          <p className="text-center text-sm text-app-gray mt-6">
             Don&apos;t have an account?{' '}
-            <Link href="/register" className="text-brand-orange font-semibold hover:underline">
+            <Link href="/register" className="text-brand-primary font-semibold hover:underline">
               Create one
             </Link>
           </p>

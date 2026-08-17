@@ -1,31 +1,32 @@
 import 'package:flutter/material.dart';
 
+/// Mealora design system — colour palette
 class AppColors {
   AppColors._();
 
-  // Brand
-  static const Color brandOrange = Color(0xFFFC8019);
-  static const Color brandOrangeLight = Color(0xFFFFF3E8);
-  static const Color brandOrangeDark = Color(0xFFE07010);
+  // ── Brand ──────────────────────────────────────────────────────────
+  static const Color brandPrimary      = Color(0xFF5B4BDB); // indigo-violet
+  static const Color brandPrimaryLight = Color(0xFFEEE9FF);
+  static const Color brandPrimaryDark  = Color(0xFF4A3BC0);
 
-  // Swiggy neutrals
-  static const Color swiggyBlack = Color(0xFF3D4152);
-  static const Color swiggyGray = Color(0xFF686B78);
-  static const Color swiggyLightGray = Color(0xFFABABAB);
+  // ── Text / Neutral ─────────────────────────────────────────────────
+  static const Color textPrimary   = Color(0xFF171525);
+  static const Color textSecondary = Color(0xFF6B687A);
+  static const Color textTertiary  = Color(0xFFA09DB8);
 
-  // Semantic
-  static const Color success = Color(0xFF48C479);
-  static const Color error = Color(0xFFFF5252);
-  static const Color warning = Color(0xFFFFC107);
+  // ── Semantic ───────────────────────────────────────────────────────
+  static const Color success = Color(0xFF16A34A);
+  static const Color error   = Color(0xFFDC2626);
+  static const Color warning = Color(0xFFF59E0B);
 
-  // Veg / Non-veg indicators
-  static const Color vegGreen = Color(0xFF0D9644);
-  static const Color nonVegRed = Color(0xFFE43B4F);
+  // ── Food indicators ────────────────────────────────────────────────
+  static const Color vegGreen   = Color(0xFF16A34A);
+  static const Color nonVegRed  = Color(0xFFDC2626);
 
-  // Surface
-  static const Color background = Color(0xFFF4F4F4);
-  static const Color surface = Color(0xFFFFFFFF);
-  static const Color divider = Color(0xFFEBEBEB);
-  static const Color shimmerBase = Color(0xFFEEEEEE);
-  static const Color shimmerHighlight = Color(0xFFF5F5F5);
+  // ── Surface ────────────────────────────────────────────────────────
+  static const Color background       = Color(0xFFF8F7FC);
+  static const Color surface          = Color(0xFFFFFFFF);
+  static const Color divider          = Color(0xFFE5E3F0);
+  static const Color shimmerBase      = Color(0xFFEEEBFF);
+  static const Color shimmerHighlight = Color(0xFFF5F3FF);
 }

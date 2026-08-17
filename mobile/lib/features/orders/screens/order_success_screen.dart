@@ -43,7 +43,7 @@ class OrderSuccessScreen extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     const Icon(Icons.receipt_outlined,
-                        size: 16, color: AppColors.swiggyGray),
+                        size: 16, color: AppColors.textSecondary),
                     const SizedBox(width: 8),
                     Text(
                       'Order #${orderId.substring(0, 12).toUpperCase()}',
@@ -63,7 +63,7 @@ class OrderSuccessScreen extends StatelessWidget {
                         pathParameters: {'id': orderId},
                       ),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.brandOrange,
+                        backgroundColor: AppColors.brandPrimary,
                         padding: const EdgeInsets.symmetric(vertical: 14),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8)),
@@ -84,14 +84,14 @@ class OrderSuccessScreen extends StatelessWidget {
                       onPressed: () => context.goNamed(RouteNames.home),
                       style: OutlinedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(vertical: 14),
-                        side: const BorderSide(color: AppColors.brandOrange),
+                        side: const BorderSide(color: AppColors.brandPrimary),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8)),
                       ),
                       child: const Text(
                         'Back to Home',
                         style: TextStyle(
-                            color: AppColors.brandOrange,
+                            color: AppColors.brandPrimary,
                             fontWeight: FontWeight.w600,
                             fontSize: 15),
                       ),

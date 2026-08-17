@@ -53,7 +53,7 @@ const columns: AdminColumn<UserRow>[] = [
     header: 'User',
     render: (row) => (
       <div className="flex items-center gap-2.5">
-        <div className="w-7 h-7 rounded-full bg-brand-orange/10 flex items-center justify-center text-brand-orange text-xs font-bold shrink-0">
+        <div className="w-7 h-7 rounded-full bg-brand-primary/10 flex items-center justify-center text-brand-primary text-xs font-bold shrink-0">
           {(row.name ?? row.email).charAt(0).toUpperCase()}
         </div>
         <div>

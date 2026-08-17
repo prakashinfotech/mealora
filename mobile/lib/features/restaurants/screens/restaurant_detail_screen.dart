@@ -91,7 +91,7 @@ class _CartBar extends StatelessWidget {
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             decoration: BoxDecoration(
-              color: AppColors.brandOrange,
+              color: AppColors.brandPrimary,
               borderRadius: BorderRadius.circular(10),
             ),
             child: Row(
@@ -99,7 +99,7 @@ class _CartBar extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
-                    color: AppColors.brandOrangeDark,
+                    color: AppColors.brandPrimaryDark,
                     borderRadius: BorderRadius.circular(6),
                   ),
                   child: Text(
@@ -175,7 +175,7 @@ class _BackButton extends StatelessWidget {
         backgroundColor: Colors.white.withAlpha(230),
         radius: 18,
         child: IconButton(
-          icon: const Icon(Icons.arrow_back, size: 18, color: AppColors.swiggyBlack),
+          icon: const Icon(Icons.arrow_back, size: 18, color: AppColors.textPrimary),
           onPressed: () => Navigator.of(context).pop(),
           padding: EdgeInsets.zero,
         ),
@@ -219,14 +219,14 @@ class _RestaurantInfo extends StatelessWidget {
               const SizedBox(width: 24),
               _StatItem(
                 icon: Icons.access_time,
-                iconColor: AppColors.brandOrange,
+                iconColor: AppColors.brandPrimary,
                 value: '${restaurant.avgDeliveryTime} min',
                 label: 'Delivery time',
               ),
               const SizedBox(width: 24),
               _StatItem(
                 icon: Icons.delivery_dining,
-                iconColor: AppColors.swiggyGray,
+                iconColor: AppColors.textSecondary,
                 value: restaurant.deliveryFee == 0
                     ? 'Free'
                     : '₹${restaurant.deliveryFee.toStringAsFixed(0)}',
@@ -331,8 +331,8 @@ class _MenuItemTile extends ConsumerWidget {
                   item.name,
                   style: AppTextStyles.titleLarge.copyWith(
                     color: item.isAvailable
-                        ? AppColors.swiggyBlack
-                        : AppColors.swiggyLightGray,
+                        ? AppColors.textPrimary
+                        : AppColors.textTertiary,
                   ),
                 ),
                 const SizedBox(height: 4),
@@ -450,7 +450,7 @@ class _MenuItemTile extends ConsumerWidget {
               );
             },
             child: const Text('Start new',
-                style: TextStyle(color: AppColors.brandOrange)),
+                style: TextStyle(color: AppColors.brandPrimary)),
           ),
         ],
       ),
@@ -471,14 +471,14 @@ class _AddButton extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 6),
         decoration: BoxDecoration(
           color: AppColors.surface,
-          border: Border.all(color: AppColors.brandOrange),
+          border: Border.all(color: AppColors.brandPrimary),
           borderRadius: BorderRadius.circular(6),
         ),
         child: const Center(
           child: Text(
             'ADD',
             style: TextStyle(
-              color: AppColors.brandOrange,
+              color: AppColors.brandPrimary,
               fontWeight: FontWeight.w700,
               fontSize: 13,
             ),
@@ -505,7 +505,7 @@ class _QtyControl extends StatelessWidget {
     return Container(
       width: 90,
       decoration: BoxDecoration(
-        color: AppColors.brandOrange,
+        color: AppColors.brandPrimary,
         borderRadius: BorderRadius.circular(6),
       ),
       child: Row(

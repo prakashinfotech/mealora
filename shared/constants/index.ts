@@ -31,9 +31,9 @@ export const ORDER_STATUS_COLORS: Record<string, string> = {
   ACCEPTED: 'text-indigo-600',
   PREPARING: 'text-yellow-600',
   READY: 'text-orange-500',
-  OUT_FOR_DELIVERY: 'text-brand-orange',
-  DELIVERED: 'text-swiggy-green',
-  CANCELLED: 'text-swiggy-red',
+  OUT_FOR_DELIVERY: 'text-brand-primary',
+  DELIVERED: 'text-app-green',
+  CANCELLED: 'text-app-red',
 }
 
 export const ORDER_STATUS_STEPS = [

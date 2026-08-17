@@ -46,21 +46,21 @@ export function CouponInput({ subtotal, applied, onApply, onRemove }: Props) {
 
   if (applied) {
     return (
-      <div className="flex items-center justify-between gap-3 bg-swiggy-green/10 border border-swiggy-green/30 rounded-xl px-4 py-3">
+      <div className="flex items-center justify-between gap-3 bg-app-green/10 border border-app-green/30 rounded-xl px-4 py-3">
         <div className="flex items-center gap-2 min-w-0">
-          <svg className="w-4 h-4 text-swiggy-green shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+          <svg className="w-4 h-4 text-app-green shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
           <div className="min-w-0">
-            <span className="text-xs font-bold text-swiggy-green uppercase tracking-wide">{applied.code}</span>
-            <p className="text-xs text-swiggy-gray truncate">{applied.title}</p>
+            <span className="text-xs font-bold text-app-green uppercase tracking-wide">{applied.code}</span>
+            <p className="text-xs text-app-gray truncate">{applied.title}</p>
           </div>
         </div>
         <div className="flex items-center gap-3 shrink-0">
-          <span className="text-sm font-bold text-swiggy-green">− {formatPrice(applied.discount)}</span>
+          <span className="text-sm font-bold text-app-green">− {formatPrice(applied.discount)}</span>
           <button
             onClick={handleRemove}
-            className="text-xs text-swiggy-gray hover:text-swiggy-red font-semibold transition-colors"
+            className="text-xs text-app-gray hover:text-app-red font-semibold transition-colors"
           >
             Remove
           </button>
@@ -78,14 +78,14 @@ export function CouponInput({ subtotal, applied, onApply, onRemove }: Props) {
           onChange={(e) => { setCode(e.target.value.toUpperCase()); setError('') }}
           onKeyDown={(e) => e.key === 'Enter' && handleApply()}
           placeholder="Enter coupon code"
-          className="flex-1 border border-swiggy-border rounded-xl px-3 py-2.5 text-sm text-swiggy-black placeholder:text-swiggy-gray-light focus:outline-none focus:ring-2 focus:ring-brand-orange/40 focus:border-brand-orange uppercase tracking-wide transition"
+          className="flex-1 border border-app-border rounded-xl px-3 py-2.5 text-sm text-app-black placeholder:text-app-gray-light focus:outline-none focus:ring-2 focus:ring-brand-primary/40 focus:border-brand-primary uppercase tracking-wide transition"
           disabled={loading}
           maxLength={20}
         />
         <button
           onClick={handleApply}
           disabled={loading || !code.trim()}
-          className="px-4 py-2.5 rounded-xl bg-brand-orange text-white text-sm font-bold disabled:opacity-50 disabled:cursor-not-allowed hover:bg-brand-orange-dark transition-colors shrink-0"
+          className="px-4 py-2.5 rounded-xl bg-brand-primary text-white text-sm font-bold disabled:opacity-50 disabled:cursor-not-allowed hover:bg-brand-primary-dark transition-colors shrink-0"
         >
           {loading ? (
             <svg className="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24">
@@ -96,7 +96,7 @@ export function CouponInput({ subtotal, applied, onApply, onRemove }: Props) {
         </button>
       </div>
       {error && (
-        <p className="text-xs text-swiggy-red flex items-center gap-1">
+        <p className="text-xs text-app-red flex items-center gap-1">
           <svg className="w-3.5 h-3.5 shrink-0" fill="currentColor" viewBox="0 0 20 20">
             <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-5a.75.75 0 01.75.75v4.5a.75.75 0 01-1.5 0v-4.5A.75.75 0 0110 5zm0 10a1 1 0 100-2 1 1 0 000 2z" clipRule="evenodd" />
           </svg>

@@ -7,7 +7,7 @@ interface Props {
   params: { id: string }
 }
 
-export async function generateMetadata({ params }: Props) {
+export async function generateMetadata() {
   return { title: `Edit Restaurant` }
 }
 

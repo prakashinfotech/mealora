@@ -37,6 +37,7 @@ function buildWhereClause(filters: RestaurantFilters): Prisma.RestaurantWhereInp
   if (filters.maxDeliveryTime) where.avgDeliveryTime = { lte: filters.maxDeliveryTime }
   if (filters.isPureVeg === true) where.isPureVeg = true
   if (filters.city) where.city = { equals: filters.city, mode: 'insensitive' }
+  if (filters.maxCost != null) where.minOrderAmount = { lte: filters.maxCost }
 
   return where
 }

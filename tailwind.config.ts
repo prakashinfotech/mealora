@@ -8,19 +8,21 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        // Mealora brand — indigo-violet
         brand: {
-          orange: '#FC8019',
-          'orange-dark': '#E16A00',
-          'orange-light': '#FEF3EB',
+          primary: '#5B4BDB',
+          'primary-dark': '#4A3BC0',
+          'primary-light': '#EEE9FF',
         },
-        swiggy: {
-          black: '#02060C',
-          gray: '#686B78',
-          'gray-light': '#93959F',
-          'gray-bg': '#F5F5F5',
-          border: '#E9E9EB',
-          green: '#3D9B6D',
-          red: '#E43B4F',
+        // Neutral app tokens — generic semantic naming
+        app: {
+          black: '#171525',
+          gray: '#6B687A',
+          'gray-light': '#A09DB8',
+          'gray-bg': '#F8F7FC',
+          border: '#E5E3F0',
+          green: '#16A34A',
+          red: '#DC2626',
         },
       },
       fontFamily: {

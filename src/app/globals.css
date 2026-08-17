@@ -8,11 +8,11 @@
   }
 
   * {
-    @apply border-swiggy-border;
+    @apply border-app-border;
   }
 
   body {
-    @apply bg-white text-swiggy-black font-sans antialiased;
+    @apply bg-white text-app-black font-sans antialiased;
   }
 
   /* Hide scrollbar but keep scroll */
@@ -27,15 +27,15 @@
 
 @layer components {
   .btn-primary {
-    @apply bg-brand-orange hover:bg-brand-orange-dark text-white font-semibold px-6 py-3 rounded-lg transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed;
+    @apply bg-brand-primary hover:bg-brand-primary-dark text-white font-semibold px-6 py-3 rounded-lg transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed;
   }
 
   .btn-secondary {
-    @apply border border-brand-orange text-brand-orange hover:bg-brand-orange-light font-semibold px-6 py-3 rounded-lg transition-colors duration-200;
+    @apply border border-brand-primary text-brand-primary hover:bg-brand-primary-light font-semibold px-6 py-3 rounded-lg transition-colors duration-200;
   }
 
   .input-base {
-    @apply w-full border border-swiggy-border rounded-lg px-4 py-3 text-sm placeholder:text-swiggy-gray-light focus:outline-none focus:ring-2 focus:ring-brand-orange/30 focus:border-brand-orange transition-all;
+    @apply w-full border border-app-border rounded-lg px-4 py-3 text-sm placeholder:text-app-gray-light focus:outline-none focus:ring-2 focus:ring-brand-primary/30 focus:border-brand-primary transition-all;
   }
 
   .card {
@@ -43,6 +43,6 @@
   }
 
   .section-title {
-    @apply text-xl font-bold text-swiggy-black tracking-tight;
+    @apply text-xl font-bold text-app-black tracking-tight;
   }
 }

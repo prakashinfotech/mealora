@@ -36,3 +36,10 @@ next-env.d.ts
 # prisma
 prisma/migrations/
 .claude/settings.local.json
+
+# Flutter IDE / build artifacts
+mobile/.idea/
+mobile/.dart_tool/
+mobile/build/
+mobile/*.iml
+mobile/android/*.iml

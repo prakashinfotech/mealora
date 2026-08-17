@@ -2,7 +2,7 @@
 
 ## Platform Overview
 
-Full-stack food delivery clone (Swiggy). Production-grade architecture across three layers: Next.js 14 frontend, isolated Node backend, and framework-free shared contracts. Flutter mobile app targets the same API.
+Full-stack food delivery platform (Mealora). Production-grade architecture across three layers: Next.js 14 frontend, isolated Node backend, and framework-free shared contracts. Flutter mobile app targets the same API.
 
 ---
 
@@ -81,7 +81,7 @@ Full-stack food delivery clone (Swiggy). Production-grade architecture across th
 
 | System | Location | Notes |
 |---|---|---|
-| Design tokens | `tailwind.config.ts` | `brand-orange`, `swiggy-black`, `swiggy-gray`, `swiggy-green`, `swiggy-red` |
+| Design tokens | `tailwind.config.ts` | `brand-primary`, `app-black`, `app-gray`, `app-green`, `app-red` |
 | Shared constants | `shared/constants/index.ts` | Pricing, limits, status labels — never duplicated |
 | Shared helpers | `shared/helpers/index.ts` | Pure functions, no framework deps |
 | Skeleton system | `src/components/ui/Skeleton.tsx` | Named variants per route |
